@@ -8,4 +8,6 @@
     <string name="confirm">Confirm password</string>
     <string name="createAccount">Create</string>
     <string name="linkForLogin">Have an account?</string>
+    <string name="submit">Submit</string>
+    <string name="forgotPassword">Forgot password?</string>
 </resources>
