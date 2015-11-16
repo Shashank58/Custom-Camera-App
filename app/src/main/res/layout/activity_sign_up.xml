@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -18,45 +19,108 @@
         android:textSize="26sp"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="45dp"/>
 
-    <EditText
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/email"
-        android:hint="@string/email"
-        android:layout_marginTop="30dp"/>
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/password"
-        android:hint="@string/password"
-        android:layout_marginTop="30dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mailIconSignUp"
+            android:text="@string/mailIcon"
+            android:textSize="20sp"
+            android:layout_marginTop="25dp"/>
 
-    <EditText
-        android:layout_width="match_parent"
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            app:hintAnimationEnabled="true">
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/email"
+                android:hint="@string/email"
+                android:layout_marginTop="300dp"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/confirmPassword"
-        android:hint="@string/confirm"
-        android:layout_marginTop="30dp"/>
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/keyIconSignUp"
+            android:text="@string/keyIcon"
+            android:textSize="20sp"
+            android:layout_marginTop="45dp"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="12dp"
+            app:hintAnimationEnabled="true">
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/password"
+                android:hint="@string/password"
+                android:layout_marginTop="30dp"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkIcon"
+            android:text="@string/checkIcon"
+            android:textSize="20sp"
+            android:layout_marginTop="45dp"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="12dp"
+            app:hintAnimationEnabled="true">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/confirmPassword"
+                android:hint="@string/confirm"
+                android:layout_marginTop="30dp"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:id="@+id/createAccount"
         android:text="@string/createAccount"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="50dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/linkForLogin"
-        android:text="@string/linkForLogin"
-        android:layout_marginTop="30dp"
-        android:textStyle="italic"
-        android:textSize="16sp"
-        android:textColor="@color/colorPrimaryDark" />
 
 </LinearLayout>

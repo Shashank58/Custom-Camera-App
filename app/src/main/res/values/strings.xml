@@ -10,4 +10,7 @@
     <string name="linkForLogin">Have an account?</string>
     <string name="submit">Submit</string>
     <string name="forgotPassword">Forgot password?</string>
+    <string name="mailIcon">&#xf0e0;</string>
+    <string name="keyIcon">&#xf084;</string>
+    <string name="checkIcon">&#xf00c;</string>
 </resources>
