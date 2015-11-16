@@ -19,7 +19,8 @@
         android:textSize="26sp"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="45dp"/>
+        android:layout_marginTop="45dp"
+        android:textColor="@color/navigationBarColor"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -46,7 +47,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/email"
                 android:hint="@string/email"
-                android:layout_marginTop="300dp"/>
+                android:layout_marginTop="300dp"
+                android:textColorHint="@color/navigationBarColor"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -77,7 +79,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/password"
                 android:hint="@string/password"
-                android:layout_marginTop="30dp"/>
+                android:layout_marginTop="30dp"
+                android:textColorHint="@color/navigationBarColor"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -94,7 +97,7 @@
             android:id="@+id/checkIcon"
             android:text="@string/checkIcon"
             android:textSize="20sp"
-            android:layout_marginTop="45dp"/>
+            android:layout_marginTop="50dp"/>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="300dp"
@@ -108,19 +111,21 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/confirmPassword"
                 android:hint="@string/confirm"
-                android:layout_marginTop="30dp"/>
+                android:layout_marginTop="30dp"
+                android:textColorHint="@color/navigationBarColor"/>
 
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
 
     <Button
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:id="@+id/createAccount"
         android:text="@string/createAccount"
-        android:layout_marginTop="50dp"/>
-
+        android:layout_marginTop="50dp"
+        android:background="@color/blue"
+        android:textColor="@color/white"/>
 
 </LinearLayout>

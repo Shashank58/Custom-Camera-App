@@ -13,4 +13,5 @@
     <string name="mailIcon">&#xf0e0;</string>
     <string name="keyIcon">&#xf084;</string>
     <string name="checkIcon">&#xf00c;</string>
+    <string name="one">Home</string>
 </resources>
