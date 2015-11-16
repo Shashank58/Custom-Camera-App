@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +21,14 @@ public class LibraryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        View decorView = getWindow().getDecorView();
+        // Hide the status bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+    // Never show the action bar if the
+    // Status bar is hidden, so hide that too if necessary.
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_library);
-
-//        toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -36,9 +39,8 @@ public class LibraryActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OneFragment(), "ONE");
-        adapter.addFragment(new OneFragment(), "TWO");
-//        adapter.addFragment(new ThreeFragment(), "THREE");
+        adapter.addFragment(new OneFragment(), "Home");
+        adapter.addFragment(new OneFragment(), "My Shelf");
         viewPager.setAdapter(adapter);
     }
 

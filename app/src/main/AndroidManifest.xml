@@ -27,8 +27,7 @@
         <activity android:name=".LogInActivity" >
         </activity>
         <activity
-            android:name=".LibraryActivity"
-            android:theme="@style/NoActionBar">
+            android:name=".LibraryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
