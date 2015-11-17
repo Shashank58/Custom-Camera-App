@@ -15,4 +15,5 @@
     <string name="checkIcon">&#xf00c;</string>
     <string name="one">Home</string>
     <string name="available">Available</string>
+    <string name="returnBook">Return</string>
 </resources>

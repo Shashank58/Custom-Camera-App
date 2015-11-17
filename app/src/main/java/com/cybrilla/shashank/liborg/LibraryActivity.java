@@ -40,7 +40,7 @@ public class LibraryActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new OneFragment(this), "Home");
-        adapter.addFragment(new OneFragment(this), "My Shelf");
+        adapter.addFragment(new TwoFragment(this), "My Shelf");
         viewPager.setAdapter(adapter);
     }
 

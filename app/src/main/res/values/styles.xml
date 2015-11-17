@@ -9,16 +9,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="NewTheme" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">@color/primary_material_dark_1</item>
-        <item name="colorPrimaryDark">@color/primary_dark_material_dark_1</item>
-        <item name="colorAccent">@color/accent_material_dark_1</item>
-        <item name="android:colorBackground">@color/background_material_dark_1</item>
-        <item name="android:colorForeground">@color/foreground_material_dark_1</item>
-        <item name="android:textColorPrimary">@color/primary_text_material_light</item>
-        <item name="android:textColorPrimaryInverse">@color/primary_text_material_light_1</item>
-    </style>
-
     <style name="NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
