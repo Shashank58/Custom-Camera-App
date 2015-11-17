@@ -33,6 +33,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
     public void onBindViewHolder(HomeViewHolder holder, int position) {
         hv = allBooks.get(position);
         holder.bookName.setText(hv.getBookName());
+        holder.authorName.setText(hv.getAuthorName());
     }
 
     @Override
@@ -42,11 +43,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
 
     public static class HomeViewHolder extends RecyclerView.ViewHolder {
         protected TextView bookName;
+        protected TextView authorName;
 
         public HomeViewHolder(View v){
             super(v);
-
             bookName = (TextView) v.findViewById(R.id.bookName);
+            authorName = (TextView) v.findViewById(R.id.authorName);
         }
     }
 }

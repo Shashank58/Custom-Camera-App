@@ -5,34 +5,58 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    card_view:cardCornerRadius="4dp"
+    card_view:cardCornerRadius="8dp"
     android:layout_margin="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@color/grey">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="70dp"
             android:src="@mipmap/ic_launcher"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="10dp"/>
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/bookName"
-            android:textSize="18sp"
-            android:padding="10dp"
             android:layout_weight="1"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:id="@+id/bookName"
+                android:textSize="20sp"
+                android:singleLine="true"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/authorName"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_horizontal"/>
+
+        </LinearLayout>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/available"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/availablebutton"
+            android:textSize="12sp"/>
 
     </LinearLayout>
 

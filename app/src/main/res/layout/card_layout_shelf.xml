@@ -10,29 +10,57 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal">
+        android:layout_height="120dp"
+        android:orientation="horizontal"
+        android:background="@color/grey">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
             android:src="@mipmap/ic_launcher"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="15dp"/>
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/bookNameShelf"
-            android:textSize="18sp"
-            android:padding="10dp"
             android:layout_weight="1"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bookNameShelf"
+                android:textSize="20sp"
+                android:singleLine="true"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/authorNameShelf"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal"
+                android:padding="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dueDate"
+                android:textSize="16sp"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="italic"/>
+
+        </LinearLayout>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/returnBook"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/mybutton"
             android:layout_marginRight="10dp"
             android:textColor="@color/white"

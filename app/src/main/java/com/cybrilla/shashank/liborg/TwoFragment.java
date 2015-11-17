@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -65,7 +66,12 @@ public class TwoFragment extends android.support.v4.app.Fragment {
             }
             try {
                 JSONObject jObject = new JSONObject(completeText);
-                libraryBooks.add(new HomeView(jObject.getString("1003")));
+                JSONArray books = jObject.getJSONArray("books");
+                JSONObject book = (JSONObject) books.get(4);
+                String name = book.getString("name");
+                String authorName = book.getString("author");
+                String dueDate = book.getString("due_date");
+                libraryBooks.add(new HomeView(name, authorName, dueDate));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

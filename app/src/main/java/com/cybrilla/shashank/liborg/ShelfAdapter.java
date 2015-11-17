@@ -32,6 +32,8 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
     public void onBindViewHolder(ShelfViewHolder holder, int position) {
         HomeView hv = allBooks.get(position);
         holder.bookNameShelf.setText(hv.getBookName());
+        holder.authorNameShelf.setText(hv.getAuthorName());
+        holder.dueDate.setText(hv.getDueDate());
     }
 
     @Override
@@ -40,12 +42,13 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
     }
 
     public static class ShelfViewHolder extends RecyclerView.ViewHolder {
-        protected TextView bookNameShelf;
+        protected TextView bookNameShelf, authorNameShelf, dueDate;
 
         public ShelfViewHolder(View v){
             super(v);
-
             bookNameShelf = (TextView) v.findViewById(R.id.bookNameShelf);
+            authorNameShelf = (TextView) v.findViewById(R.id.authorNameShelf);
+            dueDate = (TextView) v.findViewById(R.id.dueDate);
         }
     }
 }

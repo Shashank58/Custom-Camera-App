@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,8 +68,12 @@ public class OneFragment extends Fragment {
             }
             try {
                 JSONObject jObject = new JSONObject(completeText);
-                for(int i = 0; i < jObject.length(); i++){
-                    libraryBooks.add(new HomeView(jObject.getString("100"+i)));
+                JSONArray books = jObject.getJSONArray("books");
+                for(int i = 0; i < books.length(); i++){
+                    JSONObject book = (JSONObject) books.get(i);
+                    String name = book.getString("name");
+                    String author = book.getString("author");
+                    libraryBooks.add(new HomeView(name, author));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
