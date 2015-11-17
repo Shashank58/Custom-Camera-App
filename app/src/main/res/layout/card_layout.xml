@@ -6,17 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     card_view:cardCornerRadius="8dp"
-    android:layout_margin="5dp">
+    android:layout_margin="3dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="110dp"
         android:orientation="horizontal"
         android:background="@color/grey">
 
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="70dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:src="@mipmap/ic_launcher"
             android:layout_marginTop="10dp"/>
 
@@ -26,7 +26,6 @@
             android:layout_weight="1"
             android:layout_marginTop="20dp"
             android:orientation="vertical"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp">
 
             <TextView
@@ -37,7 +36,8 @@
                 android:textSize="20sp"
                 android:singleLine="true"
                 android:layout_gravity="center_horizontal"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textColor="@color/navigationBarColor"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -49,14 +49,14 @@
 
         </LinearLayout>
 
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/available"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="85dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/availablebutton"
-            android:textSize="12sp"/>
+            android:textSize="18sp"
+            android:textStyle="italic"/>
 
     </LinearLayout>
 

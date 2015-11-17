@@ -10,61 +10,67 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:orientation="horizontal"
-        android:background="@color/grey">
-
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/ic_launcher"
-            android:layout_marginTop="15dp"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="horizontal"
+            android:background="@color/grey">
 
-            <TextView
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@mipmap/ic_launcher"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"/>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/bookNameShelf"
-                android:textSize="20sp"
-                android:singleLine="true"
-                android:layout_gravity="center_horizontal"
-                android:textStyle="bold"/>
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/authorNameShelf"
-                android:textSize="18sp"
-                android:layout_gravity="center_horizontal"
-                android:padding="5dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bookNameShelf"
+                    android:textSize="22sp"
+                    android:singleLine="true"
+                    android:layout_gravity="center_horizontal"
+                    android:textStyle="bold"
+                    android:textColor="@color/navigationBarColor"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/dueDate"
-                android:textSize="16sp"
-                android:layout_gravity="center_horizontal"
-                android:textStyle="italic"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/authorNameShelf"
+                    android:textSize="20sp"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dueDate"
+                    android:textSize="18sp"
+                    android:layout_gravity="center_horizontal"
+                    android:textStyle="italic"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/returnBook"
-            android:layout_marginTop="30dp"
             android:background="@drawable/mybutton"
-            android:layout_marginRight="10dp"
-            android:textColor="@color/white"
-            />
+            android:textColor="@color/white"/>
 
     </LinearLayout>
 
