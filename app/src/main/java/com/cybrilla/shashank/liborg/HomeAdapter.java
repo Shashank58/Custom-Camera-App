@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder> {
     private List<HomeView> allBooks;
+    private HomeView hv;
 
     public HomeAdapter(List<HomeView> allBooks){
         super();
@@ -30,7 +31,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
 
     @Override
     public void onBindViewHolder(HomeViewHolder holder, int position) {
-        HomeView hv = allBooks.get(position);
+        hv = allBooks.get(position);
         holder.bookName.setText(hv.getBookName());
     }
 

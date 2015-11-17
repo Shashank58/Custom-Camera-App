@@ -1,6 +1,5 @@
 package com.cybrilla.shashank.liborg;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,13 +20,12 @@ import java.util.List;
  * Created by shashankm on 17/11/15.
  */
 public class TwoFragment extends android.support.v4.app.Fragment {
-    ShelfAdapter bookList;
-    List<HomeView> libraryBooks;
-    Context mcontext;
+    private ShelfAdapter bookList;
+    private List<HomeView> libraryBooks;
+    private RecyclerView recList;
 
-    public TwoFragment(Context context) {
+    public TwoFragment() {
         // Required empty public constructor
-        mcontext = context;
     }
 
 
@@ -41,17 +39,22 @@ public class TwoFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_two, container, false);
-        RecyclerView recList = (RecyclerView) view.findViewById(R.id.cardListTwo);
+        recList = (RecyclerView) view.findViewById(R.id.cardListTwo);
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity().getBaseContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
+        getData();
 
+        return view;
+    }
+
+    private void getData(){
         libraryBooks = new ArrayList<>();
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(
-                    new InputStreamReader(mcontext.getAssets().open("library.txt")));
+                    new InputStreamReader(getActivity().getBaseContext().getAssets().open("library.txt")));
 
             // do reading, usually loop until end of file reading
             String mLine;
@@ -67,20 +70,18 @@ public class TwoFragment extends android.support.v4.app.Fragment {
                 e.printStackTrace();
             }
         } catch (IOException e) {
-            //log the exception
+            e.printStackTrace();
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    //log the exception
+                    e.printStackTrace();
                 }
             }
         }
 
         bookList = new ShelfAdapter(libraryBooks);
         recList.setAdapter(bookList);
-
-        return view;
     }
 }

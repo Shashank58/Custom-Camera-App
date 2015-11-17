@@ -21,12 +21,11 @@ public class LibraryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View decorView = getWindow().getDecorView();
         // Hide the status bar.
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
-    // Never show the action bar if the
-    // Status bar is hidden, so hide that too if necessary.
+        getWindow().getDecorView().setSystemUiVisibility(uiOptions);
+        // Never show the action bar if the
+        // Status bar is hidden, so hide that too if necessary.
         getSupportActionBar().hide();
         setContentView(R.layout.activity_library);
 
@@ -39,8 +38,8 @@ public class LibraryActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OneFragment(this), "Home");
-        adapter.addFragment(new TwoFragment(this), "My Shelf");
+        adapter.addFragment(new OneFragment(), "Home");
+        adapter.addFragment(new TwoFragment(), "My Shelf");
         viewPager.setAdapter(adapter);
     }
 
