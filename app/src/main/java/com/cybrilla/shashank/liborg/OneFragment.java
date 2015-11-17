@@ -12,7 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OneFragment extends Fragment {
+    HomeAdapter bookList;
+    List<HomeView> libraryBooks;
 
     public OneFragment() {
         // Required empty public constructor
@@ -33,6 +38,16 @@ public class OneFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity().getBaseContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
+
+        libraryBooks = new ArrayList<>();
+        libraryBooks.add(new HomeView("Effective Java"));
+        libraryBooks.add(new HomeView("Game Of Thrones"));
+        libraryBooks.add(new HomeView("Ineffective Java"));
+        libraryBooks.add(new HomeView("Mildly Effective Java"));
+        libraryBooks.add(new HomeView("Java...?"));
+        bookList = new HomeAdapter(libraryBooks);
+        recList.setAdapter(bookList);
+
         return view;
     }
 
