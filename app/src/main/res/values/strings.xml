@@ -16,4 +16,6 @@
     <string name="one">Home</string>
     <string name="available">Available</string>
     <string name="returnBook">Return</string>
+    <string name="name">Name</string>
+    <string name="nameIcon">&#xf007;</string>
 </resources>
