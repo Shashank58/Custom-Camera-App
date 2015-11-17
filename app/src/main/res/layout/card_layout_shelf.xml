@@ -70,7 +70,8 @@
             android:layout_height="wrap_content"
             android:text="@string/returnBook"
             android:background="@drawable/mybutton"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:onClick="barCode"/>
 
     </LinearLayout>
 
