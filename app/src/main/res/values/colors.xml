@@ -17,4 +17,6 @@
     <color name="background_lighter">#208abc</color>
     <color name="grey">#f8e8e2</color>
     <color name="light_grey">#eeeeee</color>
+    <color name="cardBackground">#2196F3</color>
+    <color name="black">#212121</color>
 </resources>

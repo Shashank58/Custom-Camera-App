@@ -2,32 +2,32 @@
    "books" :[
      {
         "name":"It happened in India",
-        "author":"Not me"
+        "author":"Kishore Biyani"
      },
      {
         "name":"Stay Hungry Stay Foolish",
-        "author":"Not me for sure"
+        "author":"Rashmi Bansal"
      },
      {
         "name":"The Magic Of Thinking Big",
-        "author":"You guessed it"
+        "author":"David J. Schwartz"
      },
      {
         "name":"From A Buick 8",
-        "author":"Not me again"
+        "author":"Stephen King"
      },
      {
         "name":"October Sky",
-        "author":"November Ground?",
+        "author":"Homer Hickam",
         "due_date":"29th Nov 2015"
      },
      {
         "name":"Of Course I Love You",
-        "author":"Of course"
+        "author":"Durjoy Datta"
      },
      {
         "name":"Life Of Pi",
-        "author":"Pi"
+        "author":"Yenn Martel"
      },
      {
         "name":"The Art Of War",
