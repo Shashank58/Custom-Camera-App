@@ -1,5 +1,7 @@
 package com.cybrilla.shashank.liborg;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,10 +17,12 @@ import java.util.List;
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder> {
     private List<HomeView> allBooks;
     private HomeView hv;
+    private Context mContext;
 
-    public HomeAdapter(List<HomeView> allBooks){
+    public HomeAdapter(List<HomeView> allBooks, Context context){
         super();
         this.allBooks = allBooks;
+        mContext = context;
     }
 
     @Override
@@ -41,7 +45,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
             public void onClick(View v) {
                 String bookName = allBooks.get(position).getBookName();
                 String authorName = allBooks.get(position).getAuthorName();
-
+                Intent intent = new Intent(mContext, DetailActivity.class);
+                intent.putExtra("bookName", bookName);
+                intent.putExtra("authorName", authorName);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                mContext.startActivity(intent);
             }
         });
     }

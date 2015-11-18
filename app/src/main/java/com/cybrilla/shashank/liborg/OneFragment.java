@@ -91,7 +91,7 @@ public class OneFragment extends Fragment {
             }
         }
 
-        bookList = new HomeAdapter(libraryBooks);
+        bookList = new HomeAdapter(libraryBooks, getActivity().getBaseContext());
         recList.setAdapter(bookList);
     }
 

@@ -13,6 +13,8 @@
     <string name="mailIcon">&#xf0e0;</string>
     <string name="keyIcon">&#xf084;</string>
     <string name="checkIcon">&#xf00c;</string>
+    <string name="homeIcon">&#xf015;</string>
+    <string name="bookIcon">&#xf02d;</string>
     <string name="one">Home</string>
     <string name="available">Current Status: Available</string>
     <string name="returnBook">Return</string>
