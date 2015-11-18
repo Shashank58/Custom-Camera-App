@@ -1,5 +1,6 @@
 package com.cybrilla.shashank.liborg;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,10 +31,19 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
     }
 
     @Override
-    public void onBindViewHolder(HomeViewHolder holder, int position) {
+    public void onBindViewHolder(final HomeViewHolder holder, final int position) {
         hv = allBooks.get(position);
         holder.bookName.setText(hv.getBookName());
         holder.authorName.setText(hv.getAuthorName());
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String bookName = allBooks.get(position).getBookName();
+                String authorName = allBooks.get(position).getAuthorName();
+
+            }
+        });
     }
 
     @Override
@@ -44,11 +54,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
     public static class HomeViewHolder extends RecyclerView.ViewHolder {
         protected TextView bookName;
         protected TextView authorName;
+        protected CardView cardView;
 
         public HomeViewHolder(View v){
             super(v);
             bookName = (TextView) v.findViewById(R.id.bookName);
             authorName = (TextView) v.findViewById(R.id.authorName);
+            cardView = (CardView) v.findViewById(R.id.card_view);
         }
     }
 }

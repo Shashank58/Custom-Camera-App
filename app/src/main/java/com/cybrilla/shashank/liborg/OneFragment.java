@@ -49,6 +49,7 @@ public class OneFragment extends Fragment {
         recList.setLayoutManager(llm);
         getData();
 
+
         return view;
     }
 
