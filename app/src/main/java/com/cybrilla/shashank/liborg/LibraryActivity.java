@@ -60,14 +60,12 @@ public class LibraryActivity extends AppCompatActivity {
         String transitionName = getString(R.string.transition_name_circle);
 
         // Define the view that the animation will start from
-        View viewStart = findViewById(R.id.card_view);
+        View viewStart = v.findViewById(R.id.card_view);
 
-        ActivityOptionsCompat options =
-
-                ActivityOptionsCompat.makeSceneTransitionAnimation(this,
-                        viewStart,   // Starting view
-                        transitionName    // The String
-                );
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation
+                                        (this, viewStart,   // Starting view
+                                            transitionName    // The String
+                                        );
         //Start the Intent
         ActivityCompat.startActivity(this, intent, options.toBundle());
     }

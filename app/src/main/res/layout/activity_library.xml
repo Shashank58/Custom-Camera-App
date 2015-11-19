@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabMode="fixed"
+            app:tabMaxWidth="0dp"
             app:tabGravity="fill"
             app:tabTextColor="#999999"
             app:tabSelectedTextColor="@color/white"

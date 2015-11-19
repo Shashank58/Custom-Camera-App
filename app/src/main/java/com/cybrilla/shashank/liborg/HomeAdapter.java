@@ -45,6 +45,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         .crossFade().into(holder.bookImage);
     }
 
+
     @Override
     public int getItemCount() {
         return allBooks.size();

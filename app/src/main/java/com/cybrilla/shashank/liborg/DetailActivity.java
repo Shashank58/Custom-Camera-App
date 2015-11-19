@@ -5,8 +5,6 @@ import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Slide;
-import android.transition.Transition;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -19,7 +17,5 @@ public class DetailActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        Transition ts = new Slide();
-        ts.setDuration(2000);
     }
 }
