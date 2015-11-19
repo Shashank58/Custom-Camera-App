@@ -6,7 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -38,6 +41,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         hv = allBooks.get(position);
         holder.bookName.setText(hv.getBookName());
         holder.authorName.setText(hv.getAuthorName());
+        Glide.with(mContext).load("http://ia.media-imdb.com/images/M/MV5BNTg2OTY2ODg5OF5BMl5BanBnXkFtZTcwODM5MTYxOA@@._V1_SX214_AL_.jpg")
+        .crossFade().into(holder.bookImage);
     }
 
     @Override
@@ -49,14 +54,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         protected TextView bookName;
         protected TextView authorName;
         public CardView cardView;
-        protected View bookImage;
+        protected ImageView bookImage;
 
         public HomeViewHolder(View v){
             super(v);
             bookName = (TextView) v.findViewById(R.id.bookName);
             authorName = (TextView) v.findViewById(R.id.authorName);
             cardView = (CardView) v.findViewById(R.id.card_view);
-            bookImage = v.findViewById(R.id.bookImage);
+            bookImage = (ImageView) v.findViewById(R.id.bookImage);
         }
     }
 
