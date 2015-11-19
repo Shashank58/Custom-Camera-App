@@ -16,7 +16,7 @@
     <string name="homeIcon">&#xf015;</string>
     <string name="bookIcon">&#xf02d;</string>
     <string name="one">Home</string>
-    <string name="available">Current Status: Available</string>
+    <string name="available">Current Status:</string>
     <string name="returnBook">Return</string>
     <string name="name">Name</string>
     <string name="nameIcon">&#xf007;</string>

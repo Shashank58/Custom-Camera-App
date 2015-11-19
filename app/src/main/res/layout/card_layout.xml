@@ -57,16 +57,33 @@
                 android:text="Author: Stephane King"
                 android:layout_gravity="center_horizontal"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/available"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:textSize="16sp"
-                android:textStyle="italic"
-                android:textColor="#ff5f5f"
-                android:layout_marginBottom="40dp"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/available"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="16sp"
+                    android:textStyle="italic"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="40dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Available"
+                    android:textColor="@color/success"
+                    android:textSize="16sp"
+                    android:layout_marginTop="6dp"
+                    android:textStyle="italic"
+                    android:layout_marginLeft="4dp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
