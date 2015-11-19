@@ -20,7 +20,7 @@
             android:layout_height="120dp"
             android:src="@drawable/javaconcepts_icon"
             app:siBorderWidth="3dp"
-            app:siBorderColor="@color/black"
+            app:siBorderColor="@color/navigationBarColor"
             android:scaleType="fitXY"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"/>

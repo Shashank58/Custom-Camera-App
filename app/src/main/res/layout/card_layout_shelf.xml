@@ -2,6 +2,7 @@
 <android.support.v7.widget.CardView
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,27 +22,29 @@
             android:textStyle="italic"
             android:textSize="16sp"
             android:padding="5dp"
-            android:textColor="#ff5f5f"
-            android:background="@color/white"/>
+            android:textColor="@color/white"
+            android:background="#607D8B"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/cardShelfBackground"
+            android:background="#43A047"
             android:layout_marginTop="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="280dp"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="140dp"
-                    android:src="@mipmap/ic_launcher"
-                    android:layout_marginTop="5dp"
+                <com.github.siyamed.shapeimageview.RoundedImageView
+                    android:layout_width="140dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/javaconcepts_icon"
+                    android:layout_marginTop="55dp"
                     android:layout_marginLeft="15dp"
+                    app:siBorderWidth="3dp"
+                    app:siBorderColor="@color/navigationBarColor"
                     android:maxHeight="120dp"
                     android:maxWidth="120dp"
                     android:adjustViewBounds="true"
@@ -59,12 +62,33 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="NAME"
+                        android:textStyle="bold"
+                        android:textSize="24sp"
+                        android:layout_gravity="center_horizontal"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:id="@+id/bookNameShelf"
                         android:textSize="22sp"
                         android:singleLine="true"
                         android:layout_gravity="center_horizontal"
                         android:textStyle="bold"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white"
+                        android:text="Effective Java"
+                        android:layout_marginTop="5dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="AUTHOR"
+                        android:textColor="@color/white"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="25dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -73,7 +97,18 @@
                         android:textSize="20sp"
                         android:layout_gravity="center_horizontal"
                         android:padding="5dp"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white"
+                        android:text="Stephane King"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DUE DATE"
+                        android:textColor="@color/white"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="25dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -82,7 +117,9 @@
                         android:textSize="18sp"
                         android:layout_gravity="center_horizontal"
                         android:textStyle="italic"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white"
+                        android:text="29th November 2015"
+                        android:layout_marginTop="5dp"/>
 
                 </LinearLayout>
 
@@ -95,8 +132,8 @@
             android:layout_height="wrap_content"
             android:text="@string/returnBook"
             android:id="@+id/returnBook"
-            android:background="@color/white"
-            android:textColor="#ff5f5f"
+            android:background="#607D8B"
+            android:textColor="@color/white"
             android:layout_marginTop="1dp"/>
 
     </LinearLayout>
