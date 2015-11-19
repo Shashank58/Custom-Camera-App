@@ -1,7 +1,6 @@
 package com.cybrilla.shashank.liborg;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,20 +38,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         hv = allBooks.get(position);
         holder.bookName.setText(hv.getBookName());
         holder.authorName.setText(hv.getAuthorName());
-
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String bookName = allBooks.get(position).getBookName();
-                String authorName = allBooks.get(position).getAuthorName();
-                Intent intent = new Intent(mContext, DetailActivity.class);
-                intent.putExtra("bookName", bookName);
-                intent.putExtra("authorName", authorName);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                mContext.startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -63,13 +48,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
     public static class HomeViewHolder extends RecyclerView.ViewHolder {
         protected TextView bookName;
         protected TextView authorName;
-        protected CardView cardView;
+        public CardView cardView;
+        protected View bookImage;
 
         public HomeViewHolder(View v){
             super(v);
             bookName = (TextView) v.findViewById(R.id.bookName);
             authorName = (TextView) v.findViewById(R.id.authorName);
             cardView = (CardView) v.findViewById(R.id.card_view);
+            bookImage = v.findViewById(R.id.bookImage);
         }
     }
+
 }

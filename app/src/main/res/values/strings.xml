@@ -22,4 +22,7 @@
     <string name="nameIcon">&#xf007;</string>
     <string name="borrow">Borrow Book</string>
     <string name="myBooks">Your Books</string>
+    <string name="transition_name_name">transition:NAME</string>
+    <string name="transition_name_circle">transition:CIRCLE</string>
+    <string name="transition_name_author">transition:AUTHOR</string>
 </resources>

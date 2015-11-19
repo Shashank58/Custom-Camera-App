@@ -7,7 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     card_view:cardElevation="0dp"
-    android:layout_margin="0.3dp">
+    android:layout_margin="0.3dp"
+    android:clickable="true"
+    android:onClick="animateIntent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,12 +20,14 @@
         <com.github.siyamed.shapeimageview.CircularImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
+            android:id="@+id/bookImage"
             android:src="@drawable/javaconcepts_icon"
             app:siBorderWidth="3dp"
             app:siBorderColor="@color/navigationBarColor"
             android:scaleType="fitXY"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"/>
+            android:layout_marginTop="30dp"
+            android:transitionName="@string/transition_name_circle"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,7 +48,8 @@
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:text="EFFECTIVE JAVA"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:transitionName="@string/transition_name_name"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -55,7 +60,8 @@
                 android:textStyle="italic"
                 android:textColor="#ff5f5f"
                 android:text="Author: Stephane King"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:transitionName="@string/transition_name_author"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"

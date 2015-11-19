@@ -3,6 +3,8 @@ package com.cybrilla.shashank.liborg;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -46,6 +48,28 @@ public class LibraryActivity extends AppCompatActivity {
         adapter.addFragment(new OneFragment(), "Home");
         adapter.addFragment(new TwoFragment(), "My Shelf");
         viewPager.setAdapter(adapter);
+    }
+
+    public void animateIntent(View v){
+//        String bookName = allBooks.get(position).getBookName();
+//        String authorName = allBooks.get(position).getAuthorName();
+        Intent intent = new Intent(this, DetailActivity.class);
+
+//        intent.putExtra("bookName", bookName);
+//        intent.putExtra("authorName", authorName);
+        String transitionName = getString(R.string.transition_name_circle);
+
+        // Define the view that the animation will start from
+        View viewStart = findViewById(R.id.card_view);
+
+        ActivityOptionsCompat options =
+
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                        viewStart,   // Starting view
+                        transitionName    // The String
+                );
+        //Start the Intent
+        ActivityCompat.startActivity(this, intent, options.toBundle());
     }
 
 
