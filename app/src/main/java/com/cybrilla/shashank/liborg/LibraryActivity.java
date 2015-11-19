@@ -21,7 +21,6 @@ public class LibraryActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private int[] tabIcons = {R.string.homeIcon, R.string.bookIcon};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,24 +33,17 @@ public class LibraryActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_library);
 
-
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        setupTabIcons();
-    }
-
-    private void setupTabIcons() {
-        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
     }
 
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OneFragment(), ""+"Home");
+        adapter.addFragment(new OneFragment(), "Home");
         adapter.addFragment(new TwoFragment(), "My Shelf");
         viewPager.setAdapter(adapter);
     }
