@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:hintAnimationEnabled="true"
-            android:textColorHint="@color/navigationBarColor"
+            android:textColorHint="@color/black"
             android:textColor="@color/navigationBarColor">
 
             <EditText
@@ -79,8 +79,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="12dp"
             app:hintAnimationEnabled="true"
-            android:textColorHint="@color/navigationBarColor"
-            android:textColor="@color/navigationBarColor">
+            android:textColorHint="@color/black"
+            android:textColor="@color/black">
 
             <EditText
                 android:layout_width="match_parent"
@@ -88,7 +88,7 @@
                 android:id="@+id/passwordLogin"
                 android:hint="@string/password"
                 android:layout_marginTop="30dp"
-                android:textColor="@color/navigationBarColor"/>
+                android:textColor="@color/black"/>
 
         </android.support.design.widget.TextInputLayout>
 
