@@ -168,7 +168,8 @@
                 android:text="@string/createAccount"
                 android:layout_marginTop="50dp"
                 android:background="@color/blue"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:onClick="loginScreen"/>
 
     </LinearLayout>
 

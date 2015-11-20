@@ -107,7 +107,8 @@
             android:text="@string/submit"
             android:layout_marginTop="40dp"
             android:background="#0277BD"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:onClick="login"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -129,7 +130,9 @@
             android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
             android:textColor="#01579B"
-            android:textStyle="italic"/>
+            android:textStyle="italic"
+            android:clickable="true"
+            android:onClick="signUp"/>
 
     </LinearLayout>
 

@@ -1,8 +1,10 @@
 package com.cybrilla.shashank.liborg;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 
 public class SignUp extends AppCompatActivity {
@@ -23,5 +25,10 @@ public class SignUp extends AppCompatActivity {
         keyIconSignUp.setTypeface(font);
         checkIcon.setTypeface(font);
         nameIcon.setTypeface(font);
+    }
+
+    public void loginScreen(View v){
+        Intent intent = new Intent(this, LogInActivity.class);
+        startActivity(intent);
     }
 }
