@@ -10,36 +10,41 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.cybrilla.shashank.liborg.LogInActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#9E9E9E">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/logIn"
         android:text="@string/login"
-        android:textSize="26sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="35dp"
+        android:textColor="@color/navigationBarColor"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="35dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/mailIcon"
             android:text="@string/mailIcon"
-            android:textSize="20sp"
-            android:layout_marginTop="25dp"/>
+            android:textSize="24sp"
+            android:layout_marginTop="25dp"
+            android:textColor="@color/navigationBarColor"/>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:hintAnimationEnabled="true">
+            app:hintAnimationEnabled="true"
+            android:textColorHint="@color/navigationBarColor"
+            android:textColor="@color/navigationBarColor">
 
             <EditText
                 android:layout_width="300dp"
@@ -47,7 +52,8 @@
                 android:id="@+id/loginEmail"
                 android:hint="@string/email"
                 android:layout_marginTop="50dp"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/navigationBarColor"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -63,22 +69,26 @@
             android:layout_height="wrap_content"
             android:id="@+id/keyIcon"
             android:text="@string/keyIcon"
-            android:textSize="20sp"
-            android:layout_marginTop="45dp"/>
+            android:textSize="24sp"
+            android:layout_marginTop="45dp"
+            android:textColor="@color/navigationBarColor"/>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="12dp"
-            app:hintAnimationEnabled="true">
+            app:hintAnimationEnabled="true"
+            android:textColorHint="@color/navigationBarColor"
+            android:textColor="@color/navigationBarColor">
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/passwordLogin"
                 android:hint="@string/password"
-                android:layout_marginTop="30dp"/>
+                android:layout_marginTop="30dp"
+                android:textColor="@color/navigationBarColor"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -91,7 +101,7 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/submit"
         android:layout_marginTop="40dp"
-        android:background="@color/blue"
+        android:background="#0277BD"
         android:textColor="@color/white"/>
 
     <TextView
@@ -102,7 +112,8 @@
         android:textSize="16sp"
         android:layout_marginTop="30dp"
         android:layout_gravity="center_horizontal"
-        android:textColor="@color/colorPrimaryDark"/>
+        android:textColor="#01579B"
+        android:textStyle="italic"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -112,6 +123,7 @@
         android:textSize="16sp"
         android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal"
-        android:textColor="@color/colorPrimaryDark"/>
+        android:textColor="#01579B"
+        android:textStyle="italic"/>
 
 </LinearLayout>
