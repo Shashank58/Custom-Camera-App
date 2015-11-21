@@ -23,13 +23,13 @@
             android:textSize="16sp"
             android:padding="5dp"
             android:textColor="@color/white"
-            android:background="#607D8B"/>
+            android:background="@color/shelfTitles"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#43A047"
+            android:background="@color/success"
             android:layout_marginTop="1dp">
 
             <LinearLayout
@@ -132,7 +132,7 @@
             android:layout_height="wrap_content"
             android:text="@string/returnBook"
             android:id="@+id/returnBook"
-            android:background="#607D8B"
+            android:background="@color/shelfTitles"
             android:textColor="@color/white"
             android:layout_marginTop="1dp"/>
 
