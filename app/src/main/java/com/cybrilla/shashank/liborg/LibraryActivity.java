@@ -1,6 +1,15 @@
 package com.cybrilla.shashank.liborg;
 
+import android.annotation.TargetApi;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -10,9 +19,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 
@@ -20,9 +29,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryActivity extends AppCompatActivity {
-    private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    PendingIntent pi;
+    BroadcastReceiver br;
+    AlarmManager am;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +51,9 @@ public class LibraryActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        setup();
+//        am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() +
+//                10*1000, pi);
     }
 
 
@@ -54,7 +68,6 @@ public class LibraryActivity extends AppCompatActivity {
 //        String bookName = allBooks.get(position).getBookName();
 //        String authorName = allBooks.get(position).getAuthorName();
         Intent intent = new Intent(this, DetailActivity.class);
-
 //        intent.putExtra("bookName", bookName);
 //        intent.putExtra("authorName", authorName);
         String transitionName = getString(R.string.transition_name_circle);
@@ -63,11 +76,44 @@ public class LibraryActivity extends AppCompatActivity {
         View viewStart = v.findViewById(R.id.card_view);
 
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation
-                                        (this, viewStart,   // Starting view
-                                            transitionName    // The String
-                                        );
+                (this, viewStart,   // Starting view
+                        transitionName    // The String
+                );
         //Start the Intent
         ActivityCompat.startActivity(this, intent, options.toBundle());
+    }
+
+    private void setup() {
+        br = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context c, Intent i) {
+                Toast.makeText(c, "Rise and Shine!", Toast.LENGTH_LONG).show();
+            }
+        };
+        registerReceiver(br, new IntentFilter("com.cybrilla.shashank.liborg") );
+        pi = PendingIntent.getBroadcast( this, 0, new Intent("com.cybrilla.shashank.liborg"),
+                0 );
+        am = (AlarmManager)(this.getSystemService( Context.ALARM_SERVICE ));
+    }
+
+    @TargetApi(VERSION_CODES.JELLY_BEAN)
+    public void sampleNotification(View v){
+        NotificationManager notificationManager = (NotificationManager) getSystemService(
+                                                    Context.NOTIFICATION_SERVICE);
+        Context context = getApplicationContext();
+        String notificationTitle = "Exercise of Notification!";
+        String notificationText = "http://android-er.blogspot.com/";
+        Intent myIntent = new Intent(this, LibraryActivity.class);
+        PendingIntent pendingIntent
+                = PendingIntent.getActivity(context,
+                0, myIntent,
+                0);
+        Notification myNotification = new Notification.Builder(context)
+                .setContentTitle(notificationTitle).setContentText(notificationText)
+                .setSmallIcon(R.drawable.lifeofpi).setContentIntent(pendingIntent).build();
+        myNotification.defaults |= Notification.DEFAULT_SOUND;
+        myNotification.flags |= Notification.FLAG_AUTO_CANCEL;
+        notificationManager.notify(1, myNotification);
     }
 
 
