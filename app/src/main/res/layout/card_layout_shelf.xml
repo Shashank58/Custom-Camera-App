@@ -134,8 +134,7 @@
             android:id="@+id/returnBook"
             android:background="@color/shelfTitles"
             android:textColor="@color/white"
-            android:layout_marginTop="1dp"
-            android:onClick="sampleNotification"/>
+            android:layout_marginTop="1dp"/>
 
     </LinearLayout>
 

@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -21,7 +22,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 
@@ -52,8 +52,8 @@ public class LibraryActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         setup();
-//        am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() +
-//                10*1000, pi);
+        am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() +
+                6*1000, pi);
     }
 
 
@@ -87,17 +87,17 @@ public class LibraryActivity extends AppCompatActivity {
         br = new BroadcastReceiver() {
             @Override
             public void onReceive(Context c, Intent i) {
-                Toast.makeText(c, "Rise and Shine!", Toast.LENGTH_LONG).show();
+                sampleNotification();
             }
         };
         registerReceiver(br, new IntentFilter("com.cybrilla.shashank.liborg") );
-        pi = PendingIntent.getBroadcast( this, 0, new Intent("com.cybrilla.shashank.liborg"),
+        pi = PendingIntent.getBroadcast(this, 0, new Intent("com.cybrilla.shashank.liborg"),
                 0 );
         am = (AlarmManager)(this.getSystemService( Context.ALARM_SERVICE ));
     }
 
     @TargetApi(VERSION_CODES.JELLY_BEAN)
-    public void sampleNotification(View v){
+    public void sampleNotification(){
         NotificationManager notificationManager = (NotificationManager) getSystemService(
                                                     Context.NOTIFICATION_SERVICE);
         Context context = getApplicationContext();
