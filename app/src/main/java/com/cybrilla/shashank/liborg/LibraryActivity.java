@@ -18,6 +18,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -70,15 +71,13 @@ public class LibraryActivity extends AppCompatActivity {
         Intent intent = new Intent(this, DetailActivity.class);
 //        intent.putExtra("bookName", bookName);
 //        intent.putExtra("authorName", authorName);
-        String transitionName = getString(R.string.transition_name_circle);
+        String transitionCircle = getString(R.string.transition_name_circle);
 
         // Define the view that the animation will start from
         View viewStart = v.findViewById(R.id.card_view);
 
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation
-                (this, viewStart,   // Starting view
-                        transitionName    // The String
-                );
+                (this,  new Pair<View, String>(viewStart, transitionCircle));
         //Start the Intent
         ActivityCompat.startActivity(this, intent, options.toBundle());
     }
