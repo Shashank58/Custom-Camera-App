@@ -45,4 +45,10 @@
         </activity>
     </application>
 
+    <dependency>
+        <groupId>com.mcxiaoke.volley</groupId>
+        <artifactId>library</artifactId>
+        <version>1.0.19</version>
+    </dependency>
+
 </manifest>
