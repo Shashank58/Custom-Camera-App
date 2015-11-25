@@ -60,7 +60,7 @@ public class LogInActivity extends AppCompatActivity {
             Typeface font = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
             mailIcon.setTypeface(font);
             keyIcon.setTypeface(font);
-        }    
+        }
     }
 
     public void login(View v){

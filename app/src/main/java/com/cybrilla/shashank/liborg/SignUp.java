@@ -63,12 +63,7 @@ public class SignUp extends AppCompatActivity {
         mFname = fname.getText().toString();
         mLname = lname.getText().toString();
         if(mConfirm.equals(mPassword)) {
-            if(mLname.equals("")){
-                Toast.makeText(getApplicationContext(), "No field should be empty"
-                        , Toast.LENGTH_LONG).show();
-            } else {
-                registerUser();
-            }
+            registerUser();
         } else {
             Toast.makeText(getApplicationContext(), "Passwords not matching"
                     , Toast.LENGTH_LONG).show();
