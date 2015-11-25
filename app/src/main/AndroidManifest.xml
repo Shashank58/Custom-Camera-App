@@ -41,6 +41,8 @@
             android:name=".DetailActivity"
             android:parentActivityName=".LibraryActivity">
         </activity>
+        <activity android:name=".SearchActivity" >
+        </activity>
     </application>
 
 </manifest>

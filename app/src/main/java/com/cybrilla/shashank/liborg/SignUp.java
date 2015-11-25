@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class SignUp extends AppCompatActivity {
-    private TextView nameIcon, checkIcon, keyIconSignUp, mailIconSignUp;
+    private TextView fnameIcon, checkIcon, keyIconSignUp, mailIconSignUp,lnameIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,13 +18,15 @@ public class SignUp extends AppCompatActivity {
         mailIconSignUp = (TextView) findViewById(R.id.mailIconSignUp);
         keyIconSignUp = (TextView) findViewById(R.id.keyIconSignUp);
         checkIcon = (TextView) findViewById(R.id.checkIcon);
-        nameIcon = (TextView) findViewById(R.id.nameIcon);
+        fnameIcon = (TextView) findViewById(R.id.fnameIcon);
+        lnameIcon = (TextView) findViewById(R.id.lnameIcon);
 
         Typeface font = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
         mailIconSignUp.setTypeface(font);
         keyIconSignUp.setTypeface(font);
         checkIcon.setTypeface(font);
-        nameIcon.setTypeface(font);
+        fnameIcon.setTypeface(font);
+        lnameIcon.setTypeface(font);
     }
 
     public void loginScreen(View v){

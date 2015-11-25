@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingTop="10dp"
     android:paddingBottom="@dimen/activity_vertical_margin"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.cybrilla.shashank.liborg.SignUp"
@@ -25,20 +25,19 @@
                 android:textSize="34sp"
                 android:textStyle="bold"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:textColor="@color/navigationBarColor"/>
+                android:layout_marginTop="0dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="15dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/nameIcon"
-                    android:text="@string/nameIcon"
+                    android:id="@+id/fnameIcon"
+                    android:text="@string/fnameIcon"
                     android:textSize="20sp"
                     android:layout_marginTop="25dp"
                     android:textColor="@color/navigationBarColor"/>
@@ -52,8 +51,8 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/name"
-                        android:hint="@string/name"
+                        android:id="@+id/fname"
+                        android:hint="@string/fname"
                         android:layout_marginTop="300dp"
                         android:textColorHint="@color/navigationBarColor"/>
 
@@ -61,11 +60,44 @@
 
             </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lnameIcon"
+                android:text="@string/lnameIcon"
+                android:textSize="20sp"
+                android:layout_marginTop="25dp"
+                android:textColor="@color/navigationBarColor"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                app:hintAnimationEnabled="true">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lname"
+                    android:hint="@string/lname"
+                    android:layout_marginTop="300dp"
+                    android:textColorHint="@color/navigationBarColor"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="15dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -74,7 +106,7 @@
                     android:text="@string/mailIcon"
                     android:textSize="20sp"
                     android:layout_marginTop="25dp"
-                    android:textColorHint="@color/navigationBarColor"/>
+                    android:textColor="@color/navigationBarColor"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -105,13 +137,13 @@
                     android:id="@+id/keyIconSignUp"
                     android:text="@string/keyIcon"
                     android:textSize="20sp"
-                    android:layout_marginTop="45dp"
-                    android:textColorHint="@color/navigationBarColor"/>
+                    android:layout_marginTop="35dp"
+                    android:textColor="@color/navigationBarColor"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="15dp"
                     android:layout_marginLeft="12dp"
                     app:hintAnimationEnabled="true">
 
@@ -138,13 +170,13 @@
                     android:id="@+id/checkIcon"
                     android:text="@string/checkIcon"
                     android:textSize="20sp"
-                    android:layout_marginTop="50dp"
-                    android:textColorHint="@color/navigationBarColor"/>
+                    android:layout_marginTop="40dp"
+                    android:textColor="@color/navigationBarColor"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="15dp"
                     android:layout_marginLeft="12dp"
                     app:hintAnimationEnabled="true">
 
@@ -166,7 +198,7 @@
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/createAccount"
                 android:text="@string/createAccount"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="30dp"
                 android:background="@color/info"
                 android:textColor="@color/white"
                 android:onClick="loginScreen"/>

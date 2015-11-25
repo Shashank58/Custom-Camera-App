@@ -6,9 +6,14 @@ package com.cybrilla.shashank.liborg;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -53,6 +58,23 @@ public class OneFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
+
+//        recList.setLayoutManager(new LinearLayoutManager(getActivity()));
+//
+//        libraryBooks = new ArrayList<>();
+//
+////        for (String movie : MOVIES) {
+////            libraryBooks.add(new HomeView(movie));
+////        }
+//
+//        bookList = new HomeAdapter(libraryBooks, getActivity());
+//        recList.setAdapter(bookList);
+    }
+
     private void getData(){
         libraryBooks = new ArrayList<>();
         BufferedReader reader = null;
@@ -93,6 +115,41 @@ public class OneFragment extends Fragment {
 
         bookList = new HomeAdapter(libraryBooks, getActivity().getBaseContext());
         recList.setAdapter(bookList);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main_menu, menu);
+
+        final MenuItem item = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                final List<HomeView> filteredModelList = filter(libraryBooks, newText);
+                bookList.animateTo(filteredModelList);
+                recList.scrollToPosition(0);
+                return true;
+            }
+        });
+    }
+
+    private List<HomeView> filter(List<HomeView> models, String query) {
+        query = query.toLowerCase();
+
+        final List<HomeView> filteredModelList = new ArrayList<>();
+        for (HomeView model : models) {
+            final String text = model.getBookName().toLowerCase();
+            if (text.contains(query)) {
+                filteredModelList.add(model);
+            }
+        }
+        return filteredModelList;
     }
 
 }

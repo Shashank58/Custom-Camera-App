@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -21,6 +20,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
@@ -31,6 +31,7 @@ import java.util.List;
 
 public class LibraryActivity extends AppCompatActivity {
     private TabLayout tabLayout;
+    private Toolbar toolbar;
     private ViewPager viewPager;
     PendingIntent pi;
     BroadcastReceiver br;
@@ -40,22 +41,26 @@ public class LibraryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Hide the status bar.
-        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-        getWindow().getDecorView().setSystemUiVisibility(uiOptions);
-        // Never show the action bar if the
-        // Status bar is hidden, so hide that too if necessary.
-        getSupportActionBar().hide();
+//        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+//        getWindow().getDecorView().setSystemUiVisibility(uiOptions);
+//        // Never show the action bar if the
+//        // Status bar is hidden, so hide that too if necessary.
+//        getSupportActionBar().hide();
         setContentView(R.layout.activity_library);
+        getSupportActionBar().setElevation(0);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
         setup();
-        am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() +
-                6*1000, pi);
+//        am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() +
+//                6*1000, pi);
     }
+
+
 
 
     private void setupViewPager(ViewPager viewPager) {
@@ -115,6 +120,10 @@ public class LibraryActivity extends AppCompatActivity {
         notificationManager.notify(1, myNotification);
     }
 
+    public void searchForBooks(View v){
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
@@ -159,9 +168,6 @@ public class LibraryActivity extends AppCompatActivity {
 
             String _code = data.getStringExtra("SCAN_RESULT");
             Log.e("Library Activity", "Code: "+_code);
-            // do whatever you want
-
         }
-
     }
 }
