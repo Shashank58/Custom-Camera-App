@@ -153,7 +153,8 @@
                         android:id="@+id/password"
                         android:hint="@string/password"
                         android:layout_marginTop="30dp"
-                        android:textColorHint="@color/navigationBarColor"/>
+                        android:textColorHint="@color/navigationBarColor"
+                        android:password="true"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -186,7 +187,8 @@
                         android:id="@+id/confirmPassword"
                         android:hint="@string/confirm"
                         android:layout_marginTop="30dp"
-                        android:textColorHint="@color/navigationBarColor"/>
+                        android:textColorHint="@color/navigationBarColor"
+                        android:password="true"/>
 
                 </android.support.design.widget.TextInputLayout>
 

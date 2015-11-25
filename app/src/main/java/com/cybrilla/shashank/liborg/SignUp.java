@@ -24,8 +24,8 @@ import java.util.Map;
 
 public class SignUp extends AppCompatActivity {
     private TextView fnameIcon, checkIcon, keyIconSignUp, mailIconSignUp,lnameIcon;
-    private String mFname, mLname, mEmail, mPassword;
-    private EditText fname, lname, email, password;
+    private String mFname, mLname, mEmail, mPassword, mConfirm;
+    private EditText fname, lname, email, password, confirm;
     public static final String KEY_FNAME = "firstname";
     public static final String KEY_LNAME = "lastname";
     public static final String KEY_EMAIL = "email";
@@ -47,6 +47,7 @@ public class SignUp extends AppCompatActivity {
         lname = (EditText) findViewById(R.id.lname);
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
+        confirm = (EditText) findViewById(R.id.confirmPassword);
 
         Typeface font = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
         mailIconSignUp.setTypeface(font);
@@ -57,18 +58,28 @@ public class SignUp extends AppCompatActivity {
     }
 
     public void loginScreen(View v){
-        registerUser();
+        mPassword = password.getText().toString();
+        mConfirm = confirm.getText().toString();
+        mFname = fname.getText().toString();
+        mLname = lname.getText().toString();
+        if(mConfirm.equals(mPassword)) {
+            if(mLname.equals("")){
+                Toast.makeText(getApplicationContext(), "No field should be empty"
+                        , Toast.LENGTH_LONG).show();
+            } else {
+               // registerUser();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "Passwords not matching"
+                    , Toast.LENGTH_LONG).show();
+        }
     }
 
     public void registerUser(){
-        mFname = fname.getText().toString();
-        mLname = lname.getText().toString();
         mEmail = email.getText().toString();
-        mPassword = password.getText().toString();
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        String REGISTER_URL = "https://liborgs-1139.appspot.com/users/register?" +
-                "";
+        String REGISTER_URL = "https://liborgs-1139.appspot.com/users/register?";
 
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
                 new Response.Listener<String>() {
@@ -77,11 +88,16 @@ public class SignUp extends AppCompatActivity {
                         try {
                             Log.e("Sign Up", "Response is: "+response);
                             JSONObject jObj = new JSONObject(response);
+                            String message = jObj.getString("message");
                             Boolean status = jObj.getBoolean("status");
                             Log.e("SIgn Up", "Status: " + status);
                             if(status){
-                                Toast.makeText(getApplicationContext(), "Register successful" +
-                                        "Please check your mail", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), message
+                                        , Toast.LENGTH_LONG).show();
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), message
+                                        , Toast.LENGTH_LONG).show();
                             }
                         }catch (JSONException e){
                             e.printStackTrace();
