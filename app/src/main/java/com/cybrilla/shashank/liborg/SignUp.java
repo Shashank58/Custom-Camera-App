@@ -67,7 +67,7 @@ public class SignUp extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "No field should be empty"
                         , Toast.LENGTH_LONG).show();
             } else {
-               // registerUser();
+                registerUser();
             }
         } else {
             Toast.makeText(getApplicationContext(), "Passwords not matching"

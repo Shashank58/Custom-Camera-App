@@ -87,7 +87,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/passwordLogin"
                     android:hint="@string/password"
-                    android:layout_marginTop="30dp"/>
+                    android:layout_marginTop="30dp"
+                    android:password="true"/>
 
             </android.support.design.widget.TextInputLayout>
 
