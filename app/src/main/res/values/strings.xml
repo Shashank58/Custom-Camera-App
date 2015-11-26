@@ -27,4 +27,6 @@
     <string name="transition_name_name">transition:NAME</string>
     <string name="transition_name_circle">transition:CIRCLE</string>
     <string name="transition_name_author">transition:AUTHOR</string>
+    <string name="message_retrive">To reset password please enter your registered email</string>
+    <string name="account_recover">Account Recovery</string>
 </resources>

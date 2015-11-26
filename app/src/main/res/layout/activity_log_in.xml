@@ -114,7 +114,9 @@
             android:layout_marginTop="30dp"
             android:layout_gravity="center_horizontal"
             android:textColor="@color/linkColour"
-            android:textStyle="italic"/>
+            android:textStyle="italic"
+            android:clickable="true"
+            android:onClick="forgotPassword"/>
 
         <TextView
             android:layout_width="wrap_content"

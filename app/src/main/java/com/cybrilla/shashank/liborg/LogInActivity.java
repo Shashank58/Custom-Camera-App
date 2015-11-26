@@ -27,6 +27,7 @@ import java.util.Map;
 
 public class LogInActivity extends AppCompatActivity {
     private EditText email, password;
+    private TextView forgotPassword;
     private String mEmail, mPassword;
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
@@ -63,11 +64,16 @@ public class LogInActivity extends AppCompatActivity {
         }
     }
 
+    public void forgotPassword(View v){
+        Intent intent = new Intent(this, ForgotPassActivity.class);
+        startActivity(intent);
+    }
+
     public void login(View v){
         email = (EditText) findViewById(R.id.loginEmail);
         password = (EditText) findViewById(R.id.passwordLogin);
 
-        mEmail = email.getText().toString();
+        mEmail = email.getText().toString().trim();
         mPassword = password.getText().toString();
 
         if(mEmail.equals("") || mPassword.equals("")){

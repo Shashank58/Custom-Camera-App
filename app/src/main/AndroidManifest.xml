@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cybrilla.shashank.liborg" >
 
@@ -14,9 +13,14 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <dependency>
+        <groupId>com.mcxiaoke.volley</groupId>
+        <artifactId>library</artifactId>
+        <version>1.0.19</version>
+    </dependency>
 
     <application
         android:allowBackup="true"
@@ -39,16 +43,12 @@
         </activity>
         <activity
             android:name=".DetailActivity"
-            android:parentActivityName=".LibraryActivity">
+            android:parentActivityName=".LibraryActivity" >
         </activity>
         <activity android:name=".SearchActivity" >
         </activity>
+        <activity android:name=".ForgotPassActivity">
+        </activity>
     </application>
-
-    <dependency>
-        <groupId>com.mcxiaoke.volley</groupId>
-        <artifactId>library</artifactId>
-        <version>1.0.19</version>
-    </dependency>
 
 </manifest>

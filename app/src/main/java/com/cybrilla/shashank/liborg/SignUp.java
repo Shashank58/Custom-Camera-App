@@ -3,7 +3,6 @@ package com.cybrilla.shashank.liborg;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,6 +36,17 @@ public class SignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        findViews();
+
+        Typeface font = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
+        mailIconSignUp.setTypeface(font);
+        keyIconSignUp.setTypeface(font);
+        checkIcon.setTypeface(font);
+        fnameIcon.setTypeface(font);
+        lnameIcon.setTypeface(font);
+    }
+
+    private void findViews(){
         mailIconSignUp = (TextView) findViewById(R.id.mailIconSignUp);
         keyIconSignUp = (TextView) findViewById(R.id.keyIconSignUp);
         checkIcon = (TextView) findViewById(R.id.checkIcon);
@@ -48,20 +58,13 @@ public class SignUp extends AppCompatActivity {
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         confirm = (EditText) findViewById(R.id.confirmPassword);
-
-        Typeface font = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
-        mailIconSignUp.setTypeface(font);
-        keyIconSignUp.setTypeface(font);
-        checkIcon.setTypeface(font);
-        fnameIcon.setTypeface(font);
-        lnameIcon.setTypeface(font);
     }
 
     public void loginScreen(View v){
         mPassword = password.getText().toString();
         mConfirm = confirm.getText().toString();
-        mFname = fname.getText().toString();
-        mLname = lname.getText().toString();
+        mFname = fname.getText().toString().trim();
+        mLname = lname.getText().toString().trim();
         if(mConfirm.equals(mPassword)) {
             registerUser();
         } else {
@@ -71,7 +74,7 @@ public class SignUp extends AppCompatActivity {
     }
 
     public void registerUser(){
-        mEmail = email.getText().toString();
+        mEmail = email.getText().toString().trim();
         RequestQueue queue = Volley.newRequestQueue(this);
 
         String REGISTER_URL = "https://liborgs-1139.appspot.com/users/register?";
@@ -81,11 +84,9 @@ public class SignUp extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            Log.e("Sign Up", "Response is: "+response);
                             JSONObject jObj = new JSONObject(response);
                             String message = jObj.getString("message");
                             Boolean status = jObj.getBoolean("status");
-                            Log.e("SIgn Up", "Status: " + status);
                             if(status){
                                 Toast.makeText(getApplicationContext(), message
                                         , Toast.LENGTH_LONG).show();
@@ -114,7 +115,6 @@ public class SignUp extends AppCompatActivity {
                 params.put(KEY_LNAME, mLname);
                 params.put(KEY_EMAIL, mEmail);
                 params.put(KEY_PASSWORD, mPassword);
-                Log.e("Sign Up", "Params: "+params.toString());
                 return params;
             }
         };
