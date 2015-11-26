@@ -1,10 +1,12 @@
 package com.cybrilla.shashank.liborg;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -51,7 +53,6 @@ public class LogInActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LibraryActivity.class);
             startActivity(intent);
             finish();
-            Log.e("Log In activity", "This printing?");
         }else {
             setContentView(R.layout.activity_log_in);
 
@@ -96,11 +97,11 @@ public class LogInActivity extends AppCompatActivity {
                         try {
                             Log.e("Sign Up", "Response is: "+response);
                             JSONObject jObj = new JSONObject(response);
-                            String auth_token = jObj.getString("auth_token");
                             Boolean status = jObj.getBoolean("status");
                             if(status){
                                 String fname = jObj.getString("firstname");
                                 String lname = jObj.getString("lastname");
+                                String auth_token = jObj.getString("auth_token");
 
                                 pref = getApplicationContext().getSharedPreferences(LIB_KEY, PRIVATE_MODE);
                                 editor = pref.edit();
@@ -115,15 +116,20 @@ public class LogInActivity extends AppCompatActivity {
 
                                 editor.commit();
 
-                                String loggedIn = pref.getString(KEY_AUTH, null);
-                                Log.e("Login Activity", "Logged In First: " + loggedIn);
 
                                 Intent intent = new Intent(getApplication(), LibraryActivity.class);
                                 startActivity(intent);
                             } else {
                                 String message = jObj.getString("message");
-                                Toast.makeText(getApplicationContext(), message
-                                        , Toast.LENGTH_LONG).show();
+
+                                new AlertDialog.Builder(LogInActivity.this)
+                                        .setTitle("Log in")
+                                        .setMessage(message)
+                                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        }).show();
                             }
                         }catch (JSONException e){
                             e.printStackTrace();
@@ -143,7 +149,6 @@ public class LogInActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put(KEY_EMAIL, mEmail);
                 params.put(KEY_PASSWORD, mPassword);
-                Log.e("Sign Up", "Params: "+params.toString());
                 return params;
             }
         };

@@ -1,7 +1,9 @@
 package com.cybrilla.shashank.liborg;
 
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -68,8 +70,14 @@ public class SignUp extends AppCompatActivity {
         if(mConfirm.equals(mPassword)) {
             registerUser();
         } else {
-            Toast.makeText(getApplicationContext(), "Passwords not matching"
-                    , Toast.LENGTH_LONG).show();
+            new AlertDialog.Builder(SignUp.this)
+                    .setTitle("Sign up")
+                    .setMessage("Passwords not matching")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).show();
         }
     }
 
@@ -88,12 +96,24 @@ public class SignUp extends AppCompatActivity {
                             String message = jObj.getString("message");
                             Boolean status = jObj.getBoolean("status");
                             if(status){
-                                Toast.makeText(getApplicationContext(), message
-                                        , Toast.LENGTH_LONG).show();
+                                new AlertDialog.Builder(SignUp.this)
+                                        .setTitle("Sign up")
+                                        .setMessage(message)
+                                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        }).show();
                                 finish();
                             } else {
-                                Toast.makeText(getApplicationContext(), message
-                                        , Toast.LENGTH_LONG).show();
+                                new AlertDialog.Builder(SignUp.this)
+                                        .setTitle("Sign up")
+                                        .setMessage(message)
+                                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        }).show();
                             }
                         }catch (JSONException e){
                             e.printStackTrace();
