@@ -30,6 +30,7 @@ import java.util.List;
 public class OneFragment extends Fragment {
     private HomeAdapter bookList;
     private List<HomeView> libraryBooks;
+    private List<HomeView> listOfAllBooks;
     private RecyclerView recList;
 
     public OneFragment() {
@@ -73,6 +74,9 @@ public class OneFragment extends Fragment {
 //
 //        bookList = new HomeAdapter(libraryBooks, getActivity());
 //        recList.setAdapter(bookList);
+        bookList = new HomeAdapter(libraryBooks, getActivity().getBaseContext());
+
+        recList.setAdapter(bookList);
     }
 
     private void getData(){
@@ -113,8 +117,6 @@ public class OneFragment extends Fragment {
             }
         }
 
-        bookList = new HomeAdapter(libraryBooks, getActivity().getBaseContext());
-        recList.setAdapter(bookList);
     }
 
     @Override
