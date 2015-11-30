@@ -32,6 +32,7 @@ public class OneFragment extends Fragment {
     private List<HomeView> libraryBooks;
     private List<HomeView> listOfAllBooks;
     private RecyclerView recList;
+    int i = 1;
 
     public OneFragment() {
         // Required empty public constructor
@@ -74,9 +75,7 @@ public class OneFragment extends Fragment {
 //
 //        bookList = new HomeAdapter(libraryBooks, getActivity());
 //        recList.setAdapter(bookList);
-        bookList = new HomeAdapter(libraryBooks, getActivity().getBaseContext());
 
-        recList.setAdapter(bookList);
     }
 
     private void getData(){
@@ -116,8 +115,12 @@ public class OneFragment extends Fragment {
                 }
             }
         }
+        listOfAllBooks = new ArrayList<>(libraryBooks);
+        bookList = new HomeAdapter(libraryBooks, getActivity().getBaseContext());
 
+        recList.setAdapter(bookList);
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -133,10 +136,16 @@ public class OneFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                final List<HomeView> filteredModelList = filter(libraryBooks, newText);
-                bookList.animateTo(filteredModelList);
-                recList.scrollToPosition(0);
-                return true;
+                if(newText.equals("")){
+                    bookList.animateTo(listOfAllBooks);
+                    recList.scrollToPosition(0);
+                    return true;
+                } else {
+                    final List<HomeView> filteredModelList = filter(listOfAllBooks, newText);
+                    bookList.animateTo(filteredModelList);
+                    recList.scrollToPosition(0);
+                    return true;
+                }
             }
         });
     }

@@ -19,9 +19,9 @@ import java.util.List;
  */
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder>{
     private List<HomeView> allBooks;
+    private List<HomeView> filteredBooks;
     private HomeView hv;
     private Context mContext;
-    int i = 1;
 
     public HomeAdapter(List<HomeView> allBooks, Context context){
         super();
