@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/detail_book_name"
                     android:text="Effective Java"
-                    android:textSize="26sp"
+                    android:textSize="24sp"
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:layout_marginTop="35dp"
@@ -54,8 +54,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/detail_author_name"
                     android:text="Stephaine King"
-                    android:textSize="20sp"
-                    android:layout_marginLeft="5dp"
+                    android:textSize="18sp"
                     android:layout_marginTop="10dp"
                     android:transitionName="@string/transition_name_author"
                     android:textColor="@color/authorText"/>
