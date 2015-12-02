@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <!--android:clickable="true"-->
-    <!--android:onClick="animateIntent"-->
 
 <android.support.v7.widget.CardView
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -24,11 +22,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="10dp">
+            android:layout_marginLeft="20dp">
 
             <ImageView
-                android:layout_width="90dp"
-                android:layout_height="105dp"
+                android:layout_width="80dp"
+                android:layout_height="95dp"
                 android:id="@+id/bookImage"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
@@ -54,71 +52,33 @@
             android:layout_weight="1"
             android:layout_marginTop="10dp"
             android:orientation="vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginRight="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
                 android:id="@+id/bookName"
-                android:textSize="24sp"
-                android:singleLine="true"
+                android:textSize="22sp"
+                android:text="Effective Java"
                 android:textStyle="bold"
                 android:textColor="@color/white"
-                android:text="EFFECTIVE JAVA"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="start"
                 android:transitionName="@string/transition_name_name"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="15dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/authorName"
                 android:textSize="18sp"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="15dp"
                 android:textStyle="italic"
                 android:textColor="#03A9F4"
                 android:text="Stephane King"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="start"
                 android:transitionName="@string/transition_name_author"/>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="6dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_star"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_star"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_star"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_star"/>
-
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_add"
-                android:layout_marginRight="6dp"
-                android:layout_gravity="right"
-                android:clickable="true"/>
 
         </LinearLayout>
 

@@ -7,18 +7,21 @@ public class HomeView {
     private String bookName;
     private String authorName;
     private String dueDate;
+    private String thumbnail;
 
-    public HomeView(String bookName, String authorName){
+    public HomeView(String bookName, String authorName, String thumbnail){
         super();
         this.bookName = bookName;
         this.authorName = authorName;
+        this.thumbnail = thumbnail;
     }
 
-    public HomeView(String bookName, String authorName, String dueDate){
+    public HomeView(String bookName, String authorName, String thumbnail,String dueDate){
         super();
         this.bookName = bookName;
         this.authorName = authorName;
         this.dueDate = dueDate;
+        this.thumbnail = thumbnail;
     }
 
     public String getBookName(){
@@ -31,5 +34,9 @@ public class HomeView {
 
     public String getDueDate(){
         return dueDate;
+    }
+
+    public String getThumbnail(){
+        return thumbnail;
     }
 }

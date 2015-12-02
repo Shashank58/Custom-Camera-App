@@ -22,6 +22,7 @@
             <ImageView
                 android:layout_width="130dp"
                 android:layout_height="160dp"
+                android:id="@+id/detail_thumbnail"
                 android:src="@drawable/lifeofpi"
                 android:scaleType="centerInside"
                 android:layout_marginLeft="15dp"
@@ -39,6 +40,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/detail_book_name"
                     android:text="Effective Java"
                     android:textSize="26sp"
                     android:textStyle="bold"
@@ -50,6 +52,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/detail_author_name"
                     android:text="Stephaine King"
                     android:textSize="20sp"
                     android:layout_marginLeft="5dp"

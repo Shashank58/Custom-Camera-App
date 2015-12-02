@@ -44,8 +44,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         hv = allBooks.get(position);
         holder.bookName.setText(hv.getBookName());
         holder.authorName.setText(hv.getAuthorName());
-        Glide.with(mContext).load("http://ia.media-imdb.com/images/M/MV5BNTg2OTY2ODg5OF5BMl5BanBnXkFtZTcwODM5MTYxOA@@._V1_SX214_AL_.jpg")
-        .crossFade().into(holder.bookImage);
+        Glide.with(mContext).load(hv.getThumbnail())
+        .asBitmap().into(holder.bookImage);
     }
 
 

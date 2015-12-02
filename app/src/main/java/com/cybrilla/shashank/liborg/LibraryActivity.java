@@ -9,6 +9,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -23,9 +25,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,9 +65,6 @@ public class LibraryActivity extends AppCompatActivity {
 //                6*1000, pi);
     }
 
-
-
-
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new OneFragment(), "Home");
@@ -71,18 +73,40 @@ public class LibraryActivity extends AppCompatActivity {
     }
 
     public void animateIntent(View v){
-//        String bookName = allBooks.get(position).getBookName();
-//        String authorName = allBooks.get(position).getAuthorName();
         Intent intent = new Intent(this, DetailActivity.class);
-//        intent.putExtra("bookName", bookName);
-//        intent.putExtra("authorName", authorName);
         String transitionCircle = getString(R.string.transition_name_circle);
 
         // Define the view that the animation will start from
         View viewStart = v.findViewById(R.id.card_view);
 
+        TextView nameOfBook = (TextView) viewStart.findViewById(R.id.bookName);
+        TextView nameOfAuthor = (TextView) viewStart.findViewById(R.id.authorName);
+        ImageView bookImage = (ImageView) viewStart.findViewById(R.id.bookImage);
+
+        String bookName = nameOfBook.getText().toString();
+        String authorName = nameOfAuthor.getText().toString();
+        Bitmap thumbnail = ((BitmapDrawable)bookImage.getDrawable()).getBitmap();
+
+        intent.putExtra("bookName", bookName);
+        intent.putExtra("authorName", authorName);
+
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation
                 (this,  new Pair<View, String>(viewStart, transitionCircle));
+
+        try {
+            //Write file
+            String filename = "bitmap.png";
+            FileOutputStream stream = this.openFileOutput(filename, Context.MODE_PRIVATE);
+            thumbnail.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+            //Cleanup
+            stream.close();
+           // thumbnail.recycle();
+            intent.putExtra("thumbnail", filename);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         //Start the Intent
         ActivityCompat.startActivity(this, intent, options.toBundle());
     }
@@ -120,10 +144,6 @@ public class LibraryActivity extends AppCompatActivity {
         notificationManager.notify(1, myNotification);
     }
 
-    public void searchForBooks(View v){
-        Intent intent = new Intent(this, SearchActivity.class);
-        startActivity(intent);
-    }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

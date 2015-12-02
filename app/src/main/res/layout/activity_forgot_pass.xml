@@ -48,11 +48,11 @@
             android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
             android:text="@string/submit"
+            android:id="@+id/recoveryButton"
             android:background="@color/navigationBarColor"
             android:textColor="@color/white"
             android:elevation="2dp"
-            android:clickable="true"
-            android:onClick="resetPassword"/>
+            android:clickable="true"/>
 
     </LinearLayout>
 
