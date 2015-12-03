@@ -9,27 +9,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,15 +33,7 @@ public class LibraryActivity extends AppCompatActivity {
     PendingIntent pi;
     BroadcastReceiver br;
     AlarmManager am;
-    private List<HomeView> books;
 
-    public LibraryActivity(List<HomeView> listOfAllBooks){
-
-    }
-
-    public LibraryActivity(){
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,16 +41,16 @@ public class LibraryActivity extends AppCompatActivity {
         // Hide the status bar.
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         getWindow().getDecorView().setSystemUiVisibility(uiOptions);
-        // Never show the action bar if the
-        // Status bar is hidden, so hide that too if necessary.
         getSupportActionBar().hide();
         setContentView(R.layout.activity_library);
-       // getSupportActionBar().setElevation(0);
+        //getSupportActionBar().setElevation(0);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
-        books = new ArrayList<>();
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.main_menu);
+        toolbar.setCollapsible(true);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -82,11 +67,6 @@ public class LibraryActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-
-    public void animateIntent(View v){
-
-
-    }
 
     private void setup() {
         br = new BroadcastReceiver() {

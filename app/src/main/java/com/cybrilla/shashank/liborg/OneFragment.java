@@ -130,32 +130,7 @@ public class OneFragment extends Fragment {
         };
         Log.e("One fragment", "Is this getting called?");
         queue.add(jRequest);
-//        recList.setOnScrollListener(new HidingScrollListener() {
-//            @Override
-//            public void onHide() {
-//                hideViews();
-//            }
-//
-//            @Override
-//            public void onShow() {
-//                showViews();
-//            }
-//        });
     }
-
-
-//    private void hideViews() {
-//        mToolbar.animate().translationY(-mToolbar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
-
-//        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mFabButton.getLayoutParams();
-//        int fabBottomMargin = lp.bottomMargin;
-//        mFabButton.animate().translationY(mFabButton.getHeight()+fabBottomMargin).setInterpolator(new AccelerateInterpolator(2)).start();
-//    }
-
- //   private void showViews() {
-//        mToolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
-//        mFabButton.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
-//`    }
 
 
     @Override
@@ -164,20 +139,20 @@ public class OneFragment extends Fragment {
 
         final MenuItem item = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                final List<HomeView> filteredModelList = filter(listOfAllBooks, newText);
-                bookList.animateTo(filteredModelList);
-                recList.scrollToPosition(0);
-                return true;
-            }
-        });
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                final List<HomeView> filteredModelList = filter(listOfAllBooks, newText);
+//                bookList.animateTo(filteredModelList);
+//                recList.scrollToPosition(0);
+//                return true;
+//            }
+//        });
     }
 
     private List<HomeView> filter(List<HomeView> models, String query) {

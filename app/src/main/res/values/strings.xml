@@ -29,4 +29,5 @@
     <string name="transition_name_author">transition:AUTHOR</string>
     <string name="message_retrive">To reset password please enter your registered email</string>
     <string name="account_recover">Account Recovery</string>
+
 </resources>

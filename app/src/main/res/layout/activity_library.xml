@@ -9,7 +9,16 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/cardBackground">
+        android:background="#212121">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:title="Liborg"
+            app:titleTextColor="@color/white"
+            app:theme="@style/ThemeOverlay.AppCompat.Light"/>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
@@ -20,7 +29,8 @@
             app:tabGravity="fill"
             app:tabTextColor="#999999"
             app:tabSelectedTextColor="@color/white"
-            app:tabIndicatorColor="@color/white"/>
+            app:tabIndicatorColor="@color/white"
+            app:elevation="2dp"/>
 
     </android.support.design.widget.AppBarLayout>
 

@@ -10,7 +10,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,8 +57,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 // Define the view that the animation will start from
                 View viewStart = v.findViewById(R.id.card_view_one);
                 int pos = (int) v.getTag();
-                Log.e("Library activity", "Size of books after: "+allBooks.size());
-                Log.e("Library activity", "Pos: " + pos);
                 HomeView hv = allBooks.get(pos);
                 intent.putExtra("allData", hv);
                 ImageView bookImage = (ImageView) viewStart.findViewById(R.id.bookImage);
@@ -108,9 +104,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         return allBooks.size();
     }
 
-    public void setModels(List<HomeView> models) {
-        allBooks = new ArrayList<>(models);
-    }
 
     public HomeView removeItem(int position) {
         final HomeView model = allBooks.remove(position);
