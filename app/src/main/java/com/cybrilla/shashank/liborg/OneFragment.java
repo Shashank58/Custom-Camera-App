@@ -4,6 +4,7 @@ package com.cybrilla.shashank.liborg;
  * Created by shashankm on 16/11/15.
  */
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -36,13 +37,14 @@ import java.util.List;
 import java.util.Map;
 
 public class OneFragment extends Fragment {
-    private HomeAdapter bookList;
-    private List<HomeView> libraryBooks;
-    private List<HomeView> listOfAllBooks;
     private RecyclerView recList;
+    private Context mContext;
     private static final String LIB_KEY = "Liborg Auth";
     private static final int PRIVATE_MODE = 0;
     private static final String KEY_AUTH = "auth_key" ;
+    private HomeAdapter bookList;
+    private List<HomeView> libraryBooks;
+    private List<HomeView> listOfAllBooks;
 
     public OneFragment(){
 
@@ -62,35 +64,23 @@ public class OneFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_one, container, false);
         recList = (RecyclerView) view.findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity().getBaseContext());
+        mContext = getActivity().getBaseContext();
+        LinearLayoutManager llm = new LinearLayoutManager(mContext);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
-        Log.e("One Fragment","On create view");
 
         return view;
     }
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
-
-//        recList.setLayoutManager(new LinearLayoutManager(getActivity()));
-//
-//        libraryBooks = new ArrayList<>();
-//
-////        for (String movie : MOVIES) {
-////            libraryBooks.add(new HomeView(movie));
-////        }
-//
-//        bookList = new HomeAdapter(libraryBooks, getActivity());
-//        recList.setAdapter(bookList);
-
     }
 
     private void getData(){
         libraryBooks = new ArrayList<>();
-        Log.e("One Fragment", "Getting called?");
         String url = "https://liborgs-1139.appspot.com/books/get_all_books";
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         JsonObjectRequest jRequest = new JsonObjectRequest(url, new Response.Listener<JSONObject>() {
@@ -101,14 +91,24 @@ public class OneFragment extends Fragment {
                     for(int i = 0; i < data.length(); i++){
                         JSONObject book = (JSONObject) data.get(i);
                         JSONArray authors = book.getJSONArray("author");
+                        JSONArray categories = book.getJSONArray("categories");
                         String thumbnail = book.getString("thumbnail");
                         String title = book.getString("title");
-                        libraryBooks.add(new HomeView(title, (String)authors.get(0), thumbnail));
+                        int available = book.getInt("available");
+                        String description = book.getString("description");
+                        String pageCount = book.getString("pagecount");
+                        String publisher = book.getString("publisher");
+                        String authorName = (String) authors.get(0);
+                        String category = "NA";
+                        if(categories.length() != 0){
+                            category = (String)categories.get(0);
+                        }
+                        libraryBooks.add(new HomeView(title, authorName, thumbnail
+                                , available, pageCount, description, publisher, category));
                     }
-                    Log.e("One Fragment", "Length of librarybooks: "+libraryBooks.size());
                     listOfAllBooks = new ArrayList<>(libraryBooks);
-                    bookList = new HomeAdapter(libraryBooks, getActivity().getBaseContext());
 
+                    bookList = new HomeAdapter(libraryBooks, mContext, getActivity());
                     recList.setAdapter(bookList);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -143,6 +143,7 @@ public class OneFragment extends Fragment {
 //        });
     }
 
+
 //    private void hideViews() {
 //        mToolbar.animate().translationY(-mToolbar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
 
@@ -154,7 +155,7 @@ public class OneFragment extends Fragment {
  //   private void showViews() {
 //        mToolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
 //        mFabButton.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
-//    }
+//`    }
 
 
     @Override

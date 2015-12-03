@@ -45,7 +45,7 @@ public class TwoFragment extends android.support.v4.app.Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity().getBaseContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
-        getData();
+        //getData();
 
         return view;
     }
@@ -71,7 +71,7 @@ public class TwoFragment extends android.support.v4.app.Fragment {
                 String name = book.getString("name");
                 String authorName = book.getString("author");
                 String dueDate = book.getString("due_date");
-                libraryBooks.add(new HomeView(name, authorName, dueDate));
+                //libraryBooks.add(new HomeView(name, authorName, dueDate));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

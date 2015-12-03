@@ -18,6 +18,11 @@ public class SearchActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_bar);
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        getWindow().getDecorView().setSystemUiVisibility(uiOptions);
+        // Never show the action bar if the
+        // Status bar is hidden, so hide that too if necessary.
+        getSupportActionBar().hide();
 
         mSearchEt = (EditText) findViewById(R.id.etSearch);
     }

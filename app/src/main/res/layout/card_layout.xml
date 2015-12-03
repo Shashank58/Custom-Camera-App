@@ -3,13 +3,12 @@
 <android.support.v7.widget.CardView
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/card_view"
+    android:id="@+id/card_view_one"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     card_view:cardElevation="0dp"
     android:layout_margin="0.3dp"
-    android:clickable="true"
-    android:onClick="animateIntent">
+    android:clickable="true">
 
     <LinearLayout
         android:layout_width="match_parent"

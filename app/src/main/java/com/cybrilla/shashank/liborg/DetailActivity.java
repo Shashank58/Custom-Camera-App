@@ -5,15 +5,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.FileInputStream;
+import java.io.Serializable;
 
-public class DetailActivity extends AppCompatActivity {
-    private TextView bookName, authorName;
+public class DetailActivity extends AppCompatActivity implements Serializable {
+    private TextView bookName, authorName, categories, pageCount, available, description, publication;
     private ImageView thumbnail;
 
     @TargetApi(VERSION_CODES.LOLLIPOP)
@@ -25,12 +25,28 @@ public class DetailActivity extends AppCompatActivity {
         bookName = (TextView) findViewById(R.id.detail_book_name);
         authorName = (TextView) findViewById(R.id.detail_author_name);
         thumbnail = (ImageView) findViewById(R.id.detail_thumbnail);
+        categories = (TextView) findViewById(R.id.detail_category);
+        pageCount = (TextView) findViewById(R.id.detail_pages);
+        available = (TextView) findViewById(R.id.detail_available);
+        description = (TextView) findViewById(R.id.detail_description);
+        publication = (TextView) findViewById(R.id.detail_publication);
 
-        String title = getIntent().getExtras().getString("bookName");
-        bookName.setText(title);
+        setData();
+//      ActionBar actionBar = getSupportActionBar();
+//      actionBar.setDisplayHomeAsUpEnabled(true);
 
-        String author = getIntent().getExtras().getString("authorName");
-        authorName.setText(author);
+    }
+
+    private void setData(){
+        HomeView hv = (HomeView) getIntent().getSerializableExtra("allData");
+
+        bookName.setText(hv.getBookName());
+        authorName.setText(hv.getAuthorName());
+        categories.setText(hv.getCategories());
+        pageCount.setText(hv.getPageCount());
+        //available.setText(hv.getAvailable());
+        description.setText(hv.getDescription());
+        publication.setText(hv.getPublisher());
 
         Bitmap bmp = null;
         String filename = getIntent().getStringExtra("thumbnail");
@@ -43,9 +59,5 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         thumbnail.setImageBitmap(bmp);
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
     }
 }

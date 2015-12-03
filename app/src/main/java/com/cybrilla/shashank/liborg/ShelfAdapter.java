@@ -33,7 +33,7 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
         HomeView hv = allBooks.get(position);
         holder.bookNameShelf.setText(hv.getBookName());
         holder.authorNameShelf.setText(hv.getAuthorName());
-        holder.dueDate.setText(hv.getDueDate());
+       // holder.dueDate.setText(hv.getDueDate());
     }
 
     @Override

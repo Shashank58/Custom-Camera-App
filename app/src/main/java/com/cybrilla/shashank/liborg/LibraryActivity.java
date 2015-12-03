@@ -26,7 +26,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 
@@ -41,26 +40,37 @@ public class LibraryActivity extends AppCompatActivity {
     PendingIntent pi;
     BroadcastReceiver br;
     AlarmManager am;
+    private List<HomeView> books;
+
+    public LibraryActivity(List<HomeView> listOfAllBooks){
+
+    }
+
+    public LibraryActivity(){
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Hide the status bar.
-//        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-//        getWindow().getDecorView().setSystemUiVisibility(uiOptions);
-//        // Never show the action bar if the
-//        // Status bar is hidden, so hide that too if necessary.
-//        getSupportActionBar().hide();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        getWindow().getDecorView().setSystemUiVisibility(uiOptions);
+        // Never show the action bar if the
+        // Status bar is hidden, so hide that too if necessary.
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_library);
-        getSupportActionBar().setElevation(0);
+       // getSupportActionBar().setElevation(0);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
+        books = new ArrayList<>();
+
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        setup();
+//        setup();
 //        am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() +
 //                6*1000, pi);
     }
@@ -72,43 +82,10 @@ public class LibraryActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
+
     public void animateIntent(View v){
-        Intent intent = new Intent(this, DetailActivity.class);
-        String transitionCircle = getString(R.string.transition_name_circle);
 
-        // Define the view that the animation will start from
-        View viewStart = v.findViewById(R.id.card_view);
 
-        TextView nameOfBook = (TextView) viewStart.findViewById(R.id.bookName);
-        TextView nameOfAuthor = (TextView) viewStart.findViewById(R.id.authorName);
-        ImageView bookImage = (ImageView) viewStart.findViewById(R.id.bookImage);
-
-        String bookName = nameOfBook.getText().toString();
-        String authorName = nameOfAuthor.getText().toString();
-        Bitmap thumbnail = ((BitmapDrawable)bookImage.getDrawable()).getBitmap();
-
-        intent.putExtra("bookName", bookName);
-        intent.putExtra("authorName", authorName);
-
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation
-                (this,  new Pair<View, String>(viewStart, transitionCircle));
-
-        try {
-            //Write file
-            String filename = "bitmap.png";
-            FileOutputStream stream = this.openFileOutput(filename, Context.MODE_PRIVATE);
-            thumbnail.compress(Bitmap.CompressFormat.PNG, 100, stream);
-
-            //Cleanup
-            stream.close();
-           // thumbnail.recycle();
-            intent.putExtra("thumbnail", filename);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        //Start the Intent
-        ActivityCompat.startActivity(this, intent, options.toBundle());
     }
 
     private void setup() {
@@ -185,7 +162,6 @@ public class LibraryActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-
             String _code = data.getStringExtra("SCAN_RESULT");
             Log.e("Library Activity", "Code: "+_code);
         }
