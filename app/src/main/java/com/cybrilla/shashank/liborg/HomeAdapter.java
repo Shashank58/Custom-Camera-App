@@ -38,10 +38,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         mActivity = activity;
     }
 
-    public HomeAdapter(){
-
-    }
-
 
     @Override
     public HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -102,62 +98,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
     @Override
     public int getItemCount() {
         return allBooks.size();
-    }
-
-
-    public HomeView removeItem(int position) {
-        final HomeView model = allBooks.remove(position);
-        notifyItemRemoved(position);
-        return model;
-    }
-
-    public void addItem(int position, HomeView model) {
-        allBooks.add(position, model);
-        notifyItemInserted(position);
-    }
-
-    public void moveItem(int fromPosition, int toPosition) {
-        final HomeView model = allBooks.remove(fromPosition);
-        allBooks.add(toPosition, model);
-        notifyItemMoved(fromPosition, toPosition);
-    }
-
-    public void animateTo(List<HomeView> models) {
-        applyAndAnimateRemovals(models);
-        applyAndAnimateAdditions(models);
-        applyAndAnimateMovedItems(models);
-    }
-
-    private void applyAndAnimateRemovals(List<HomeView> newModels) {
-        for (int i = allBooks.size() - 1; i >= 0; i--) {
-            final HomeView model = allBooks.get(i);
-            if (!newModels.contains(model)) {
-                removeItem(i);
-            }
-        }
-    }
-
-    public List<HomeView> sendBookList(){
-        return allBooks;
-    }
-
-    private void applyAndAnimateAdditions(List<HomeView> newModels) {
-        for (int i = 0, count = newModels.size(); i < count; i++) {
-            final HomeView model = newModels.get(i);
-            if (!allBooks.contains(model)) {
-                addItem(i, model);
-            }
-        }
-    }
-
-    private void applyAndAnimateMovedItems(List<HomeView> newModels) {
-        for (int toPosition = newModels.size() - 1; toPosition >= 0; toPosition--) {
-            final HomeView model = newModels.get(toPosition);
-            final int fromPosition = allBooks.indexOf(model);
-            if (fromPosition >= 0 && fromPosition != toPosition) {
-                moveItem(fromPosition, toPosition);
-            }
-        }
     }
 
 

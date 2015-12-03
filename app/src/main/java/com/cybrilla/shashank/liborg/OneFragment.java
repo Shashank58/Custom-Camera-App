@@ -8,15 +8,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -109,6 +105,7 @@ public class OneFragment extends Fragment {
                     listOfAllBooks = new ArrayList<>(libraryBooks);
 
                     bookList = new HomeAdapter(libraryBooks, mContext, getActivity());
+
                     recList.setAdapter(bookList);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -128,7 +125,6 @@ public class OneFragment extends Fragment {
                 return params;
             }
         };
-        Log.e("One fragment", "Is this getting called?");
         queue.add(jRequest);
     }
 
@@ -136,36 +132,5 @@ public class OneFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main_menu, menu);
-
-        final MenuItem item = menu.findItem(R.id.action_search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                final List<HomeView> filteredModelList = filter(listOfAllBooks, newText);
-//                bookList.animateTo(filteredModelList);
-//                recList.scrollToPosition(0);
-//                return true;
-//            }
-//        });
     }
-
-    private List<HomeView> filter(List<HomeView> models, String query) {
-        query = query.toLowerCase();
-
-        final List<HomeView> filteredModelList = new ArrayList<>();
-        for (HomeView model : models) {
-            final String text = model.getBookName().toLowerCase();
-            if (text.contains(query)) {
-                filteredModelList.add(model);
-            }
-        }
-        return filteredModelList;
-    }
-
 }
