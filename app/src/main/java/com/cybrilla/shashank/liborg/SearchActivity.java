@@ -3,16 +3,16 @@ package com.cybrilla.shashank.liborg;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
-
-import java.util.List;
+import android.widget.ImageView;
 
 /**
  * Created by shashankm on 24/11/15.
  */
 public class SearchActivity extends AppCompatActivity {
     private EditText mSearchEt;
-    private List<HomeView> mBookFilter;
+    private ImageView searchText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,9 +25,14 @@ public class SearchActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         mSearchEt = (EditText) findViewById(R.id.etSearch);
+        searchText = (ImageView) findViewById(R.id.search_text);
+
+        searchText.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = mSearchEt.getText().toString();
+            }
+        });
     }
 
-    public void searchBooks(View v){
-        String text = mSearchEt.getText().toString();
-    }
 }

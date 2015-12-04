@@ -132,5 +132,22 @@ public class OneFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main_menu, menu);
+
+//        MenuItem item = menu.findItem(R.id.action_search);
+//        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+//
+//            @Override
+//            public boolean onQueryTextSubmit(String s) {
+//                Log.e("One fragment", "This");
+//                Toast.makeText(getActivity(), "Our word : " + s, Toast.LENGTH_SHORT).show();
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String s) {
+//                return false;
+//            }
+//        });
     }
 }

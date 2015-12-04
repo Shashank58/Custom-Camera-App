@@ -80,6 +80,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 ActivityCompat.startActivity(mActivity, intent, options.toBundle());
             }
         });
+
         return new HomeViewHolder(itemView);
     }
 

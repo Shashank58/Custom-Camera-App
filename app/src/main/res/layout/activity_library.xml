@@ -15,9 +15,42 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:title="Liborg"
-            app:titleTextColor="@color/white"/>
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Liborg"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="10dp"/>
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/myEditText"
+                    android:focusable="true"
+                    android:visibility="invisible"
+                    android:layout_marginLeft="5dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_search"
+                    android:id="@+id/search_action"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="15dp"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
@@ -40,9 +73,6 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_marginTop="1dp">
 
-
     </android.support.v4.view.ViewPager>
-
-
 
 </android.support.design.widget.CoordinatorLayout>

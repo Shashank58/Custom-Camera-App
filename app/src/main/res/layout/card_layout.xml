@@ -55,7 +55,7 @@
                 android:textColor="@color/navigationBarColor"
                 android:layout_gravity="start"
                 android:transitionName="@string/transition_name_name"
-                android:layout_marginTop="15dp"/>
+                android:layout_marginTop="5dp"/>
 
             <TextView
                 android:layout_width="wrap_content"

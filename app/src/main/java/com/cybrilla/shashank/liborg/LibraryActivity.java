@@ -18,10 +18,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.Toolbar.OnMenuItemClickListener;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 
@@ -32,9 +33,11 @@ public class LibraryActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private Toolbar toolbar;
     private ViewPager viewPager;
+    private ImageView search;
     PendingIntent pi;
     BroadcastReceiver br;
     AlarmManager am;
+    private EditText myEditText;
 
 
     @Override
@@ -51,12 +54,22 @@ public class LibraryActivity extends AppCompatActivity {
         setupViewPager(viewPager);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.inflateMenu(R.menu.main_menu);
         toolbar.setCollapsible(true);
-        toolbar.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+
+        myEditText = (EditText) findViewById(R.id.myEditText);
+        search = (ImageView) toolbar.findViewById(R.id.search_action);
+        search.setOnClickListener(new OnClickListener() {
+
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return false;
+            public void onClick(View v) {
+                if(myEditText.getVisibility() == View.INVISIBLE) {
+                    myEditText.setVisibility(View.VISIBLE);
+                } else {
+                    String query = myEditText.getText().toString();
+                    if(!query.equals("")){
+                        
+                    }
+                }
             }
         });
 
@@ -73,6 +86,12 @@ public class LibraryActivity extends AppCompatActivity {
         adapter.addFragment(new OneFragment(), "Home");
         adapter.addFragment(new TwoFragment(), "My Shelf");
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        myEditText.setVisibility(View.INVISIBLE);
+        return;
     }
 
 
