@@ -107,15 +107,11 @@ public class LogInActivity extends AppCompatActivity {
                                 editor = pref.edit();
 
                                 editor.putString(KEY_AUTH, auth_token);
-
                                 editor.putString(KEY_FNAME, fname);
-
                                 editor.putString(KEY_EMAIL, mEmail);
-
                                 editor.putString(KEY_LNAME, lname);
 
                                 editor.commit();
-
 
                                 Intent intent = new Intent(getApplication(), LibraryActivity.class);
                                 startActivity(intent);
@@ -125,7 +121,8 @@ public class LogInActivity extends AppCompatActivity {
                                 new AlertDialog.Builder(LogInActivity.this)
                                         .setTitle("Log in")
                                         .setMessage(message)
-                                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                        .setPositiveButton(android.R.string.yes,
+                                                new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
 
                                             }

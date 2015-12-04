@@ -99,7 +99,8 @@ public class SignUp extends AppCompatActivity {
                                 new AlertDialog.Builder(SignUp.this)
                                         .setTitle("Sign up")
                                         .setMessage(message)
-                                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                        .setPositiveButton(android.R.string.yes
+                                                , new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
 
                                             }
@@ -109,7 +110,8 @@ public class SignUp extends AppCompatActivity {
                                 new AlertDialog.Builder(SignUp.this)
                                         .setTitle("Sign up")
                                         .setMessage(message)
-                                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                        .setPositiveButton(android.R.string.yes
+                                                , new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
 
                                             }

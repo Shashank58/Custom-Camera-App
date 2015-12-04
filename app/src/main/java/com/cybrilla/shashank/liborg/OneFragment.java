@@ -44,11 +44,7 @@ public class OneFragment extends Fragment {
     private static final String LIB_KEY = "Liborg Auth";
     private static final int PRIVATE_MODE = 0;
     private static final String KEY_AUTH = "auth_key" ;
-    private HomeAdapter bookList;
-    private List<HomeView> libraryBooks;
-    private List<HomeView> listOfAllBooks;
     private EditText myEditText;
-    private HomeAdapter newBookAdapter;
     private ImageView search;
     private Toolbar toolbar;
 
@@ -68,6 +64,7 @@ public class OneFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_one, container, false);
+        searchFeature();
         recList = (RecyclerView) view.findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
         mContext = getActivity().getBaseContext();
@@ -75,6 +72,10 @@ public class OneFragment extends Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
+        return view;
+    }
+
+    private void searchFeature(){
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setCollapsible(true);
 
@@ -94,45 +95,16 @@ public class OneFragment extends Fragment {
                 }
             }
         });
-
-        return view;
     }
 
     private void fetchData(String query){
         String url = "https://liborgs-1139.appspot.com/books/search/"+query;
-        final List<HomeView> newBookList = new ArrayList<>();
 
         JsonObjectRequest jObject = new JsonObjectRequest(Method.GET, url,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray data = response.getJSONArray("data");
-                            for(int i = 0; i < data.length(); i++){
-                                JSONObject book = (JSONObject) data.get(i);
-                                JSONArray authors = book.getJSONArray("author");
-                                JSONArray categories = book.getJSONArray("categories");
-                                String thumbnail = book.getString("thumbnail");
-                                String title = book.getString("title");
-                                int available = book.getInt("available");
-                                String description = book.getString("description");
-                                String pageCount = book.getString("pagecount");
-                                String publisher = book.getString("publisher");
-                                String authorName = (String) authors.get(0);
-                                String category = "NA";
-                                if(categories.length() != 0){
-                                    category = (String)categories.get(0);
-                                }
-                                newBookList.add(new HomeView(title, authorName, thumbnail
-                                        , available, pageCount, description, publisher, category));
-                            }
-                            Log.e("Library Activity", "New book list: " + newBookList.size());
-                            newBookAdapter = new HomeAdapter(newBookList, mContext, getActivity());
-                            Log.e("Library activity", "Adapter: "+newBookAdapter.getItemCount());
-                            recList.swapAdapter(newBookAdapter, true);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        extractResponse(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -144,6 +116,37 @@ public class OneFragment extends Fragment {
         queue.add(jObject);
     }
 
+    private void extractResponse(JSONObject response){
+        HomeAdapter bookList;
+        List<HomeView> libraryBooks = new ArrayList<>();
+        try {
+            JSONArray data = response.getJSONArray("data");
+            for(int i = 0; i < data.length(); i++){
+                JSONObject book = (JSONObject) data.get(i);
+                JSONArray authors = book.getJSONArray("author");
+                JSONArray categories = book.getJSONArray("categories");
+                String thumbnail = book.getString("thumbnail");
+                String title = book.getString("title");
+                int available = book.getInt("available");
+                String description = book.getString("description");
+                String pageCount = book.getString("pagecount");
+                String publisher = book.getString("publisher");
+                String authorName = (String) authors.get(0);
+                String category = "NA";
+                if(categories.length() != 0){
+                    category = (String)categories.get(0);
+                }
+                libraryBooks.add(new HomeView(title, authorName, thumbnail
+                        , available, pageCount, description, publisher, category));
+            }
+            Log.e("Library Activity", "New book list: " + libraryBooks.size());
+            bookList = new HomeAdapter(libraryBooks, mContext, getActivity());
+            Log.e("Library activity", "Adapter: "+bookList.getItemCount());
+            recList.setAdapter(bookList);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     @Override
@@ -153,40 +156,12 @@ public class OneFragment extends Fragment {
     }
 
     private void getData(){
-        libraryBooks = new ArrayList<>();
         String url = "https://liborgs-1139.appspot.com/books/get_all_books";
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         JsonObjectRequest jRequest = new JsonObjectRequest(url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                try {
-                    JSONArray data = response.getJSONArray("data");
-                    for(int i = 0; i < data.length(); i++){
-                        JSONObject book = (JSONObject) data.get(i);
-                        JSONArray authors = book.getJSONArray("author");
-                        JSONArray categories = book.getJSONArray("categories");
-                        String thumbnail = book.getString("thumbnail");
-                        String title = book.getString("title");
-                        int available = book.getInt("available");
-                        String description = book.getString("description");
-                        String pageCount = book.getString("pagecount");
-                        String publisher = book.getString("publisher");
-                        String authorName = (String) authors.get(0);
-                        String category = "NA";
-                        if(categories.length() != 0){
-                            category = (String)categories.get(0);
-                        }
-                        libraryBooks.add(new HomeView(title, authorName, thumbnail
-                                , available, pageCount, description, publisher, category));
-                    }
-                    listOfAllBooks = new ArrayList<>(libraryBooks);
-
-                    bookList = new HomeAdapter(libraryBooks, mContext, getActivity());
-
-                    recList.setAdapter(bookList);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                extractResponse(response);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -209,22 +184,5 @@ public class OneFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main_menu, menu);
-
-//        MenuItem item = menu.findItem(R.id.action_search);
-//        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
-//
-//            @Override
-//            public boolean onQueryTextSubmit(String s) {
-//                Log.e("One fragment", "This");
-//                Toast.makeText(getActivity(), "Our word : " + s, Toast.LENGTH_SHORT).show();
-//                return true;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String s) {
-//                return false;
-//            }
-//        });
     }
 }
