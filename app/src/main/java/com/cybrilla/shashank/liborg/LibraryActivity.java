@@ -17,12 +17,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 
@@ -33,10 +32,10 @@ public class LibraryActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private Toolbar toolbar;
     private ViewPager viewPager;
-    private ImageView search;
     PendingIntent pi;
     BroadcastReceiver br;
     AlarmManager am;
+    private RecyclerView recList;
     private EditText myEditText;
 
 
@@ -53,25 +52,10 @@ public class LibraryActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
+        myEditText = (EditText) findViewById(R.id.myEditText);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setCollapsible(true);
-
-        myEditText = (EditText) findViewById(R.id.myEditText);
-        search = (ImageView) toolbar.findViewById(R.id.search_action);
-        search.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if(myEditText.getVisibility() == View.INVISIBLE) {
-                    myEditText.setVisibility(View.VISIBLE);
-                } else {
-                    String query = myEditText.getText().toString();
-                    if(!query.equals("")){
-                        
-                    }
-                }
-            }
-        });
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -80,6 +64,8 @@ public class LibraryActivity extends AppCompatActivity {
 //        am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() +
 //                6*1000, pi);
     }
+
+
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());

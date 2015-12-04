@@ -10,13 +10,19 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -41,6 +47,10 @@ public class OneFragment extends Fragment {
     private HomeAdapter bookList;
     private List<HomeView> libraryBooks;
     private List<HomeView> listOfAllBooks;
+    private EditText myEditText;
+    private HomeAdapter newBookAdapter;
+    private ImageView search;
+    private Toolbar toolbar;
 
     public OneFragment(){
 
@@ -65,8 +75,75 @@ public class OneFragment extends Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
+        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setCollapsible(true);
+
+        myEditText = (EditText) getActivity().findViewById(R.id.myEditText);
+        search = (ImageView) toolbar.findViewById(R.id.search_action);
+        search.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (myEditText.getVisibility() == View.INVISIBLE) {
+                    myEditText.setVisibility(View.VISIBLE);
+                } else {
+                    String query = myEditText.getText().toString();
+                    if (!query.equals("")) {
+                        fetchData(query);
+                    }
+                }
+            }
+        });
+
         return view;
     }
+
+    private void fetchData(String query){
+        String url = "https://liborgs-1139.appspot.com/books/search/"+query;
+        final List<HomeView> newBookList = new ArrayList<>();
+
+        JsonObjectRequest jObject = new JsonObjectRequest(Method.GET, url,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray data = response.getJSONArray("data");
+                            for(int i = 0; i < data.length(); i++){
+                                JSONObject book = (JSONObject) data.get(i);
+                                JSONArray authors = book.getJSONArray("author");
+                                JSONArray categories = book.getJSONArray("categories");
+                                String thumbnail = book.getString("thumbnail");
+                                String title = book.getString("title");
+                                int available = book.getInt("available");
+                                String description = book.getString("description");
+                                String pageCount = book.getString("pagecount");
+                                String publisher = book.getString("publisher");
+                                String authorName = (String) authors.get(0);
+                                String category = "NA";
+                                if(categories.length() != 0){
+                                    category = (String)categories.get(0);
+                                }
+                                newBookList.add(new HomeView(title, authorName, thumbnail
+                                        , available, pageCount, description, publisher, category));
+                            }
+                            Log.e("Library Activity", "New book list: " + newBookList.size());
+                            newBookAdapter = new HomeAdapter(newBookList, mContext, getActivity());
+                            Log.e("Library activity", "Adapter: "+newBookAdapter.getItemCount());
+                            recList.swapAdapter(newBookAdapter, true);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        queue.add(jObject);
+    }
+
 
 
     @Override
