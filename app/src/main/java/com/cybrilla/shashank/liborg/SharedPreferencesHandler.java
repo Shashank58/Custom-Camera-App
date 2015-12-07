@@ -1,0 +1,45 @@
+package com.cybrilla.shashank.liborg;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+
+/**
+ * Created by shashankm on 07/12/15.
+ */
+public class SharedPreferencesHandler {
+    private static final String KEY_AUTH = "auth_key" ;
+    private static final String KEY_FNAME = "first name" ;
+    private static final String KEY_LNAME = "last name" ;
+    private static final String KEY_EMAIL = "email";
+    private static final String KEY_PASSWORD = "password";
+    private SharedPreferences pref;
+    private Editor editor;
+    private String auth_token, fName, lName, email;
+
+    private static final String LIB_KEY = "Liborg Auth";
+    private static final int PRIVATE_MODE = 0;
+
+    public void setSharedPreference(Context context, String fname, String lname
+                                    , String mEmail, String authToken){
+        this.auth_token = authToken;
+        this.email = mEmail;
+        this.fName = fname;
+        this.lName = lname;
+
+        pref = context.getSharedPreferences(LIB_KEY, PRIVATE_MODE);
+        editor = pref.edit();
+
+        editor.putString(KEY_AUTH, auth_token);
+        editor.putString(KEY_FNAME, fName);
+        editor.putString(KEY_EMAIL, email);
+        editor.putString(KEY_LNAME, lName);
+
+        editor.commit();
+    }
+
+    public String getKeyAuth(Context context){
+        SharedPreferences pref = context.getSharedPreferences(LIB_KEY, PRIVATE_MODE);
+        return pref.getString(KEY_AUTH, null);
+    }
+}

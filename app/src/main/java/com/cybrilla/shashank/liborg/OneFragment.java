@@ -5,7 +5,6 @@ package com.cybrilla.shashank.liborg;
  */
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -178,8 +177,8 @@ public class OneFragment extends Fragment {
             }
         }){
             public Map<String, String> getHeaders() throws AuthFailureError {
-                SharedPreferences pref = getActivity().getSharedPreferences(LIB_KEY, PRIVATE_MODE);
-                String loggedIn = pref.getString(KEY_AUTH, null);
+                SharedPreferencesHandler s = new SharedPreferencesHandler();
+                String loggedIn = s.getKeyAuth(getActivity());
                 HashMap<String, String> params = new HashMap<>();
                 params.put("auth-token", loggedIn);
                 return params;

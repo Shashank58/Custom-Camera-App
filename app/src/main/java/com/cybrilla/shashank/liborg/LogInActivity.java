@@ -2,8 +2,6 @@ package com.cybrilla.shashank.liborg;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -33,21 +31,13 @@ public class LogInActivity extends AppCompatActivity {
     private String mEmail, mPassword;
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
-    private static final String KEY_AUTH = "auth_key" ;
-    private static final String KEY_FNAME = "first name" ;
-    private static final String KEY_LNAME = "last name" ;
-    private SharedPreferences pref;
-    private Editor editor;
-
-    private static final String LIB_KEY = "Liborg Auth";
-    private static final int PRIVATE_MODE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(LIB_KEY, PRIVATE_MODE);
-        String loggedIn = pref.getString(KEY_AUTH, null);
+        SharedPreferencesHandler sh = new SharedPreferencesHandler();
+        String loggedIn = sh.getKeyAuth(getApplicationContext());
         Log.e("Login Activity", "Logged In: "+loggedIn);
         if(loggedIn != null) {
             Intent intent = new Intent(this, LibraryActivity.class);
@@ -103,15 +93,9 @@ public class LogInActivity extends AppCompatActivity {
                                 String lname = jObj.getString("lastname");
                                 String auth_token = jObj.getString("auth_token");
 
-                                pref = getApplicationContext().getSharedPreferences(LIB_KEY, PRIVATE_MODE);
-                                editor = pref.edit();
-
-                                editor.putString(KEY_AUTH, auth_token);
-                                editor.putString(KEY_FNAME, fname);
-                                editor.putString(KEY_EMAIL, mEmail);
-                                editor.putString(KEY_LNAME, lname);
-
-                                editor.commit();
+                                SharedPreferencesHandler s = new SharedPreferencesHandler();
+                                s.setSharedPreference(getApplicationContext(), fname, lname
+                                                    ,mEmail ,auth_token);
 
                                 Intent intent = new Intent(getApplication(), LibraryActivity.class);
                                 startActivity(intent);

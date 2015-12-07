@@ -9,7 +9,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -50,7 +49,6 @@ public class LibraryActivity extends AppCompatActivity {
     private static final String LIB_KEY = "Liborg Auth";
     private static final int PRIVATE_MODE = 0;
     private static final String KEY_AUTH = "auth_key" ;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,8 +190,8 @@ public class LibraryActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders(){
                 Map<String, String> params = new HashMap<>();
-                SharedPreferences pref = getApplicationContext().getSharedPreferences(LIB_KEY, PRIVATE_MODE);
-                String authToken = pref.getString(KEY_AUTH, null);
+                SharedPreferencesHandler sh = new SharedPreferencesHandler();
+                String authToken = sh.getKeyAuth(LibraryActivity.this);
                 params.put("auth-token", authToken);
                 return params;
             }
