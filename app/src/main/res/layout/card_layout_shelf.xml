@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="2dp"
-    android:layout_margin="10dp">
+    android:layout_margin="15dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,14 +34,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="220dp"
                 android:orientation="horizontal">
 
                 <com.github.siyamed.shapeimageview.RoundedImageView
                     android:layout_width="140dp"
                     android:layout_height="150dp"
                     android:src="@drawable/javaconcepts_icon"
-                    android:layout_marginTop="55dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginLeft="15dp"
                     app:siBorderWidth="3dp"
                     app:siBorderColor="@color/navigationBarColor"
@@ -65,14 +65,14 @@
                         android:textColor="@color/white"
                         android:text="NAME"
                         android:textStyle="bold"
-                        android:textSize="22sp"
+                        android:textSize="20sp"
                         android:layout_gravity="center_horizontal"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/bookNameShelf"
-                        android:textSize="22sp"
+                        android:textSize="20sp"
                         android:singleLine="true"
                         android:layout_gravity="center_horizontal"
                         android:textColor="@color/white"
@@ -84,10 +84,10 @@
                         android:layout_height="wrap_content"
                         android:text="AUTHOR"
                         android:textColor="@color/white"
-                        android:textSize="22sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="20dp"/>
+                        android:layout_marginTop="15dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -104,10 +104,10 @@
                         android:layout_height="wrap_content"
                         android:text="DUE DATE"
                         android:textColor="@color/white"
-                        android:textSize="22sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="20dp"/>
+                        android:layout_marginTop="15dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"

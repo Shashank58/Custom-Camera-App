@@ -179,7 +179,8 @@ public class LibraryActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                            Log.e("Library activity", "Message: "+response);
+                        Log.e("Library activity", "Message: "+response);
+
                     }
                 }, new Response.ErrorListener() {
             @Override
