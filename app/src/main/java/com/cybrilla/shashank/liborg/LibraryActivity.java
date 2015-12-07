@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -23,10 +24,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.zxing.integration.android.IntentIntegrator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LibraryActivity extends AppCompatActivity {
     private TabLayout tabLayout;
@@ -37,6 +46,10 @@ public class LibraryActivity extends AppCompatActivity {
     AlarmManager am;
     private RecyclerView recList;
     private EditText myEditText;
+
+    private static final String LIB_KEY = "Liborg Auth";
+    private static final int PRIVATE_MODE = 0;
+    private static final String KEY_AUTH = "auth_key" ;
 
 
     @Override
@@ -144,7 +157,7 @@ public class LibraryActivity extends AppCompatActivity {
         }
     }
 
-    public void barCode(View v){
+    public void scanBarCode(View v){
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
         integrator.initiateScan();
@@ -156,7 +169,44 @@ public class LibraryActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK) {
             String _code = data.getStringExtra("SCAN_RESULT");
-            Log.e("Library Activity", "Code: "+_code);
+            issueBook(_code);
         }
     }
+
+    private void issueBook(final String isbn){
+        String url = "  https://liborgs-1139.appspot.com/users/issue";
+        StringRequest jObject = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                            Log.e("Library activity", "Message: "+response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders(){
+                Map<String, String> params = new HashMap<>();
+                SharedPreferences pref = getApplicationContext().getSharedPreferences(LIB_KEY, PRIVATE_MODE);
+                String authToken = pref.getString(KEY_AUTH, null);
+                params.put("auth-token", authToken);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getParams(){
+                Map<String, String> params = new HashMap<>();
+                params.put("isbn", isbn);
+                params.put("title", "");
+                return params;
+            }
+        };
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(jObject);
+    }
+
 }

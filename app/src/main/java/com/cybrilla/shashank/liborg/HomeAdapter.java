@@ -63,20 +63,15 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                         (mActivity,  new Pair<View, String>(viewStart, transitionCircle));
 
                 try {
-                    //Write file
                     String filename = "bitmap.png";
                     FileOutputStream stream = mContext.openFileOutput(filename, Context.MODE_PRIVATE);
                     thumbnail.compress(Bitmap.CompressFormat.PNG, 100, stream);
 
-                    //Cleanup
                     stream.close();
-                    // thumbnail.recycle();
                     intent.putExtra("thumbnail", filename);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                //Start the Intent
                 ActivityCompat.startActivity(mActivity, intent, options.toBundle());
             }
         });
