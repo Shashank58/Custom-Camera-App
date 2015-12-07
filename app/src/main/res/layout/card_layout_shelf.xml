@@ -40,7 +40,7 @@
                 <com.github.siyamed.shapeimageview.RoundedImageView
                     android:layout_width="140dp"
                     android:layout_height="150dp"
-                    android:src="@drawable/javaconcepts_icon"
+                    android:src="@drawable/lifeofpi"
                     android:layout_marginTop="30dp"
                     android:layout_marginLeft="15dp"
                     app:siBorderWidth="3dp"

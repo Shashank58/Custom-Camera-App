@@ -2,11 +2,13 @@ package com.cybrilla.shashank.liborg;
 
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build.VERSION_CODES;
@@ -16,10 +18,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
@@ -30,6 +32,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.zxing.integration.android.IntentIntegrator;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,12 +48,8 @@ public class LibraryActivity extends AppCompatActivity {
     PendingIntent pi;
     BroadcastReceiver br;
     AlarmManager am;
-    private RecyclerView recList;
     private EditText myEditText;
 
-    private static final String LIB_KEY = "Liborg Auth";
-    private static final int PRIVATE_MODE = 0;
-    private static final String KEY_AUTH = "auth_key" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,18 +59,15 @@ public class LibraryActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(uiOptions);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_library);
-        //getSupportActionBar().setElevation(0);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-
         myEditText = (EditText) findViewById(R.id.myEditText);
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setCollapsible(true);
-
         tabLayout = (TabLayout) findViewById(R.id.tabs);
+
+        setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
+        toolbar.setCollapsible(true);
 
 //        setup();
 //        am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() +
@@ -88,7 +86,6 @@ public class LibraryActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         myEditText.setVisibility(View.INVISIBLE);
-        return;
     }
 
 
@@ -156,9 +153,39 @@ public class LibraryActivity extends AppCompatActivity {
     }
 
     public void scanBarCode(View v){
-        IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
-        integrator.initiateScan();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.pick_issue_type)
+                .setItems(R.array.issue_method, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == 0) {
+                            IntentIntegrator integrator = new IntentIntegrator(LibraryActivity.this);
+                            integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
+                            integrator.initiateScan();
+                        } else {
+                            AlertDialog.Builder build = new AlertDialog.Builder(LibraryActivity.this);
+                            final LayoutInflater layoutInflater = LibraryActivity.this.getLayoutInflater();
+                            build.setView(layoutInflater.inflate(R.layout.dialog_title, null))
+                                    .setPositiveButton(android.R.string.yes,
+                                            new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    Dialog dialogView = (Dialog) dialog;
+                                                    EditText dialogBookTitle = (EditText) dialogView.findViewById(R.id.dialog_book_title);
+                                                    String bookTitle = dialogBookTitle.getText().toString();
+                                                    if(!bookTitle.equals("")){
+                                                        issueBook("", bookTitle);
+                                                    }
+                                                }
+                                            })
+                                    .setNegativeButton(android.R.string.cancel,
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+
+                                                }
+                                            }).show();
+                        }
+                    }
+                }).show();
     }
 
     @Override
@@ -167,18 +194,33 @@ public class LibraryActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK) {
             String _code = data.getStringExtra("SCAN_RESULT");
-            issueBook(_code);
+            issueBook(_code, "");
         }
     }
 
-    private void issueBook(final String isbn){
-        String url = "  https://liborgs-1139.appspot.com/users/issue";
+    private void issueBook(final String isbn, final String bookTitle){
+        String url = "https://liborgs-1139.appspot.com/users/issue";
         StringRequest jObject = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("Library activity", "Message: "+response);
+                        try {
+                            JSONObject res = new JSONObject(response);
+                            String message = res.getString("message");
+                            AlertDialog.Builder builder = new AlertDialog.Builder(LibraryActivity.this);
+                            builder.setTitle("Book Issue")
+                                    .setMessage(message)
+                                    .setPositiveButton(android.R.string.yes,
+                                            new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int id) {
 
+                                                }
+                                            })
+                                    .show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -200,12 +242,11 @@ public class LibraryActivity extends AppCompatActivity {
             public Map<String, String> getParams(){
                 Map<String, String> params = new HashMap<>();
                 params.put("isbn", isbn);
-                params.put("title", "");
+                params.put("title", bookTitle);
                 return params;
             }
         };
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(jObject);
     }
-
 }

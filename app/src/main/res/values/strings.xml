@@ -29,5 +29,9 @@
     <string name="transition_name_author">transition:AUTHOR</string>
     <string name="message_retrive">To reset password please enter your registered email</string>
     <string name="account_recover">Account Recovery</string>
-
+    <string name="pick_issue_type">Select book issue type</string>
+    <array name="issue_method">
+        <item>Barcode Scanner</item>
+        <item>Book title</item>
+    </array>
 </resources>
