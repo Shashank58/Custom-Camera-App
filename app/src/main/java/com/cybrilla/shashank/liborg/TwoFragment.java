@@ -3,26 +3,37 @@ package com.cybrilla.shashank.liborg;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request.Method;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by shashankm on 17/11/15.
  */
 public class TwoFragment extends android.support.v4.app.Fragment {
     private ShelfAdapter bookList;
-    private List<HomeView> libraryBooks;
+    private List<HomeView> myBooks;
     private RecyclerView recList;
 
     public TwoFragment() {
@@ -33,6 +44,7 @@ public class TwoFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getData();
     }
 
     @Override
@@ -45,49 +57,59 @@ public class TwoFragment extends android.support.v4.app.Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity().getBaseContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
-        //getData();
 
         return view;
     }
 
     private void getData(){
-        libraryBooks = new ArrayList<>();
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(
-                    new InputStreamReader(getActivity().getBaseContext().getAssets().open("library.txt")));
+        String url = "  https://liborgs-1139.appspot.com/users/issued_books";
+        myBooks = new ArrayList<>();
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
 
-            // do reading, usually loop until end of file reading
-            String mLine;
-            String completeText = "";
-            while ((mLine = reader.readLine()) != null) {
-                //process line
-                completeText += mLine;
-            }
-            try {
-                JSONObject jObject = new JSONObject(completeText);
-                JSONArray books = jObject.getJSONArray("books");
-                JSONObject book = (JSONObject) books.get(4);
-                String name = book.getString("name");
-                String authorName = book.getString("author");
-                String dueDate = book.getString("due_date");
-                //libraryBooks.add(new HomeView(name, authorName, dueDate));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        JsonObjectRequest jObject = new JsonObjectRequest(Method.GET, url,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray data = response.getJSONArray("data");
+                            for(int i = 0; i < data.length(); i++){
+                                JSONObject book = (JSONObject) data.get(i);
+                                String title = book.getString("title");
+                                JSONArray authors = book.getJSONArray("author");
+                                String author = authors.getString(0);
+                                JSONObject issueData = book.getJSONObject("issue_data");
+                                long issueDate = issueData.getLong("issue_date");
+                                String isbn = issueData.getString("isbn");
+                                Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+                                cal.setTimeInMillis(issueDate * 1000L);
+                                String date = DateFormat.format("dd-MM-yyyy", cal).toString();
+                                cal.add(Calendar.DATE, 15);
+                                String dueDate = DateFormat.format("dd-MM-yyyy", cal).toString();
+                                String thumbnail = book.getString("thumbnail");
+                                myBooks.add(new HomeView(title, author, date, thumbnail, dueDate, issueDate, isbn));
+                            }
+                            bookList = new ShelfAdapter(myBooks, getActivity(), getActivity());
+                            recList.setAdapter(bookList);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-        bookList = new ShelfAdapter(libraryBooks);
-        recList.setAdapter(bookList);
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError{
+                HashMap<String, String> params = new HashMap<>();
+                SharedPreferencesHandler s = new SharedPreferencesHandler();
+                params.put("auth-token", s.getKeyAuth(getActivity()));
+                return params;
+            }
+        };
+
+        queue.add(jObject);
     }
 }

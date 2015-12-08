@@ -11,16 +11,7 @@
         android:orientation="vertical"
         android:layout_margin="5dp">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/borrow"
-            android:background="@drawable/mybutton"
-            android:textColor="@color/white"
-            android:onClick="barCode"
-            android:layout_marginBottom="15dp"
-            android:textSize="16sp"
-            android:layout_marginTop="10dp"/>
+
 
     </LinearLayout>
 

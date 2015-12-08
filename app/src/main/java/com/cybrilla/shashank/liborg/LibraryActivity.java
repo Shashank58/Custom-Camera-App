@@ -198,6 +198,10 @@ public class LibraryActivity extends AppCompatActivity {
         }
     }
 
+    public AlertDialog.Builder alertDialog(){
+        return new AlertDialog.Builder(this);
+    }
+
     private void issueBook(final String isbn, final String bookTitle){
         String url = "https://liborgs-1139.appspot.com/users/issue";
         StringRequest jObject = new StringRequest(Request.Method.POST, url,
