@@ -7,6 +7,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="info.androidhive.materialtabs.fragments.OneFragment">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fetching_data"
+        android:text="Fetching..."
+        android:textColor="#009688"
+        android:visibility="gone"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        android:layout_marginTop="175dp"
+        android:layout_marginLeft="125dp"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cardList"
         android:layout_width="match_parent"

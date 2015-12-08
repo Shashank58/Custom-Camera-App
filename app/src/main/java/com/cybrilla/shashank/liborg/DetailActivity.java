@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,8 +36,11 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         publication = (TextView) findViewById(R.id.detail_publication);
 
         setData();
-//      ActionBar actionBar = getSupportActionBar();
-//      actionBar.setDisplayHomeAsUpEnabled(true);
+      ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(false);
+        }
+
 
     }
 

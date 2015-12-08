@@ -54,72 +54,81 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
                 from(parent.getContext()).
                 inflate(R.layout.card_layout_shelf, parent, false);
 
-        final Button returnBook = (Button) itemView.findViewById(R.id.returnBook);
+        Button returnBook = (Button) itemView.findViewById(R.id.returnBook);
+        returnBook.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = (int) v.getTag();
+                final HomeView hv = allBooks.get(pos);
+                Log.e("Shelf adapter", "Vs tag: " + v.getTag());
+                RequestQueue queue = Volley.newRequestQueue(mContext);
+                String url = "https://liborgs-1139.appspot.com/users/return";
+                Log.e("Shelf adapter", "Clicked");
+                StringRequest sRequest = new StringRequest(Method.POST, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                JSONObject res = null;
+                                String message = "";
+                                try {
+                                    res = new JSONObject(response);
+                                    message = res.getString("message");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+                                builder.setTitle("Book Return")
+                                        .setMessage(message)
+                                        .setPositiveButton(android.R.string.yes,
+                                                new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int id) {
+
+                                                    }
+                                                })
+                                        .show();
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                })
+                {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String, String> params = new HashMap<>();
+                        params.put("isbn", hv.getIsbn());
+                        params.put("title", hv.getBookName());
+                        params.put("issue_date", String.valueOf(hv.getIssueDate()));
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> params = new HashMap<>();
+                        SharedPreferencesHandler s = new SharedPreferencesHandler();
+                        params.put("auth-token", s.getKeyAuth(mContext));
+                        return params;
+                    }
+                };
+
+                queue.add(sRequest);
+            }
+        });
+
         itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                final View vs = v;
-                returnBook.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        int pos = (int) vs.getTag();
-                        final HomeView hv = allBooks.get(pos);
+                Log.e("Shelf adapter", "Still clicked");
+//                final View vs = v;
+//                returnBook.setOnClickListener(new OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Log.e("Shelf adapter", "View tag: " + view.getTag());
 
-                        RequestQueue queue = Volley.newRequestQueue(mContext);
-                        String url = "https://liborgs-1139.appspot.com/users/return";
-                        Log.e("Shelf adapter", "Clicked");
-                        StringRequest sRequest = new StringRequest(Method.POST, url,
-                                new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        JSONObject res = null;
-                                        String message = "";
-                                        try {
-                                            res = new JSONObject(response);
-                                            message = res.getString("message");
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-                                        builder.setTitle("Book Return")
-                                                .setMessage(message)
-                                                .setPositiveButton(android.R.string.yes,
-                                                        new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialog, int id) {
-
-                                                            }
-                                                        })
-                                                .show();
-                                    }
-                                }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-
-                            }
-                        })
-                        {
-                            @Override
-                            protected Map<String, String> getParams() throws AuthFailureError {
-                                HashMap<String, String> params = new HashMap<>();
-                                params.put("isbn", hv.getIsbn());
-                                params.put("title", hv.getBookName());
-                                params.put("issue_date", String.valueOf(hv.getIssueDate()));
-                                return params;
-                            }
-
-                            @Override
-                            public Map<String, String> getHeaders() throws AuthFailureError {
-                                HashMap<String, String> params = new HashMap<>();
-                                SharedPreferencesHandler s = new SharedPreferencesHandler();
-                                params.put("auth-token", s.getKeyAuth(mContext));
-                                return params;
-                            }
-                        };
-
-                        queue.add(sRequest);
-                    }
-                });
+//                    }
+//                });
             }
         });
 
@@ -129,6 +138,7 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
     @Override
     public void onBindViewHolder(ShelfViewHolder holder, int position) {
         holder.cardViewShelf.setTag(position);
+        holder.returnBook.setTag(position);
         HomeView hv = allBooks.get(position);
         holder.bookNameShelf.setText(hv.getBookName());
         holder.authorNameShelf.setText(hv.getAuthorName());
@@ -147,6 +157,7 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
         protected TextView bookNameShelf, authorNameShelf, dueDate, borrowedDate;
         protected ImageView bookImage;
         protected CardView cardViewShelf;
+        protected Button returnBook;
 
         public ShelfViewHolder(View v){
             super(v);
@@ -156,6 +167,7 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
             bookImage = (ImageView) v.findViewById(R.id.shelf_book_image);
             borrowedDate = (TextView) v.findViewById(R.id.borrowedDate);
             cardViewShelf = (CardView) v.findViewById(R.id.card_view_shelf);
+            returnBook = (Button) v.findViewById(R.id.returnBook);
         }
     }
 }

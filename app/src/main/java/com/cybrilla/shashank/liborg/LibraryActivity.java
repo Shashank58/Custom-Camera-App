@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -157,39 +159,48 @@ public class LibraryActivity extends AppCompatActivity {
     }
 
     public void scanBarCode(View v){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.pick_issue_type)
-                .setItems(R.array.issue_method, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == 0) {
-                            IntentIntegrator integrator = new IntentIntegrator(LibraryActivity.this);
-                            integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
-                            integrator.initiateScan();
-                        } else {
-                            AlertDialog.Builder build = new AlertDialog.Builder(LibraryActivity.this);
-                            final LayoutInflater layoutInflater = LibraryActivity.this.getLayoutInflater();
-                            build.setView(layoutInflater.inflate(R.layout.dialog_title, null))
-                                    .setPositiveButton(android.R.string.yes,
-                                            new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    Dialog dialogView = (Dialog) dialog;
-                                                    EditText dialogBookTitle = (EditText) dialogView.findViewById(R.id.dialog_book_title);
-                                                    String bookTitle = dialogBookTitle.getText().toString();
-                                                    if(!bookTitle.equals("")){
-                                                        issueBook("", bookTitle);
+        if(isNetworkAvailable()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.pick_issue_type)
+                    .setItems(R.array.issue_method, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (which == 0) {
+                                IntentIntegrator integrator = new IntentIntegrator(LibraryActivity.this);
+                                integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
+                                integrator.initiateScan();
+                            } else {
+                                AlertDialog.Builder build = new AlertDialog.Builder(LibraryActivity.this);
+                                final LayoutInflater layoutInflater = LibraryActivity.this.getLayoutInflater();
+                                build.setView(layoutInflater.inflate(R.layout.dialog_title, null))
+                                        .setPositiveButton(android.R.string.yes,
+                                                new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        Dialog dialogView = (Dialog) dialog;
+                                                        EditText dialogBookTitle = (EditText) dialogView.findViewById(R.id.dialog_book_title);
+                                                        String bookTitle = dialogBookTitle.getText().toString();
+                                                        if (!bookTitle.equals("")) {
+                                                            issueBook("", bookTitle);
+                                                        }
                                                     }
-                                                }
-                                            })
-                                    .setNegativeButton(android.R.string.cancel,
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
+                                                })
+                                        .setNegativeButton(android.R.string.cancel,
+                                                new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
 
-                                                }
-                                            }).show();
+                                                    }
+                                                }).show();
+                            }
                         }
-                    }
-                }).show();
+                    }).show();
+        }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     @Override

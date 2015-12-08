@@ -1,6 +1,8 @@
 <resources>
 
-    <style name="AppTheme" parent="AppTheme.Base"></style>
+    <style name="AppTheme" parent="AppTheme.Base">
+        <item name="colorPrimaryDark">@color/navBar</item>
+    </style>
 
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light">
 

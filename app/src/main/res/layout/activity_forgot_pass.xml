@@ -49,7 +49,7 @@
             android:layout_gravity="center_horizontal"
             android:text="@string/submit"
             android:id="@+id/recoveryButton"
-            android:background="@color/navigationBarColor"
+            android:background="@color/pure_black"
             android:textColor="@color/white"
             android:elevation="2dp"
             android:clickable="true"/>

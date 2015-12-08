@@ -6,7 +6,12 @@ package com.cybrilla.shashank.liborg;
  **/
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.CoordinatorLayout.LayoutParams;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request.Method;
@@ -44,6 +50,7 @@ public class OneFragment extends Fragment {
     private EditText myEditText;
     private ImageView search;
     private Toolbar toolbar;
+    private TextView fetchData;
 
     public OneFragment(){
 
@@ -53,7 +60,9 @@ public class OneFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getData();
+        if(isNetworkAvailable()) {
+            getData();
+        }
     }
 
     @Override
@@ -61,22 +70,39 @@ public class OneFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_one, container, false);
-        searchFeature();
-        recList = (RecyclerView) view.findViewById(R.id.cardList);
-        recList.setHasFixedSize(true);
-        mContext = getActivity().getBaseContext();
-        LinearLayoutManager llm = new LinearLayoutManager(mContext);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recList.setLayoutManager(llm);
+        fetchData = (TextView) view.findViewById(R.id.fetching_data);
+        if(isNetworkAvailable()) {
+            fetchData.setVisibility(View.VISIBLE);
+            searchFeature();
+            recList = (RecyclerView) view.findViewById(R.id.cardList);
+            recList.setHasFixedSize(true);
+            mContext = getActivity().getBaseContext();
+            LinearLayoutManager llm = new LinearLayoutManager(mContext);
+            llm.setOrientation(LinearLayoutManager.VERTICAL);
+            recList.setLayoutManager(llm);
 
-        recList.addOnScrollListener(new OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-            }
-        });
+            recList.addOnScrollListener(new OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                }
+            });
+        } else {
+            fetchData.setText("Please connect to internet");
+            fetchData.setVisibility(View.VISIBLE);
+            CoordinatorLayout.LayoutParams params = (LayoutParams) fetchData.getLayoutParams();
+            params.setMargins(80,140,0,0);
+            fetchData.setLayoutParams(params);
+        }
 
         return view;
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     private void searchFeature(){
@@ -102,7 +128,10 @@ public class OneFragment extends Fragment {
     }
 
     private void fetchData(String query){
-        String url = "https://liborgs-1139.appspot.com/books/search/"+query;
+        String url = Uri.parse("https://liborgs-1139.appspot.com/books/search")
+                        .buildUpon()
+                        .appendQueryParameter("query", query)
+                        .build().toString();
 
         JsonObjectRequest jObject = new JsonObjectRequest(Method.GET, url,
                 new Response.Listener<JSONObject>() {
@@ -163,6 +192,7 @@ public class OneFragment extends Fragment {
         JsonObjectRequest jRequest = new JsonObjectRequest(url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                fetchData.setVisibility(View.GONE);
                 extractResponse(response);
             }
         }, new Response.ErrorListener() {
