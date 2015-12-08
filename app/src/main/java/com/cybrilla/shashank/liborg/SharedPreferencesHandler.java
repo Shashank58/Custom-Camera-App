@@ -5,8 +5,9 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 /**
- * Created by shashankm on 07/12/15.
+ * Responsible for setting shared preferences along with getting auth token.
  */
+
 public class SharedPreferencesHandler {
     private static final String KEY_AUTH = "auth_key" ;
     private static final String KEY_FNAME = "first name" ;

@@ -29,8 +29,9 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Created by shashankm on 17/11/15.
+ * My Shelf fragment which fetches issued books.
  */
+
 public class TwoFragment extends android.support.v4.app.Fragment {
     private ShelfAdapter bookList;
     private List<HomeView> myBooks;

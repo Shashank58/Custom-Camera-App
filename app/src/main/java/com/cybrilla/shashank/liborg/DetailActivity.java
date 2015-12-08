@@ -12,6 +12,9 @@ import android.widget.TextView;
 import java.io.FileInputStream;
 import java.io.Serializable;
 
+/**
+ * Class responsible for setting details of the given book.**/
+
 public class DetailActivity extends AppCompatActivity implements Serializable {
     private TextView bookName, authorName, categories, pageCount, available, description, publication;
     private ImageView thumbnail;

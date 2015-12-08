@@ -1,8 +1,9 @@
 package com.cybrilla.shashank.liborg;
 
 /**
- * Created by shashankm on 16/11/15.
- */
+ This is the home fragment of app which contains list of all books in the library.
+ Fetches data of all books from server. Search of books is also handled here.
+ **/
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,9 +41,6 @@ import java.util.Map;
 public class OneFragment extends Fragment {
     private RecyclerView recList;
     private Context mContext;
-    private static final String LIB_KEY = "Liborg Auth";
-    private static final int PRIVATE_MODE = 0;
-    private static final String KEY_AUTH = "auth_key" ;
     private EditText myEditText;
     private ImageView search;
     private Toolbar toolbar;
@@ -146,9 +143,7 @@ public class OneFragment extends Fragment {
                 libraryBooks.add(new HomeView(title, authorName, thumbnail
                         , available, pageCount, description, publisher, category));
             }
-            Log.e("Library Activity", "New book list: " + libraryBooks.size());
             bookList = new HomeAdapter(libraryBooks, mContext, getActivity());
-            Log.e("Library activity", "Adapter: "+bookList.getItemCount());
             recList.setAdapter(bookList);
         } catch (JSONException e) {
             e.printStackTrace();

@@ -3,7 +3,7 @@ package com.cybrilla.shashank.liborg;
 import java.io.Serializable;
 
 /**
- * Created by shashankm on 17/11/15.
+ * Class for storing and getting all the book details.
  */
 public class HomeView implements Serializable {
     private String bookName;

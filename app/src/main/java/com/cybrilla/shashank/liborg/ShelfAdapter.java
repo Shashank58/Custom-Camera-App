@@ -32,8 +32,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by shashankm on 17/11/15.
+ * Adapter for myShelf fragment. Sets data of issued books and archives.
+ * Also handles return of book.
  */
+
 public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHolder> {
     private List<HomeView> allBooks;
     private Context mContext;
@@ -52,10 +54,10 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
                 from(parent.getContext()).
                 inflate(R.layout.card_layout_shelf, parent, false);
 
+        final Button returnBook = (Button) itemView.findViewById(R.id.returnBook);
         itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Button returnBook = (Button) v.findViewById(R.id.returnBook);
                 final View vs = v;
                 returnBook.setOnClickListener(new OnClickListener() {
                     @Override

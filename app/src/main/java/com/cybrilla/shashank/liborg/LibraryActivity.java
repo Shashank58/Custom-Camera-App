@@ -41,6 +41,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**  Main activity which contains home and myShelf fragments.
+ *   Also contains issue of books through bar code or book title. **/
+
+
 public class LibraryActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private Toolbar toolbar;
