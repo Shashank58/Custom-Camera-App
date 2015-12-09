@@ -164,7 +164,10 @@ public class OneFragment extends Fragment {
                 String description = book.getString("description");
                 String pageCount = book.getString("pagecount");
                 String publisher = book.getString("publisher");
-                String authorName = (String) authors.get(0);
+                String authorName = "";
+                for(int j = 0; j < authors.length(); j++) {
+                    authorName += (authors.get(j)) + " ";
+                }
                 String category = "NA";
                 if(categories.length() != 0){
                     category = (String)categories.get(0);

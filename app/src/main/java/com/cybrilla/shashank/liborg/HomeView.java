@@ -18,6 +18,8 @@ public class HomeView implements Serializable {
     private String publisher;
     private String categories;
     private String isbn;
+    private String returnDate;
+    private int returnStatus;
 
     public HomeView(String bookName, String authorName, String thumbnail
             , int available, String pageCount, String description, String publisher, String categories){
@@ -33,7 +35,7 @@ public class HomeView implements Serializable {
     }
 
     public HomeView(String bookName, String authorName, String borrowedDate, String thumbnail
-            , String dueDate, long issueDate, String isbn){
+            , String dueDate, long issueDate, String isbn, String returnDate, int returnStatus){
         this.bookName = bookName;
         this.authorName = authorName;
         this.dueDate = dueDate;
@@ -41,6 +43,8 @@ public class HomeView implements Serializable {
         this.borrowedDate = borrowedDate;
         this.issueDate = issueDate;
         this.isbn = isbn;
+        this.returnDate = returnDate;
+        this.returnStatus = returnStatus;
     }
 
     public String getBookName(){
@@ -89,5 +93,13 @@ public class HomeView implements Serializable {
 
     public String getIsbn(){
         return isbn;
+    }
+
+    public String getReturnDate(){
+        return returnDate;
+    }
+
+    public int getReturnStatus(){
+        return returnStatus;
     }
 }
