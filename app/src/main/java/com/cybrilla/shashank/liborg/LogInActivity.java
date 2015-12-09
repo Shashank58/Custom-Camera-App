@@ -18,6 +18,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,14 +33,16 @@ public class LogInActivity extends AppCompatActivity {
     private String mEmail, mPassword;
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         SharedPreferencesHandler sh = new SharedPreferencesHandler();
-        String loggedIn = sh.getKeyAuth(getApplicationContext());
+        String loggedIn = sh.getKeyAuth(this);
+        String token = sh.getRegId(this);
         Log.e("Login Activity", "Logged In: "+loggedIn);
+        Log.e("Login Activity", "Token value: " + token);
         if(loggedIn != null) {
             Intent intent = new Intent(this, LibraryActivity.class);
             startActivity(intent);
@@ -95,7 +99,16 @@ public class LogInActivity extends AppCompatActivity {
 
                                 SharedPreferencesHandler s = new SharedPreferencesHandler();
                                 s.setSharedPreference(getApplicationContext(), fname, lname
-                                                    ,mEmail ,auth_token);
+                                        , mEmail, auth_token);
+
+                                RegisterGCMId app = (RegisterGCMId) getApplication();
+                                app.sendToServer();
+                                if (checkPlayServices()) {
+                                    // Start IntentService to register this application with GCM.
+//                                    Log.e("Login activity", "Getting called?");
+//                                    Intent intent = new Intent(LogInActivity.this, RegistrationIntentService.class);
+//                                    startService(intent);
+                                }
 
                                 Intent intent = new Intent(getApplication(), LibraryActivity.class);
                                 startActivity(intent);
@@ -140,5 +153,21 @@ public class LogInActivity extends AppCompatActivity {
     public void signUp(View v){
         Intent intent = new Intent(this, SignUp.class);
         startActivity(intent);
+    }
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Log.i("Login activity", "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
     }
 }

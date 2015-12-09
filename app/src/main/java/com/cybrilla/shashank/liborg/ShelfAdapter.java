@@ -60,10 +60,8 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
             public void onClick(View v) {
                 int pos = (int) v.getTag();
                 final HomeView hv = allBooks.get(pos);
-                Log.e("Shelf adapter", "Vs tag: " + v.getTag());
                 RequestQueue queue = Volley.newRequestQueue(mContext);
                 String url = "https://liborgs-1139.appspot.com/users/return";
-                Log.e("Shelf adapter", "Clicked");
                 StringRequest sRequest = new StringRequest(Method.POST, url,
                         new Response.Listener<String>() {
                             @Override
