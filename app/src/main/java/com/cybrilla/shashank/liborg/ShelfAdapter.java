@@ -139,17 +139,27 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
         HomeView hv = allBooks.get(position);
         if(hv.getReturnDate() == null) {
             holder.returnBook.setTag(position);
-            holder.bookNameShelf.setText(hv.getBookName());
-            holder.authorNameShelf.setText(hv.getAuthorName());
             holder.dueDate.setText(hv.getDueDate());
             holder.borrowedDate.setText(hv.getBorrowedDate());
-            Glide.with(mContext).load(hv.getThumbnail())
-                    .asBitmap().into(holder.bookImage);
         } else {
+            int bookStatus = hv.getReturnStatus();
+            String status;
+            if(bookStatus == 0){
+                status = "Pending";
+            } else {
+                status = "Returned";
+            }
             holder.returnBook.setVisibility(View.GONE);
-            holder.dueDateText.setText("Returned Date");
+            holder.dueDateText.setText("Returned date");
             holder.dueDate.setText(hv.getReturnDate());
+            holder.bookStatus.setText("Status:");
+            holder.borrowedDate.setText(status);
         }
+        holder.bookNameShelf.setText(hv.getBookName());
+        holder.authorNameShelf.setText(hv.getAuthorName());
+        Glide.with(mContext).load(hv.getThumbnail())
+                .asBitmap().into(holder.bookImage);
+
     }
 
     @Override
@@ -158,7 +168,7 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
     }
 
     public static class ShelfViewHolder extends RecyclerView.ViewHolder {
-        protected TextView bookNameShelf, authorNameShelf, dueDate, borrowedDate, dueDateText;
+        protected TextView bookNameShelf, authorNameShelf, dueDate, borrowedDate, dueDateText, bookStatus;
         protected ImageView bookImage;
         protected CardView cardViewShelf;
         protected Button returnBook;
@@ -173,6 +183,7 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
             cardViewShelf = (CardView) v.findViewById(R.id.card_view_shelf);
             returnBook = (Button) v.findViewById(R.id.returnBook);
             dueDateText = (TextView) v.findViewById(R.id.dueDateText);
+            bookStatus = (TextView) v.findViewById(R.id.bookStatusText);
         }
     }
 }
