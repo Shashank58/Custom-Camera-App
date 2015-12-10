@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,7 +49,7 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
 
     @Override
     public ShelfViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.
+        final View itemView = LayoutInflater.
                 from(parent.getContext()).
                 inflate(R.layout.card_layout_shelf, parent, false);
 
@@ -66,11 +65,12 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                JSONObject res = null;
+                                JSONObject res;
                                 String message = "";
                                 try {
                                     res = new JSONObject(response);
                                     message = res.getString("message");
+                                    itemView.findViewById(R.id.returnBook).setVisibility(View.GONE);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -115,21 +115,6 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
             }
         });
 
-        itemView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("Shelf adapter", "Still clicked");
-//                final View vs = v;
-//                returnBook.setOnClickListener(new OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Log.e("Shelf adapter", "View tag: " + view.getTag());
-
-//                    }
-//                });
-            }
-        });
-
         return new ShelfViewHolder(itemView);
     }
 
@@ -141,6 +126,7 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
             holder.returnBook.setTag(position);
             holder.dueDate.setText(hv.getDueDate());
             holder.borrowedDate.setText(hv.getBorrowedDate());
+            holder.returnBook.setVisibility(View.VISIBLE);
         } else {
             int bookStatus = hv.getReturnStatus();
             String status;
@@ -159,7 +145,6 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
         holder.authorNameShelf.setText(hv.getAuthorName());
         Glide.with(mContext).load(hv.getThumbnail())
                 .asBitmap().into(holder.bookImage);
-
     }
 
     @Override

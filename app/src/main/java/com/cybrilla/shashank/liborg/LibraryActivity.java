@@ -1,21 +1,12 @@
 package com.cybrilla.shashank.liborg;
 
-import android.annotation.TargetApi;
-import android.app.AlarmManager;
 import android.app.Dialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -52,9 +43,6 @@ public class LibraryActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private Toolbar toolbar;
     private ViewPager viewPager;
-    PendingIntent pi;
-    BroadcastReceiver br;
-    AlarmManager am;
     private EditText myEditText;
 
 
@@ -75,10 +63,6 @@ public class LibraryActivity extends AppCompatActivity {
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         toolbar.setCollapsible(true);
-
-        setup();
-        am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() +
-                6*1000, pi);
     }
 
 
@@ -95,41 +79,6 @@ public class LibraryActivity extends AppCompatActivity {
         myEditText.setVisibility(View.INVISIBLE);
     }
 
-
-    private void setup() {
-        br = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context c, Intent i) {
-                sampleNotification();
-            }
-        };
-        registerReceiver(br, new IntentFilter("com.cybrilla.shashank.liborg") );
-        pi = PendingIntent.getBroadcast(this, 0, new Intent("com.cybrilla.shashank.liborg"),
-                0 );
-        am = (AlarmManager)(this.getSystemService( Context.ALARM_SERVICE ));
-    }
-
-    @TargetApi(VERSION_CODES.JELLY_BEAN)
-    public void sampleNotification(){
-        NotificationManager notificationManager = (NotificationManager) getSystemService(
-                                                    Context.NOTIFICATION_SERVICE);
-        Context context = getApplicationContext();
-        String notificationTitle = "Exercise of Notification!";
-        String notificationText = "http://android-er.blogspot.com/";
-        Intent myIntent = new Intent(this, LibraryActivity.class);
-        PendingIntent pendingIntent
-                = PendingIntent.getActivity(context,
-                0, myIntent,
-                0);
-        Notification myNotification = new Notification.Builder(context)
-                                            .setContentTitle(notificationTitle)
-                                            .setContentText(notificationText)
-                                            .setSmallIcon(R.mipmap.ic_launcher)
-                                            .setContentIntent(pendingIntent).build();
-        myNotification.defaults |= Notification.DEFAULT_SOUND;
-        myNotification.flags |= Notification.FLAG_AUTO_CANCEL;
-        notificationManager.notify(1, myNotification);
-    }
 
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -214,10 +163,6 @@ public class LibraryActivity extends AppCompatActivity {
             String _code = data.getStringExtra("SCAN_RESULT");
             issueBook(_code, "");
         }
-    }
-
-    public AlertDialog.Builder alertDialog(){
-        return new AlertDialog.Builder(this);
     }
 
     private void issueBook(final String isbn, final String bookTitle){

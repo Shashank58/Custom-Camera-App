@@ -5,8 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +24,10 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        getWindow().getDecorView().setSystemUiVisibility(uiOptions);
+        getSupportActionBar().hide();
+
         setContentView(R.layout.activity_detail);
 
         bookName = (TextView) findViewById(R.id.detail_book_name);
@@ -35,13 +39,8 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         description = (TextView) findViewById(R.id.detail_description);
         publication = (TextView) findViewById(R.id.detail_publication);
 
+
         setData();
-      ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(false);
-        }
-
-
     }
 
     private void setData(){
@@ -51,7 +50,6 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         authorName.setText(hv.getAuthorName());
         categories.setText(hv.getCategories());
         pageCount.setText(hv.getPageCount());
-        //available.setText(hv.getAvailable());
         description.setText(hv.getDescription());
         publication.setText(hv.getPublisher());
 

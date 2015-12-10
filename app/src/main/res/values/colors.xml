@@ -23,4 +23,6 @@
     <color name="linkColour">#01579B</color>
     <color name="authorText">#f15928</color>
     <color name="shelfTitles">#607D8B</color>
+    <color name="authorGreen">#4CAF50</color>
+    <color name="shelf_blue">#0097A7</color>
 </resources>
