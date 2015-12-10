@@ -15,6 +15,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -75,9 +76,9 @@ public class LibraryActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         toolbar.setCollapsible(true);
 
-//        setup();
-//        am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() +
-//                6*1000, pi);
+        setup();
+        am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() +
+                6*1000, pi);
     }
 
 
@@ -121,8 +122,10 @@ public class LibraryActivity extends AppCompatActivity {
                 0, myIntent,
                 0);
         Notification myNotification = new Notification.Builder(context)
-                .setContentTitle(notificationTitle).setContentText(notificationText)
-                .setSmallIcon(R.drawable.lifeofpi).setContentIntent(pendingIntent).build();
+                                            .setContentTitle(notificationTitle)
+                                            .setContentText(notificationText)
+                                            .setSmallIcon(R.mipmap.ic_launcher)
+                                            .setContentIntent(pendingIntent).build();
         myNotification.defaults |= Notification.DEFAULT_SOUND;
         myNotification.flags |= Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(1, myNotification);
