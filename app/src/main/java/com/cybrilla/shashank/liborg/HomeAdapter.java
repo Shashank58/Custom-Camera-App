@@ -56,17 +56,17 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 HomeView hv = allBooks.get(pos);
                 intent.putExtra("allData", hv);
                 ImageView bookImage = (ImageView) viewStart.findViewById(R.id.bookImage);
-                Bitmap thumbnail = ((BitmapDrawable)bookImage.getDrawable()).getBitmap();
-
+                Bitmap thumbnail = null;
+                if(bookImage.getDrawable() != null) {
+                    thumbnail = ((BitmapDrawable) bookImage.getDrawable()).getBitmap();
+                }
 
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation
                         (mActivity,  new Pair<View, String>(viewStart, transitionCircle));
-
                 try {
                     String filename = "bitmap.png";
                     FileOutputStream stream = mContext.openFileOutput(filename, Context.MODE_PRIVATE);
                     thumbnail.compress(Bitmap.CompressFormat.PNG, 100, stream);
-
                     stream.close();
                     intent.putExtra("thumbnail", filename);
                 } catch (Exception e) {
