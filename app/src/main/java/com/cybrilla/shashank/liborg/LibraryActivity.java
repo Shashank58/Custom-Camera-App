@@ -15,6 +15,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -44,6 +45,7 @@ public class LibraryActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ViewPager viewPager;
     private EditText myEditText;
+    private TwoFragment twoFragment;
 
 
     @Override
@@ -68,9 +70,10 @@ public class LibraryActivity extends AppCompatActivity {
 
 
     private void setupViewPager(ViewPager viewPager) {
+        twoFragment = new TwoFragment();
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new OneFragment(), "Home");
-        adapter.addFragment(new TwoFragment(), "My Shelf");
+        adapter.addFragment(twoFragment, "My Shelf");
         viewPager.setAdapter(adapter);
     }
 
@@ -172,8 +175,13 @@ public class LibraryActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            Log.e("Library activity", "Response: "+response);
                             JSONObject res = new JSONObject(response);
                             String message = res.getString("message");
+                            boolean status = res.getBoolean("status");
+                            if(status){
+                                twoFragment.getData();
+                            }
                             AlertDialog.Builder builder = new AlertDialog.Builder(LibraryActivity.this);
                             builder.setTitle("Book Issue")
                                     .setMessage(message)

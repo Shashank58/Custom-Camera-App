@@ -62,7 +62,7 @@ public class TwoFragment extends android.support.v4.app.Fragment {
         return view;
     }
 
-    private void getData(){
+    protected void getData(){
         String url = "https://liborgs-1139.appspot.com/users/issued_books";
         myBooks = new ArrayList<>();
         RequestQueue queue = Volley.newRequestQueue(getActivity());

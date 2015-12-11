@@ -17,4 +17,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="PagerTabStripText">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

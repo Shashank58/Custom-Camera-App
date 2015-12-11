@@ -15,7 +15,6 @@ import android.support.design.widget.CoordinatorLayout.LayoutParams;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -81,12 +80,12 @@ public class OneFragment extends Fragment {
             llm.setOrientation(LinearLayoutManager.VERTICAL);
             recList.setLayoutManager(llm);
 
-            recList.addOnScrollListener(new OnScrollListener() {
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
-                }
-            });
+//            recList.addOnScrollListener(new OnScrollListener() {
+//                @Override
+//                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                    super.onScrolled(recyclerView, dx, dy);
+//                }
+//            });
         } else {
             fetchData.setText("Please connect to internet");
             fetchData.setVisibility(View.VISIBLE);

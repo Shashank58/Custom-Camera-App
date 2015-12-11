@@ -64,6 +64,7 @@
             app:tabMaxWidth="0dp"
             app:tabGravity="fill"
             app:tabTextColor="#E0E0E0"
+            app:tabTextAppearance="@style/PagerTabStripText"
             app:tabSelectedTextColor="@color/white"
             app:tabIndicatorColor="@color/white"
             app:elevation="2dp"/>
