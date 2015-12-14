@@ -46,6 +46,7 @@ public class LibraryActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private EditText myEditText;
     private TwoFragment twoFragment;
+    private OneFragment oneFragment;
 
 
     @Override
@@ -71,8 +72,9 @@ public class LibraryActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         twoFragment = new TwoFragment();
+        oneFragment = new OneFragment();
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OneFragment(), "Home");
+        adapter.addFragment(oneFragment, "Home");
         adapter.addFragment(twoFragment, "My Shelf");
         viewPager.setAdapter(adapter);
     }
@@ -80,6 +82,7 @@ public class LibraryActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         myEditText.setVisibility(View.INVISIBLE);
+        oneFragment.setOriginalAdapter();
     }
 
 

@@ -51,6 +51,9 @@ public class OneFragment extends Fragment {
     private ImageView search;
     private Toolbar toolbar;
     private TextView fetchData;
+    private List<HomeView> libraryBooks;
+    private List<HomeView> listOfAllBooks;
+    private HomeAdapter bookList;;
 
     public OneFragment(){
 
@@ -146,8 +149,7 @@ public class OneFragment extends Fragment {
     }
 
     private void extractResponse(JSONObject response){
-        HomeAdapter bookList;
-        List<HomeView> libraryBooks = new ArrayList<>();
+        libraryBooks = new ArrayList<>();
         try {
             JSONArray data = response.getJSONArray("data");
             for(int i = 0; i < data.length(); i++){
@@ -179,6 +181,11 @@ public class OneFragment extends Fragment {
         }
     }
 
+    public void setOriginalAdapter(){
+        bookList = new HomeAdapter(listOfAllBooks, mContext, getActivity());
+        recList.setAdapter(bookList);
+    }
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -194,6 +201,7 @@ public class OneFragment extends Fragment {
             public void onResponse(JSONObject response) {
                 fetchData.setVisibility(View.GONE);
                 extractResponse(response);
+                listOfAllBooks = new ArrayList<>(libraryBooks);
             }
         }, new Response.ErrorListener() {
             @Override
