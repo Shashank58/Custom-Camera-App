@@ -2,8 +2,6 @@ package com.cybrilla.shashank.liborg;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentActivity;
@@ -19,7 +17,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.io.FileOutputStream;
 import java.util.List;
 
 /**
@@ -55,23 +52,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 int pos = (int) v.getTag();
                 HomeView hv = allBooks.get(pos);
                 intent.putExtra("allData", hv);
-                ImageView bookImage = (ImageView) viewStart.findViewById(R.id.bookImage);
-                Bitmap thumbnail = null;
-                if(bookImage.getDrawable() != null) {
-                    thumbnail = ((BitmapDrawable) bookImage.getDrawable()).getBitmap();
-                }
 
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation
                         (mActivity,  new Pair<View, String>(viewStart, transitionCircle));
-                try {
-                    String filename = "bitmap.png";
-                    FileOutputStream stream = mContext.openFileOutput(filename, Context.MODE_PRIVATE);
-                    thumbnail.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    stream.close();
-                    intent.putExtra("thumbnail", filename);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+
                 ActivityCompat.startActivity(mActivity, intent, options.toBundle());
             }
         });
@@ -111,5 +95,4 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
             bookImage = (ImageView) v.findViewById(R.id.bookImage);
         }
     }
-
 }

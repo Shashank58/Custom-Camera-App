@@ -22,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -79,13 +80,6 @@ public class OneFragment extends Fragment {
             LinearLayoutManager llm = new LinearLayoutManager(mContext);
             llm.setOrientation(LinearLayoutManager.VERTICAL);
             recList.setLayoutManager(llm);
-
-//            recList.addOnScrollListener(new OnScrollListener() {
-//                @Override
-//                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                    super.onScrolled(recyclerView, dx, dy);
-//                }
-//            });
         } else {
             fetchData.setText("Please connect to internet");
             fetchData.setVisibility(View.VISIBLE);
@@ -116,6 +110,9 @@ public class OneFragment extends Fragment {
             public void onClick(View v) {
                 if (myEditText.getVisibility() == View.INVISIBLE) {
                     myEditText.setVisibility(View.VISIBLE);
+                    InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    myEditText.requestFocus();
+                    imgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
                 } else {
                     String query = myEditText.getText().toString();
                     if (!query.equals("")) {

@@ -70,7 +70,7 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
                                 try {
                                     res = new JSONObject(response);
                                     message = res.getString("message");
-                                    itemView.findViewById(R.id.returnBook).setVisibility(View.GONE);
+                                    itemView.findViewById(R.id.returnBook).setEnabled(false);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -132,10 +132,11 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
             String status;
             if(bookStatus == 0){
                 status = "Pending";
+                holder.returnBook.setEnabled(true);
             } else {
                 status = "Returned";
+                holder.returnBook.setVisibility(View.GONE);
             }
-            holder.returnBook.setVisibility(View.GONE);
             holder.dueDateText.setText("Returned date");
             holder.dueDate.setText(hv.getReturnDate());
             holder.bookStatus.setText("Status:");
