@@ -75,4 +75,8 @@ public class ResultsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    public void finishActivity(){
+        finish();
+    }
 }

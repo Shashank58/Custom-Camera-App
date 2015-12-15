@@ -132,6 +132,7 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
             String status;
             if(bookStatus == 0){
                 status = "Pending";
+                holder.returnBook.setTag(position);
                 holder.returnBook.setEnabled(true);
             } else {
                 status = "Returned";

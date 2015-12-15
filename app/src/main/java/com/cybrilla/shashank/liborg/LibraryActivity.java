@@ -193,7 +193,9 @@ public class LibraryActivity extends AppCompatActivity {
                                             new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int id) {
-
+                                                    TabLayout.Tab tab = tabLayout.getTabAt(1);
+                                                    if(tab != null)
+                                                        tab.select();
                                                 }
                                             })
                                     .show();

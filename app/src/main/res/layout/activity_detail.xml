@@ -15,14 +15,14 @@
             android:id="@+id/toolbarDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#4DB6AC"
+            android:background="#004D40"
             android:transitionName="@string/transition_name_circle">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="0dp"
-                android:background="#4DB6AC"
+                android:background="#004D40"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -56,7 +56,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
                             android:text="Effective Java"
-                            android:textColor="#212121"
+                            android:textColor="#000000"
                             android:textSize="24sp"
                             android:textStyle="bold"
                             android:transitionName="@string/transition_name_name"/>
@@ -96,23 +96,24 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/appBar">
+        android:layout_below="@+id/appBar"
+        android:background="#004D40">
 
         <LinearLayout
             android:id="@+id/allViewsDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="#C5E1A5">
+                android:background="#ffffff">
 
                 <GridLayout
                     android:layout_width="match_parent"
@@ -213,8 +214,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#C5E1A5"
+                android:layout_marginTop="1dp"
+                android:background="#ffffff"
                 android:orientation="vertical">
 
                 <TextView

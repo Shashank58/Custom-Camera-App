@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/fetching_data"
         android:text="Fetching..."
-        android:textColor="#009688"
+        android:textColor="#ffffff"
         android:visibility="gone"
         android:textSize="24sp"
         android:textStyle="bold|italic"
