@@ -22,16 +22,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/signUp"
-                android:textSize="34sp"
+                android:textSize="26sp"
                 android:textStyle="bold"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="0dp"/>
+                android:layout_marginTop="0dp"
+                android:textColor="@color/navBar"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -40,12 +41,13 @@
                     android:text="@string/fnameIcon"
                     android:textSize="20sp"
                     android:layout_marginTop="25dp"
-                    android:textColor="@color/pure_black"/>
+                    android:textColor="@color/navBar"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
+                    android:textColorHint="@color/navBar"
                     app:hintAnimationEnabled="true">
 
                     <EditText
@@ -64,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="7dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -73,12 +75,13 @@
                 android:text="@string/lnameIcon"
                 android:textSize="20sp"
                 android:layout_marginTop="25dp"
-                android:textColor="@color/pure_black"/>
+                android:textColor="@color/navBar"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
+                android:textColorHint="@color/navBar"
                 app:hintAnimationEnabled="true">
 
                 <EditText
@@ -97,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="7dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -106,12 +109,13 @@
                     android:text="@string/mailIcon"
                     android:textSize="20sp"
                     android:layout_marginTop="25dp"
-                    android:textColor="@color/pure_black"/>
+                    android:textColor="@color/navBar"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
+                    android:textColorHint="@color/navBar"
                     app:hintAnimationEnabled="true">
 
                     <EditText
@@ -119,7 +123,6 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/email"
                         android:hint="@string/email"
-                        android:layout_marginTop="300dp"
                         android:textColorHint="@color/pure_black"/>
 
                 </android.support.design.widget.TextInputLayout>
@@ -129,7 +132,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="7dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -137,14 +141,14 @@
                     android:id="@+id/keyIconSignUp"
                     android:text="@string/keyIcon"
                     android:textSize="20sp"
-                    android:layout_marginTop="35dp"
-                    android:textColor="@color/pure_black"/>
+                    android:layout_marginTop="25dp"
+                    android:textColor="@color/navBar"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
                     android:layout_marginLeft="12dp"
+                    android:textColorHint="@color/navBar"
                     app:hintAnimationEnabled="true">
 
                     <EditText
@@ -163,7 +167,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="7dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -171,14 +176,14 @@
                     android:id="@+id/checkIcon"
                     android:text="@string/checkIcon"
                     android:textSize="20sp"
-                    android:layout_marginTop="40dp"
-                    android:textColor="@color/pure_black"/>
+                    android:layout_marginTop="25dp"
+                    android:textColor="@color/navBar"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
                     android:layout_marginLeft="12dp"
+                    android:textColorHint="@color/navBar"
                     app:hintAnimationEnabled="true">
 
                     <EditText
@@ -199,9 +204,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/createAccount"
-                android:text="@string/createAccount"
-                android:layout_marginTop="30dp"
-                android:background="@color/info"
+                android:text="@string/signUp"
+                android:layout_marginTop="20dp"
+                android:background="@color/success"
                 android:textColor="@color/white"
                 android:onClick="loginScreen"/>
 

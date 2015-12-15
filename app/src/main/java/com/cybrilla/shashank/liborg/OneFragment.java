@@ -53,7 +53,7 @@ public class OneFragment extends Fragment {
     private TextView fetchData;
     private List<HomeView> libraryBooks;
     private List<HomeView> listOfAllBooks;
-    private HomeAdapter bookList;;
+    private HomeAdapter bookList;
 
     public OneFragment(){
 

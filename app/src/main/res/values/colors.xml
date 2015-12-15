@@ -16,7 +16,7 @@
     <color name="success">#388e3c</color>
     <color name="info">#536DFE</color>
     <color name="background_lighter">#208abc</color>
-    <color name="registerScreens">#9E9E9E</color>
+    <color name="registerScreens">#E0E0E0</color>
     <color name="cardBackground">#212121</color>
     <color name="cardShelfBackground">#64B5F6</color>
     <color name="black">#212121</color>

@@ -67,7 +67,9 @@ public class RegisterGCMId extends Application {
     }
 
     public void sendToServer(){
-        if((s.getRegId(this) != null) && (s.getKeyAuth(this) != null)){
+        final String loggedIn = s.getKeyAuth(this);
+        final String registered = s.getRegId(this);
+        if((loggedIn != null) && (registered != null)){
             String url = "  https://liborgs-1139.appspot.com/device/register";
             RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -87,7 +89,7 @@ public class RegisterGCMId extends Application {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap<String, String> params = new HashMap<>();
-                    params.put("auth-token", s.getKeyAuth(RegisterGCMId.this));
+                    params.put("auth-token", loggedIn);
                     return params;
                 }
 
@@ -95,7 +97,7 @@ public class RegisterGCMId extends Application {
                 protected Map<String, String> getParams() throws AuthFailureError {
                     HashMap<String, String> params = new HashMap<>();
                     params.put("source", "android");
-                    params.put("reg_id", s.getRegId(RegisterGCMId.this));
+                    params.put("reg_id", registered);
                     return params;
                 }
             };

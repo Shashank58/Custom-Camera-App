@@ -37,7 +37,9 @@ public class SignUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
         findViews();
 
         Typeface font = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");

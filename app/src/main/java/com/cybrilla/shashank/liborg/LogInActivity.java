@@ -49,7 +49,9 @@ public class LogInActivity extends AppCompatActivity {
             finish();
         }else {
             setContentView(R.layout.activity_log_in);
-
+            if(getSupportActionBar() != null) {
+                getSupportActionBar().hide();
+            }
             TextView mailIcon = (TextView) findViewById(R.id.mailIcon);
             TextView keyIcon = (TextView) findViewById(R.id.keyIcon);
 
@@ -58,6 +60,7 @@ public class LogInActivity extends AppCompatActivity {
             keyIcon.setTypeface(font);
         }
     }
+
 
     public void forgotPassword(View v){
         Intent intent = new Intent(this, ForgotPassActivity.class);
@@ -103,12 +106,6 @@ public class LogInActivity extends AppCompatActivity {
 
                                 RegisterGCMId app = (RegisterGCMId) getApplication();
                                 app.sendToServer();
-                                if (checkPlayServices()) {
-                                    // Start IntentService to register this application with GCM.
-//                                    Log.e("Login activity", "Getting called?");
-//                                    Intent intent = new Intent(LogInActivity.this, RegistrationIntentService.class);
-//                                    startService(intent);
-                                }
 
                                 Intent intent = new Intent(getApplication(), LibraryActivity.class);
                                 startActivity(intent);

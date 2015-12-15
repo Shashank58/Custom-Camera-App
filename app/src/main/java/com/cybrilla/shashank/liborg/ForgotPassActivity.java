@@ -32,6 +32,9 @@ public class ForgotPassActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
         setContentView(R.layout.activity_forgot_pass);
         recoveryEmail = (EditText) findViewById(R.id.recoveryEmail);
         recoveryButton = (Button) findViewById(R.id.recoveryButton);

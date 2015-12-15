@@ -1,11 +1,13 @@
 package com.cybrilla.shashank.liborg;
 
-import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -16,9 +18,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -47,6 +49,11 @@ public class LibraryActivity extends AppCompatActivity {
     private EditText myEditText;
     private TwoFragment twoFragment;
     private OneFragment oneFragment;
+    private Bitmap bm, scaledBitmap, bitmap;
+
+    private static final int PIC_CAPTURED = 0;
+    private static final int CROPPED_PIC = 2;
+    private int x1, y1, x2, y2;
 
 
     @Override
@@ -85,37 +92,6 @@ public class LibraryActivity extends AppCompatActivity {
         oneFragment.setOriginalAdapter();
     }
 
-
-
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-    }
-
     public void scanBarCode(View v){
         if(isNetworkAvailable()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -127,27 +103,8 @@ public class LibraryActivity extends AppCompatActivity {
                                 integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
                                 integrator.initiateScan();
                             } else {
-                                AlertDialog.Builder build = new AlertDialog.Builder(LibraryActivity.this);
-                                final LayoutInflater layoutInflater = LibraryActivity.this.getLayoutInflater();
-                                build.setView(layoutInflater.inflate(R.layout.dialog_title, null))
-                                        .setPositiveButton(android.R.string.yes,
-                                                new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialog, int id) {
-                                                        Dialog dialogView = (Dialog) dialog;
-                                                        EditText dialogBookTitle = (EditText) dialogView.findViewById(R.id.dialog_book_title);
-                                                        String bookTitle = dialogBookTitle.getText().toString();
-                                                        if (!bookTitle.equals("")) {
-                                                            issueBook("", bookTitle);
-                                                        }
-                                                    }
-                                                })
-                                        .setNegativeButton(android.R.string.cancel,
-                                                new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int id) {
-
-                                                    }
-                                                }).show();
+                                Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                                startActivityForResult(intent, PIC_CAPTURED);
                             }
                         }
                     }).show();
@@ -164,10 +121,54 @@ public class LibraryActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == RESULT_OK) {
-            String _code = data.getStringExtra("SCAN_RESULT");
-            issueBook(_code, "");
+            if(requestCode == PIC_CAPTURED){
+                performCrop(data.getData());
+            } else if (requestCode == CROPPED_PIC){
+                bm = data.getExtras().getParcelable("data");
+                int height = 0;
+                if (bm != null) {
+                    height = bm.getHeight();
+                }
+                Log.e("Library activity", "Height: "+height);
+                int width = bm.getWidth();
+                int finalWidth;
+                int finalHeight ;
+                if(height >= width){
+                    finalHeight = 480;
+                    finalWidth = (finalHeight * width) / height;
+                }else {
+                    finalWidth = 480;
+                    finalHeight = (finalWidth * height) / width;
+                }
+                scaledBitmap = Bitmap.createScaledBitmap(bm, finalWidth, finalHeight, true);
+                SendImage s = new SendImage(scaledBitmap, this);
+                s.sendImage();
+            } else {
+                String _code = data.getStringExtra("SCAN_RESULT");
+                issueBook(_code, "");
+            }
+        }
+    }
+
+    private void performCrop(Uri bp){
+        try {
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+
+            cropIntent.setData(bp);
+            cropIntent.setType("image/*");
+
+            cropIntent.putExtra("crop", "true");
+            cropIntent.putExtra("aspectX", x1);
+            cropIntent.putExtra("aspectY", y1);
+            cropIntent.putExtra("outputX", x2);
+            cropIntent.putExtra("outputY", y2);
+            cropIntent.putExtra("return-data", true);
+            startActivityForResult(cropIntent, CROPPED_PIC);
+        } catch (ActivityNotFoundException e){
+            e.printStackTrace();
+            Toast toast = Toast.makeText(getApplicationContext(), "Your device doesnot support cropping an image", Toast.LENGTH_LONG);
+            toast.show();
         }
     }
 
@@ -226,5 +227,34 @@ public class LibraryActivity extends AppCompatActivity {
         };
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(jObject);
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 }

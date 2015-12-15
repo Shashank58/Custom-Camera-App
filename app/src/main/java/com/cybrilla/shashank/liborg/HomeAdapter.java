@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
 
     public HomeAdapter(List<HomeView> allBooks, Context context, FragmentActivity activity){
         super();
-        this.allBooks = allBooks;
+        this.allBooks = new ArrayList<>(allBooks);
         mContext = context;
         mActivity = activity;
     }

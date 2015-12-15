@@ -23,30 +23,31 @@
             android:layout_height="wrap_content"
             android:id="@+id/logIn"
             android:text="@string/login"
-            android:textSize="34sp"
+            android:textSize="26sp"
             android:textStyle="bold"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="35dp"
-            android:textColor="@color/pure_black"/>
+            android:layout_marginTop="0dp"
+            android:textColor="@color/navBar"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="35dp">
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/mailIcon"
                 android:text="@string/mailIcon"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:layout_marginTop="25dp"
-                android:textColor="@color/pure_black"/>
+                android:textColor="@color/navBar"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColorHint="@color/navBar"
                 app:hintAnimationEnabled="true">
 
                 <EditText
@@ -71,15 +72,16 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/keyIcon"
                 android:text="@string/keyIcon"
-                android:textSize="24sp"
-                android:layout_marginTop="45dp"
-                android:textColor="@color/pure_black"/>
+                android:textSize="20sp"
+                android:layout_marginTop="35dp"
+                android:textColor="@color/navBar"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="12dp"
+                android:textColorHint="@color/navBar"
                 app:hintAnimationEnabled="true">
 
                 <EditText
@@ -100,36 +102,42 @@
             android:id="@+id/submit"
             android:layout_gravity="center_horizontal"
             android:text="@string/submit"
-            android:layout_marginTop="40dp"
-            android:background="@color/info"
+            android:layout_marginTop="20dp"
+            android:background="@color/success"
             android:textColor="@color/white"
             android:onClick="login"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/forgotPassword"
-            android:text="@string/forgotPassword"
-            android:textSize="16sp"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/linkColour"
-            android:textStyle="italic"
-            android:clickable="true"
-            android:onClick="forgotPassword"/>
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/newUser"
-            android:text="@string/signUp"
-            android:textSize="16sp"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/linkColour"
-            android:textStyle="italic"
-            android:clickable="true"
-            android:onClick="signUp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/forgotPassword"
+                android:text="@string/forgotPassword"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:textColor="@color/navBar"
+                android:textStyle="italic"
+                android:clickable="true"
+                android:onClick="forgotPassword"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/newUser"
+                android:text="@string/signUp"
+                android:textSize="16sp"
+                android:textColor="@color/navBar"
+                android:textStyle="italic"
+                android:clickable="true"
+                android:onClick="signUp"
+                android:layout_marginRight="10dp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
