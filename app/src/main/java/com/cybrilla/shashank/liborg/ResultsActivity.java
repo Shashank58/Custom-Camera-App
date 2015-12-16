@@ -1,8 +1,10 @@
 package com.cybrilla.shashank.liborg;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,12 +36,33 @@ public class ResultsActivity extends AppCompatActivity {
         resultList.setLayoutManager(llm);
         String result = getIntent().getStringExtra("response");
         JSONObject response = null;
+        boolean status = false;
         try {
             response = new JSONObject(result);
+            status = response.getBoolean("status");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        showResults(response);
+        if(status)
+            showResults(response);
+        else {
+            try {
+                String message = response.getString("message");
+                new AlertDialog.Builder(ResultsActivity.this)
+                                .setTitle("Liborg")
+                                .setMessage(message)
+                                .setPositiveButton(android.R.string.yes,
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                finish();
+                                            }
+                                        })
+                                .show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void showResults(JSONObject response){
@@ -74,9 +97,5 @@ public class ResultsActivity extends AppCompatActivity {
         } catch (JSONException e){
             e.printStackTrace();
         }
-    }
-
-    public void finishActivity(){
-        finish();
     }
 }

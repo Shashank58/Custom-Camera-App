@@ -35,6 +35,7 @@ public class RegisterGCMId extends Application {
         singleton = this;
         SharedPreferencesHandler sh = new SharedPreferencesHandler();
         if(sh.getRegId(this) == null) {
+            Log.e("Register", "Is this called???");
             registerGCM();
         }
     }
@@ -67,8 +68,10 @@ public class RegisterGCMId extends Application {
     }
 
     public void sendToServer(){
-        final String loggedIn = s.getKeyAuth(this);
-        final String registered = s.getRegId(this);
+        SharedPreferencesHandler sh = new SharedPreferencesHandler();
+        final String loggedIn = sh.getKeyAuth(this);
+        final String registered = sh.getRegId(this);
+
         if((loggedIn != null) && (registered != null)){
             String url = "  https://liborgs-1139.appspot.com/device/register";
             RequestQueue queue = Volley.newRequestQueue(this);

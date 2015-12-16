@@ -10,10 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.TabLayout.OnTabSelectedListener;
-import android.support.design.widget.TabLayout.Tab;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -21,7 +18,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -66,39 +62,18 @@ public class LibraryActivity extends AppCompatActivity {
         // Hide the status bar.
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         getWindow().getDecorView().setSystemUiVisibility(uiOptions);
-        getSupportActionBar().hide();
+        if (getSupportActionBar() != null)
+            getSupportActionBar().hide();
         setContentView(R.layout.activity_library);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         myEditText = (EditText) findViewById(R.id.myEditText);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setOnTabSelectedListener(new OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(Tab tab) {
-                if(tab.getPosition() == 1){
-                    fab.setVisibility(View.GONE);
-                    viewPager.setCurrentItem(1);
-                } else {
-                    fab.setVisibility(View.VISIBLE);
-                    viewPager.setCurrentItem(0);
-                }
-            }
 
-            @Override
-            public void onTabUnselected(Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(Tab tab) {
-
-            }
-        });
         toolbar.setCollapsible(true);
     }
 
@@ -159,7 +134,7 @@ public class LibraryActivity extends AppCompatActivity {
                 if (bm != null) {
                     height = bm.getHeight();
                 }
-                Log.e("Library activity", "Height: "+height);
+                //Resizing image
                 int width = bm.getWidth();
                 int finalWidth;
                 int finalHeight ;
@@ -215,12 +190,11 @@ public class LibraryActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             dialog.hide();
-                            Log.e("Library activity", "Response: "+response);
                             JSONObject res = new JSONObject(response);
                             String message = res.getString("message");
                             boolean status = res.getBoolean("status");
                             if(status){
-                                twoFragment.getData();
+                                twoFragment.getData(); //Update my shelf with the book
                             }
                             AlertDialog.Builder builder = new AlertDialog.Builder(LibraryActivity.this);
                             builder.setTitle("Book Issue")
@@ -229,6 +203,7 @@ public class LibraryActivity extends AppCompatActivity {
                                             new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int id) {
+                                                    //Goto My shelf
                                                     TabLayout.Tab tab = tabLayout.getTabAt(1);
                                                     if(tab != null)
                                                         tab.select();

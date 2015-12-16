@@ -1,6 +1,9 @@
 package com.cybrilla.shashank.liborg;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -38,7 +41,25 @@ public class ForgotPassActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_pass);
         recoveryEmail = (EditText) findViewById(R.id.recoveryEmail);
         recoveryButton = (Button) findViewById(R.id.recoveryButton);
-        resetPassword();
+        if (isNetworkAvailable())
+            resetPassword();
+        else {
+            new AlertDialog.Builder(ForgotPassActivity.this)
+                    .setTitle("Liborg")
+                    .setMessage("Please connect to internet")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).show();
+        }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     public void resetPassword(){

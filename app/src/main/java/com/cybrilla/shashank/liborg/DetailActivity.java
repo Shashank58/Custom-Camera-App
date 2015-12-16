@@ -25,7 +25,8 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         super.onCreate(savedInstanceState);
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         getWindow().getDecorView().setSystemUiVisibility(uiOptions);
-        getSupportActionBar().hide();
+        if(getSupportActionBar() != null)
+            getSupportActionBar().hide();
 
         setContentView(R.layout.activity_detail);
 

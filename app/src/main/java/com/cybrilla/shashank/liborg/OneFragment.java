@@ -91,6 +91,7 @@ public class OneFragment extends Fragment {
             llm.setOrientation(LinearLayoutManager.VERTICAL);
             recList.setLayoutManager(llm);
         } else {
+            //Not connected to net
             fetchData.setText("Please connect to internet");
             fetchData.setVisibility(View.VISIBLE);
             CoordinatorLayout.LayoutParams params = (LayoutParams) fetchData.getLayoutParams();
@@ -164,8 +165,8 @@ public class OneFragment extends Fragment {
 
                         @Override
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
-                            bookList = new HomeAdapter(listOfAllBooks, mContext, getActivity());
-                            recList.swapAdapter(bookList, true);
+                            //Resetting adapter with all books
+                            setOriginalAdapter();
                         }
 
                         @Override

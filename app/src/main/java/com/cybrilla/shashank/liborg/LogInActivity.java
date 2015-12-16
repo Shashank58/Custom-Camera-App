@@ -1,8 +1,11 @@
 package com.cybrilla.shashank.liborg;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,8 +21,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -78,8 +79,31 @@ public class LogInActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Email or Password empty",
                     Toast.LENGTH_LONG).show();
         } else{
-            logIntoAccount();
+            if (isNetworkAvailable())
+                logIntoAccount();
+            else {
+                showDialog("Liborg", "Please connect to internet");
+            }
         }
+    }
+
+    private void showDialog(String title, String message){
+        new AlertDialog.Builder(LogInActivity.this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.yes,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).show();
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     public void logIntoAccount(){
@@ -109,18 +133,11 @@ public class LogInActivity extends AppCompatActivity {
 
                                 Intent intent = new Intent(getApplication(), LibraryActivity.class);
                                 startActivity(intent);
+                                finish();
                             } else {
                                 String message = jObj.getString("message");
 
-                                new AlertDialog.Builder(LogInActivity.this)
-                                        .setTitle("Log in")
-                                        .setMessage(message)
-                                        .setPositiveButton(android.R.string.yes,
-                                                new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-
-                                            }
-                                        }).show();
+                                showDialog("Log In", message);
                             }
                         }catch (JSONException e){
                             e.printStackTrace();
@@ -152,19 +169,4 @@ public class LogInActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private boolean checkPlayServices() {
-        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (apiAvailability.isUserResolvableError(resultCode)) {
-                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
-                        .show();
-            } else {
-                Log.i("Login activity", "This device is not supported.");
-                finish();
-            }
-            return false;
-        }
-        return true;
-    }
 }

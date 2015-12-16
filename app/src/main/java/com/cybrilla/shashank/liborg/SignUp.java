@@ -1,7 +1,10 @@
 package com.cybrilla.shashank.liborg;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +34,7 @@ public class SignUp extends AppCompatActivity {
     public static final String KEY_LNAME = "lastname";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PASSWORD = "password";
+    private static final String SIGN_UP = "Sign Up";
 
 
     @Override
@@ -70,24 +74,40 @@ public class SignUp extends AppCompatActivity {
         mFname = fname.getText().toString().trim();
         mLname = lname.getText().toString().trim();
         if(mConfirm.equals(mPassword)) {
-            registerUser();
+            if (isNetworkAvailable())
+                registerUser();
+            else {
+                showDialog("Liborg", "Please connect to internet");
+            }
         } else {
-            new AlertDialog.Builder(SignUp.this)
-                    .setTitle("Sign up")
-                    .setMessage("Passwords not matching")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    }).show();
+            showDialog(SIGN_UP, "Password not matching");
         }
+    }
+
+    private void showDialog(String title, String message){
+        new AlertDialog.Builder(SignUp.this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.yes,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).show();
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     public void registerUser(){
         mEmail = email.getText().toString().trim();
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        String REGISTER_URL = "https://liborgs-1139.appspot.com/users/register?";
+        String REGISTER_URL = "https://liborgs-1139.appspot.com/users/register";
 
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
                 new Response.Listener<String>() {
@@ -98,26 +118,10 @@ public class SignUp extends AppCompatActivity {
                             String message = jObj.getString("message");
                             Boolean status = jObj.getBoolean("status");
                             if(status){
-                                new AlertDialog.Builder(SignUp.this)
-                                        .setTitle("Sign up")
-                                        .setMessage(message)
-                                        .setPositiveButton(android.R.string.yes
-                                                , new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-
-                                            }
-                                        }).show();
+                                showDialog(SIGN_UP, message);
                                 finish();
                             } else {
-                                new AlertDialog.Builder(SignUp.this)
-                                        .setTitle("Sign up")
-                                        .setMessage(message)
-                                        .setPositiveButton(android.R.string.yes
-                                                , new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-
-                                            }
-                                        }).show();
+                                showDialog(SIGN_UP, message);
                             }
                         }catch (JSONException e){
                             e.printStackTrace();
