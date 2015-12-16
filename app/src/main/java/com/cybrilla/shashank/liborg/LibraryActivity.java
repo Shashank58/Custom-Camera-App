@@ -9,7 +9,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.design.widget.TabLayout.OnTabSelectedListener;
+import android.support.design.widget.TabLayout.Tab;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -69,9 +72,30 @@ public class LibraryActivity extends AppCompatActivity {
         myEditText = (EditText) findViewById(R.id.myEditText);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setOnTabSelectedListener(new OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(Tab tab) {
+                if(tab.getPosition() == 1){
+                    fab.setVisibility(View.GONE);
+                } else {
+                    fab.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(Tab tab) {
+
+            }
+        });
         toolbar.setCollapsible(true);
     }
 
@@ -90,7 +114,9 @@ public class LibraryActivity extends AppCompatActivity {
     public void onBackPressed() {
         myEditText.setVisibility(View.INVISIBLE);
         oneFragment.setOriginalAdapter();
+        super.onBackPressed();
     }
+
 
     public void scanBarCode(View v){
         if(isNetworkAvailable()) {

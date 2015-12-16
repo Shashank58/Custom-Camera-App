@@ -13,7 +13,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             app:layout_scrollFlags="scroll|enterAlways"
             android:background="#00796B">
 
@@ -22,26 +22,55 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/searchBack"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_searchback"
+                    android:layout_marginTop="8dp"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/tabTitle"
                     android:text="Liborg"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:layout_marginTop="5dp"/>
+                    android:layout_marginTop="10dp"/>
 
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="35dp"
-                    android:layout_weight="1"
-                    android:id="@+id/myEditText"
-                    android:focusable="true"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:id="@+id/searchBarLayout"
+                    android:orientation="horizontal"
                     android:background="@color/white"
                     android:visibility="invisible"
+                    android:layout_weight="1"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_marginBottom="5dp">
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:textSize="16sp"
+                        android:id="@+id/myEditText"
+                        android:focusable="true"
+                        android:visibility="visible"
+                        android:layout_marginLeft="5dp"/>
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@android:drawable/ic_menu_close_clear_cancel"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"/>
+
+                </LinearLayout>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -50,7 +79,7 @@
                     android:id="@+id/search_action"
                     android:layout_marginRight="5dp"
                     android:layout_marginEnd="5dp"
-                    android:layout_marginTop="5dp"/>
+                    android:layout_marginTop="10dp"/>
 
             </LinearLayout>
 
@@ -85,9 +114,11 @@
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:id="@+id/fab"
+        android:layout_gravity="bottom|end"
         android:layout_margin="15dp"
         android:clickable="true"
+        app:backgroundTint="#009688"
         android:src="@drawable/ic_add"
         android:onClick="scanBarCode"/>
 

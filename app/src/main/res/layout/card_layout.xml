@@ -73,10 +73,17 @@
                 android:text="Something"
                 android:textStyle="italic"
                 android:textColor="#009688"
-                android:layout_gravity="start"
-                android:transitionName="@string/transition_name_author"/>
+                android:layout_gravity="start"/>
 
         </LinearLayout>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_enter"
+            android:id="@+id/start"
+            android:layout_gravity="center_vertical"
+            android:transitionName="@string/transition_name_author"/>
 
     </LinearLayout>
 

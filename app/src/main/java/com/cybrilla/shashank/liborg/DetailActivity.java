@@ -42,6 +42,10 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         setData();
     }
 
+    public void back(View v){
+        super.onBackPressed();
+    }
+
     private void setData(){
         HomeView hv = (HomeView) getIntent().getSerializableExtra("allData");
 

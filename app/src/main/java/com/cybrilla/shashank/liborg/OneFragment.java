@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -106,18 +107,34 @@ public class OneFragment extends Fragment {
         toolbar.setCollapsible(true);
 
         myEditText = (EditText) getActivity().findViewById(R.id.myEditText);
+        final ImageView searchBack = (ImageView) getActivity().findViewById(R.id.searchBack);
+        final TextView tabTitle = (TextView) getActivity().findViewById(R.id.tabTitle);
+        final LinearLayout searchLayout = (LinearLayout) getActivity().findViewById(R.id.searchBarLayout);
         search = (ImageView) toolbar.findViewById(R.id.search_action);
         search.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if (myEditText.getVisibility() == View.INVISIBLE) {
-                    myEditText.setVisibility(View.VISIBLE);
-                    InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (searchLayout.getVisibility() == View.INVISIBLE) {
+                    searchLayout.setVisibility(View.VISIBLE);
+                    tabTitle.setVisibility(View.GONE);
+                    searchBack.setVisibility(View.VISIBLE);
+                    final InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     myEditText.requestFocus();
                     imgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                    searchBack.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            searchBack.setVisibility(View.GONE);
+                            tabTitle.setVisibility(View.VISIBLE);
+                            searchLayout.setVisibility(View.INVISIBLE);
+                            imgr.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                            bookList = new HomeAdapter(listOfAllBooks, mContext, getActivity());
+                            recList.swapAdapter(bookList, true);
+                        }
+                    });
                 } else {
-                    String query = myEditText.getText().toString();
+                    String query = myEditText.getText().toString().trim();
                     if (!query.equals("")) {
                         fetchData(query);
                     }
