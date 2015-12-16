@@ -6,7 +6,7 @@
     tools:context="com.cybrilla.shashank.liborg.ForgotPassActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/registerScreens">
+    android:background="@color/white">
 
 
     <LinearLayout
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
-            android:background="@color/white"
+            android:background="@color/registerScreens"
             android:id="@+id/recoveryEmail"/>
 
         <Button

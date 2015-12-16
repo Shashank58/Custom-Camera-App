@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Liborg</string>
     <string name="button">Click A Pic</string>
-    <string name="login">Log in</string>
+    <string name="login">Sign in</string>
     <string name="email">Email</string>
     <string name="signUp">Sign Up</string>
     <string name="password">Password</string>

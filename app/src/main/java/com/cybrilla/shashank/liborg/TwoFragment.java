@@ -1,6 +1,5 @@
 package com.cybrilla.shashank.liborg;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -65,11 +64,6 @@ public class TwoFragment extends android.support.v4.app.Fragment {
 
     protected void getData(){
         String url = "https://liborgs-1139.appspot.com/users/issued_books";
-        final ProgressDialog dialog = new ProgressDialog(getActivity());
-        dialog.setMessage("Fetching");
-        dialog.setCancelable(false);
-        dialog.setInverseBackgroundForced(false);
-        dialog.show();
         myBooks = new ArrayList<>();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
@@ -77,7 +71,6 @@ public class TwoFragment extends android.support.v4.app.Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        dialog.hide();
                         try {
                             JSONArray data = response.getJSONArray("data");
                             for(int i = 0; i < data.length(); i++){
@@ -117,7 +110,6 @@ public class TwoFragment extends android.support.v4.app.Fragment {
                 }, new ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                dialog.hide();
             }
         })
         {

@@ -65,7 +65,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
             public void onClick(View v) {
                 String url = "https://liborgs-1139.appspot.com/users/issue";
                 final ProgressDialog dialog = new ProgressDialog(mActivity);
-                dialog.setMessage("Searching");
+                dialog.setMessage("Issuing");
                 dialog.setCancelable(false);
                 dialog.setInverseBackgroundForced(false);
                 dialog.show();

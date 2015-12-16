@@ -82,8 +82,10 @@ public class LibraryActivity extends AppCompatActivity {
             public void onTabSelected(Tab tab) {
                 if(tab.getPosition() == 1){
                     fab.setVisibility(View.GONE);
+                    viewPager.setCurrentItem(1);
                 } else {
                     fab.setVisibility(View.VISIBLE);
+                    viewPager.setCurrentItem(0);
                 }
             }
 
@@ -230,6 +232,7 @@ public class LibraryActivity extends AppCompatActivity {
                                                     TabLayout.Tab tab = tabLayout.getTabAt(1);
                                                     if(tab != null)
                                                         tab.select();
+                                                    viewPager.setCurrentItem(1);
                                                 }
                                             })
                                     .show();

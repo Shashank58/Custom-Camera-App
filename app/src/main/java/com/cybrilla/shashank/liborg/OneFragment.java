@@ -5,23 +5,30 @@ package com.cybrilla.shashank.liborg;
  Fetches data of all books from server. Search of books is also handled here.
  **/
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.CoordinatorLayout.LayoutParams;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnScrollChangeListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -70,6 +77,7 @@ public class OneFragment extends Fragment {
         }
     }
 
+    @TargetApi(VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -111,15 +119,30 @@ public class OneFragment extends Fragment {
         final TextView tabTitle = (TextView) getActivity().findViewById(R.id.tabTitle);
         final LinearLayout searchLayout = (LinearLayout) getActivity().findViewById(R.id.searchBarLayout);
         search = (ImageView) toolbar.findViewById(R.id.search_action);
+        final TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
+        final ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.viewpager);
+        final ImageView cancel = (ImageView) getActivity().findViewById(R.id.cancel);
+
         search.setOnClickListener(new OnClickListener() {
 
+            @TargetApi(VERSION_CODES.M)
             @Override
             public void onClick(View v) {
                 if (searchLayout.getVisibility() == View.INVISIBLE) {
+                    if(tabLayout.getTabAt(1).isSelected()){
+                        tabLayout.getTabAt(0).select();
+                        viewPager.setCurrentItem(0);
+                    }
+                    final InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     searchLayout.setVisibility(View.VISIBLE);
+                    recList.setOnScrollChangeListener(new OnScrollChangeListener() {
+                        @Override
+                        public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                            imgr.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                        }
+                    });
                     tabTitle.setVisibility(View.GONE);
                     searchBack.setVisibility(View.VISIBLE);
-                    final InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     myEditText.requestFocus();
                     imgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
                     searchBack.setOnClickListener(new OnClickListener() {
@@ -131,6 +154,31 @@ public class OneFragment extends Fragment {
                             imgr.hideSoftInputFromWindow(v.getWindowToken(), 0);
                             bookList = new HomeAdapter(listOfAllBooks, mContext, getActivity());
                             recList.swapAdapter(bookList, true);
+                        }
+                    });
+
+                    cancel.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            myEditText.setText("");
+                        }
+                    });
+
+                    myEditText.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            bookList = new HomeAdapter(listOfAllBooks, mContext, getActivity());
+                            recList.swapAdapter(bookList, true);
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+
                         }
                     });
                 } else {

@@ -1,7 +1,9 @@
 package com.cybrilla.shashank.liborg;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build.VERSION_CODES;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentActivity;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,15 +40,19 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
     }
 
 
+    @TargetApi(VERSION_CODES.M)
     @Override
     public HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.
                 from(parent.getContext()).
                 inflate(R.layout.card_layout, parent, false);
 
+
         itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                InputMethodManager imgr = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imgr.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 Intent intent = new Intent(mContext, DetailActivity.class);
                 String transitionCircle = mContext.getString(R.string.transition_name_circle);
                 String transitionArrow = mContext.getString(R.string.transition_name_author);

@@ -1,6 +1,7 @@
 package com.cybrilla.shashank.liborg;
 
-import android.content.Context;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -29,10 +30,10 @@ import cz.msebera.android.httpclient.Header;
  */
 public class SendImage {
     private Bitmap bookImage;
-    private Context mContext;
+    private Activity mContext;
     private String fileSrc;
 
-    public SendImage(Bitmap bookImage, Context c) {
+    public SendImage(Bitmap bookImage, Activity c) {
         this.bookImage = bookImage;
         mContext = c;
     }
@@ -59,10 +60,11 @@ public class SendImage {
         } catch (FileNotFoundException e) {
             Log.d("MyApp", "File not found!!!" + fileSrc);
         }
-
+        final ProgressDialog dialog = new ProgressDialog(mContext);
         client.post(url, params, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                dialog.hide();
                 Log.e("Send Image", "Response: " + response.toString());
                 Intent intent = new Intent(mContext, ResultsActivity.class);
                 intent.putExtra("response", response.toString());
@@ -71,12 +73,16 @@ public class SendImage {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                dialog.hide();
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
 
             @Override
             public void onProgress(long bytesWritten, long totalSize) {
-                Log.e("Send Image", "Under progress...");
+                dialog.setMessage("Fetching");
+                dialog.setCancelable(false);
+                dialog.setInverseBackgroundForced(false);
+                dialog.show();
             }
         });
     }
