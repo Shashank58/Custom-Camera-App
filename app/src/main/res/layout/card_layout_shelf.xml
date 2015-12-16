@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@color/shelfTitles">
+            android:background="#FFC107">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -30,17 +30,20 @@
                 android:id="@+id/bookStatusText"
                 android:text="@string/brought_on"
                 android:textStyle="italic"
-                android:textSize="16sp"
+                android:layout_marginLeft="5dp"
+                android:textSize="18sp"
                 android:padding="5dp"
-                android:textColor="@color/white"/>
+                android:textColor="@color/pure_black"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/borrowedDate"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:padding="5dp"
+                android:textSize="18sp"
+                android:textColor="@color/pure_black"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_marginLeft="2dp"
                 android:textStyle="italic"/>
 
         </LinearLayout>
@@ -50,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/shelf_blue"
+            android:background="@color/white"
             android:layout_marginTop="1dp">
 
             <LinearLayout
@@ -80,7 +83,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:textColor="@color/pure_black"
                         android:text="@string/name"
                         android:textStyle="bold"
                         android:textSize="16sp"
@@ -93,7 +96,7 @@
                         android:textSize="16sp"
                         android:singleLine="true"
                         android:layout_gravity="start"
-                        android:textColor="@color/white"
+                        android:textColor="@color/shelf_blue"
                         android:text="Effective Java"
                         android:layout_marginTop="3dp"/>
 
@@ -101,7 +104,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/author"
-                        android:textColor="@color/white"
+                        android:textColor="@color/pure_black"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_gravity="start"
@@ -114,7 +117,7 @@
                         android:textSize="16sp"
                         android:layout_gravity="start"
                         android:layout_marginTop="3dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/shelf_blue"
                         android:text="Stephane King"/>
 
                     <TextView
@@ -122,7 +125,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/dueDateText"
                         android:text="@string/due_date"
-                        android:textColor="@color/white"
+                        android:textColor="@color/pure_black"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_gravity="start"
@@ -135,7 +138,7 @@
                         android:textSize="16sp"
                         android:layout_gravity="start"
                         android:textStyle="italic"
-                        android:textColor="@color/white"
+                        android:textColor="@color/shelf_blue"
                         android:text="29th Nov 2015"
                         android:layout_marginTop="3dp"/>
 
@@ -150,8 +153,8 @@
             android:layout_height="wrap_content"
             android:text="@string/returnBook"
             android:id="@+id/returnBook"
-            android:background="@color/shelfTitles"
-            android:textColor="@color/white"
+            android:background="#FFC107"
+            android:textColor="@color/pure_black"
             android:layout_marginTop="1dp"
             android:clickable="true"/>
 

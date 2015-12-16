@@ -23,6 +23,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -101,6 +103,12 @@ public class TwoFragment extends android.support.v4.app.Fragment {
                                 myBooks.add(new HomeView(title, author, date, thumbnail, dueDate, issueDate
                                             , isbn, returnDate, returnStatus));
                             }
+                            Collections.sort(myBooks, new Comparator<HomeView>() {
+                                @Override
+                                public int compare(HomeView lhs, HomeView rhs) {
+                                    return lhs.getReturnStatus()-rhs.getReturnStatus();
+                                }
+                            });
                             bookList = new ShelfAdapter(myBooks, getActivity(), getActivity());
                             recList.setAdapter(bookList);
                         } catch (JSONException e) {

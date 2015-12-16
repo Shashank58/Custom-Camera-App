@@ -28,7 +28,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnScrollChangeListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -77,7 +76,6 @@ public class OneFragment extends Fragment {
         }
     }
 
-    @TargetApi(VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -135,12 +133,6 @@ public class OneFragment extends Fragment {
                     }
                     final InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     searchLayout.setVisibility(View.VISIBLE);
-                    recList.setOnScrollChangeListener(new OnScrollChangeListener() {
-                        @Override
-                        public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                            imgr.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                        }
-                    });
                     tabTitle.setVisibility(View.GONE);
                     searchBack.setVisibility(View.VISIBLE);
                     myEditText.requestFocus();
