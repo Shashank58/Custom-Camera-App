@@ -1,6 +1,7 @@
 package com.cybrilla.shashank.liborg;
 
-import android.content.Context;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -35,11 +36,11 @@ import java.util.Map;
  */
 public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsViewHolder> {
     private List<HomeView> allResultBooks;
-    private Context mContext;
+    private Activity mActivity;
 
-    public ResultsAdapter(List<HomeView> allBooks, Context context) {
+    public ResultsAdapter(List<HomeView> allBooks, Activity activity) {
         allResultBooks = new ArrayList<>(allBooks);
-        mContext = context;
+        mActivity = activity;
     }
 
     @Override
@@ -57,28 +58,34 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
         final String bookTitle = hv.getBookName();
         holder.bookName.setText(bookTitle);
         holder.authorName.setText(hv.getAuthorName());
-        Glide.with(mContext).load(hv.getThumbnail())
+        Glide.with(mActivity).load(hv.getThumbnail())
                 .asBitmap().into(holder.bookImage);
         holder.getIt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 String url = "https://liborgs-1139.appspot.com/users/issue";
+                final ProgressDialog dialog = new ProgressDialog(mActivity);
+                dialog.setMessage("Searching");
+                dialog.setCancelable(false);
+                dialog.setInverseBackgroundForced(false);
+                dialog.show();
                 StringRequest jObject = new StringRequest(Request.Method.POST, url,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
+                                dialog.hide();
                                 try {
                                     Log.e("Library activity", "Response: " + response);
                                     JSONObject res = new JSONObject(response);
                                     String message = res.getString("message");
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
                                     builder.setTitle("Book Issue")
                                             .setMessage(message)
                                             .setPositiveButton(android.R.string.yes,
                                                     new DialogInterface.OnClickListener() {
                                                         @Override
                                                         public void onClick(DialogInterface dialog, int id) {
-                                                            new ResultsActivity().finishActivity();
+                                                            mActivity.finish();
                                                         }
                                                     })
                                             .show();
@@ -89,7 +96,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        dialog.hide();
                     }
                 })
                 {
@@ -97,7 +104,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
                     public Map<String, String> getHeaders(){
                         Map<String, String> params = new HashMap<>();
                         SharedPreferencesHandler sh = new SharedPreferencesHandler();
-                        String authToken = sh.getKeyAuth(mContext);
+                        String authToken = sh.getKeyAuth(mActivity);
                         params.put("auth-token", authToken);
                         return params;
                     }
@@ -110,7 +117,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
                         return params;
                     }
                 };
-                RequestQueue queue = Volley.newRequestQueue(mContext);
+                RequestQueue queue = Volley.newRequestQueue(mActivity);
                 queue.add(jObject);
             }
         });

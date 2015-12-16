@@ -1,5 +1,6 @@
 package com.cybrilla.shashank.liborg;
 
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -200,11 +201,18 @@ public class LibraryActivity extends AppCompatActivity {
 
     private void issueBook(final String isbn, final String bookTitle){
         String url = "https://liborgs-1139.appspot.com/users/issue";
+        final ProgressDialog dialog = new ProgressDialog(LibraryActivity.this);
+        dialog.setMessage("Issuing");
+        dialog.setCancelable(false);
+        dialog.setInverseBackgroundForced(false);
+        dialog.show();
+
         StringRequest jObject = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            dialog.hide();
                             Log.e("Library activity", "Response: "+response);
                             JSONObject res = new JSONObject(response);
                             String message = res.getString("message");
@@ -232,7 +240,7 @@ public class LibraryActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                dialog.hide();
             }
         })
         {

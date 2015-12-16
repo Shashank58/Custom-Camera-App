@@ -5,6 +5,7 @@ package com.cybrilla.shashank.liborg;
  Fetches data of all books from server. Search of books is also handled here.
  **/
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -76,7 +77,6 @@ public class OneFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_one, container, false);
         fetchData = (TextView) view.findViewById(R.id.fetching_data);
         if(isNetworkAvailable()) {
-            fetchData.setVisibility(View.VISIBLE);
             searchFeature();
             recList = (RecyclerView) view.findViewById(R.id.cardList);
             recList.setHasFixedSize(true);
@@ -149,16 +149,23 @@ public class OneFragment extends Fragment {
                         .appendQueryParameter("query", query)
                         .build().toString();
 
+        final ProgressDialog dialog = new ProgressDialog(getActivity());
+        dialog.setMessage("Searching");
+        dialog.setCancelable(false);
+        dialog.setInverseBackgroundForced(false);
+        dialog.show();
+
         JsonObjectRequest jObject = new JsonObjectRequest(Method.GET, url,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        dialog.hide();
                         extractResponse(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                dialog.hide();
             }
         });
         RequestQueue queue = Volley.newRequestQueue(getActivity());
@@ -213,17 +220,23 @@ public class OneFragment extends Fragment {
     private void getData(){
         String url = "https://liborgs-1139.appspot.com/books/get_all_books";
         RequestQueue queue = Volley.newRequestQueue(getActivity());
+        final ProgressDialog dialog = new ProgressDialog(getActivity());
+        dialog.setMessage("Fetching");
+        dialog.setCancelable(false);
+        dialog.setInverseBackgroundForced(false);
+        dialog.show();
+
         JsonObjectRequest jRequest = new JsonObjectRequest(url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                fetchData.setVisibility(View.GONE);
+                dialog.hide();
                 extractResponse(response);
                 listOfAllBooks = new ArrayList<>(libraryBooks);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                dialog.hide();
             }
         }){
             public Map<String, String> getHeaders() throws AuthFailureError {
