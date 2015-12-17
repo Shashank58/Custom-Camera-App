@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -33,9 +34,11 @@ public class MyGcmListenerService extends GcmListenerService {
 
         Log.e(TAG, "Message: "+message);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Liborg")
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
+        }
+        notificationBuilder.setContentTitle("Liborg")
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
@@ -46,5 +49,4 @@ public class MyGcmListenerService extends GcmListenerService {
 
         notificationManager.notify(0, notificationBuilder.build());
     }
-
 }

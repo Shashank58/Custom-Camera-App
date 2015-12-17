@@ -66,6 +66,7 @@ public class ForgotPassActivity extends AppCompatActivity {
         recoveryButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                recoveryButton.setEnabled(false);
                 mail = recoveryEmail.getText().toString().trim();
                 String url = "https://liborgs-1139.appspot.com/users/reset-password?";
                 RequestQueue queue = Volley.newRequestQueue(ForgotPassActivity.this);

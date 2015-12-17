@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ public class SignUp extends AppCompatActivity {
     private TextView fnameIcon, checkIcon, keyIconSignUp, mailIconSignUp,lnameIcon;
     private String mFname, mLname, mEmail, mPassword, mConfirm;
     private EditText fname, lname, email, password, confirm;
+    private Button createAccount;
     public static final String KEY_FNAME = "firstname";
     public static final String KEY_LNAME = "lastname";
     public static final String KEY_EMAIL = "email";
@@ -66,6 +68,7 @@ public class SignUp extends AppCompatActivity {
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         confirm = (EditText) findViewById(R.id.confirmPassword);
+        createAccount = (Button) findViewById(R.id.createAccount);
     }
 
     public void loginScreen(View v){
@@ -74,8 +77,10 @@ public class SignUp extends AppCompatActivity {
         mFname = fname.getText().toString().trim();
         mLname = lname.getText().toString().trim();
         if(mConfirm.equals(mPassword)) {
-            if (isNetworkAvailable())
+            if (isNetworkAvailable()) {
+                createAccount.setEnabled(false);
                 registerUser();
+            }
             else {
                 showDialog("Liborg", "Please connect to internet");
             }

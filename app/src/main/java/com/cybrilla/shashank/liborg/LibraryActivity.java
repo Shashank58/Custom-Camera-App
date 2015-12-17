@@ -90,8 +90,6 @@ public class LibraryActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        myEditText.setVisibility(View.INVISIBLE);
-        oneFragment.setOriginalAdapter();
         super.onBackPressed();
     }
 
@@ -150,7 +148,21 @@ public class LibraryActivity extends AppCompatActivity {
                 s.sendImage();
             } else {
                 String _code = data.getStringExtra("SCAN_RESULT");
-                issueBook(_code, "");
+                if (isNetworkAvailable())
+                    issueBook(_code, "");
+                else {
+                    new AlertDialog.Builder(this)
+                                .setTitle("Liborg")
+                                .setMessage("Please check your internet connection")
+                                .setPositiveButton(android.R.string.yes,
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        })
+                                .show();
+                }
             }
         }
     }

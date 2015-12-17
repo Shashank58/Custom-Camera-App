@@ -28,7 +28,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
+
                     android:clickable="true"
                     android:src="@drawable/ic_searchback"
                     android:onClick="back"
@@ -39,15 +39,15 @@
                     android:layout_width="120dp"
                     android:layout_height="160dp"
                     android:layout_marginBottom="15dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="50dp"
                     android:layout_weight="0"
                     android:scaleType="fitXY"/>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="40dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="0"

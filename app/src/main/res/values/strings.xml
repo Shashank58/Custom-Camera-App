@@ -28,7 +28,7 @@
     <string name="transition_name_circle">transition:CIRCLE</string>
     <string name="transition_name_author">transition:AUTHOR</string>
     <string name="message_retrive">To reset password please enter your registered email and check your mail.</string>
-    <string name="account_recover">Account Recovery</string>
+    <string name="account_recover">Forgot Password</string>
     <string name="pick_issue_type">Select book issue type</string>
     <string name="brought_on">Brought on :</string>
     <string name="author">Author</string>

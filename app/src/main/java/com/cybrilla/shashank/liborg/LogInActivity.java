@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,13 +75,16 @@ public class LogInActivity extends AppCompatActivity {
 
         mEmail = email.getText().toString().trim();
         mPassword = password.getText().toString();
+        Button submit = (Button) findViewById(R.id.submit);
 
         if(mEmail.equals("") || mPassword.equals("")){
             Toast.makeText(getApplicationContext(), "Email or Password empty",
                     Toast.LENGTH_LONG).show();
         } else{
-            if (isNetworkAvailable())
+            if (isNetworkAvailable()) {
+                submit.setEnabled(false);
                 logIntoAccount();
+            }
             else {
                 showDialog("Liborg", "Please connect to internet");
             }

@@ -8,6 +8,7 @@ package com.cybrilla.shashank.liborg;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -18,6 +19,7 @@ import android.support.design.widget.CoordinatorLayout.LayoutParams;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -128,7 +130,7 @@ public class OneFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (searchLayout.getVisibility() == View.INVISIBLE) {
-                    if(tabLayout.getTabAt(1).isSelected()){
+                    if (tabLayout.getTabAt(1).isSelected()) {
                         tabLayout.getTabAt(0).select();
                         viewPager.setCurrentItem(0);
                     }
@@ -177,7 +179,20 @@ public class OneFragment extends Fragment {
                 } else {
                     String query = myEditText.getText().toString().trim();
                     if (!query.equals("")) {
-                        fetchData(query);
+                        if (isNetworkAvailable())
+                            fetchData(query);
+                        else {
+                            new AlertDialog.Builder(getActivity())
+                                    .setTitle("Liborg")
+                                    .setMessage("Please check your internet connection")
+                                    .setPositiveButton(android.R.string.yes,
+                                        new DialogInterface.OnClickListener(){
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        }).show();
+                        }
                     }
                 }
             }
@@ -201,7 +216,27 @@ public class OneFragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         dialog.hide();
-                        extractResponse(response);
+                        try {
+                            boolean status = response.getBoolean("status");
+                            if(status)
+                                extractResponse(response);
+                            else {
+                                String message = response.getString("message");
+                                new AlertDialog.Builder(getActivity())
+                                                .setTitle("Liborg")
+                                                .setMessage(message)
+                                                .setPositiveButton(android.R.string.yes,
+                                                        new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                            }
+                                                        })
+                                                .show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
