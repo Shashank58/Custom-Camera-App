@@ -10,8 +10,8 @@
     android:paddingTop="10dp"
     android:paddingBottom="@dimen/activity_vertical_margin"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.cybrilla.shashank.liborg.SignUp"
-    android:background="@color/white">
+    tools:context="com.cybrilla.shashank.android.SignUp"
+    android:background="#009688">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,37 +26,35 @@
                 android:textStyle="bold"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="0dp"
-                android:textColor="@color/navBar"/>
+                android:textColor="@color/white"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="15dp">
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:src="@drawable/ic_first_name"
                     android:id="@+id/fnameIcon"
-                    android:text="@string/fnameIcon"
-                    android:textSize="20sp"
-                    android:layout_marginTop="25dp"
-                    android:textColor="@color/navBar"/>
+                    android:layout_marginTop="17dp"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
-                    android:textColorHint="@color/navBar"
-                    app:hintAnimationEnabled="true">
+                    android:textColorHint="#E0E0E0"
+                    app:hintAnimationEnabled="true"
+                    android:theme="@style/TextLabel">
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/fname"
                         android:hint="@string/fname"
-                        android:layout_marginTop="300dp"
-                        android:textColorHint="@color/pure_black"/>
+                        android:layout_marginTop="300dp"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -66,31 +64,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="7dp">
+            android:layout_marginTop="10dp">
 
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@drawable/ic_last_name"
                 android:id="@+id/lnameIcon"
-                android:text="@string/lnameIcon"
-                android:textSize="20sp"
-                android:layout_marginTop="25dp"
-                android:textColor="@color/navBar"/>
+                android:layout_marginTop="17dp"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
-                android:textColorHint="@color/navBar"
-                app:hintAnimationEnabled="true">
+                android:textColorHint="#E0E0E0"
+                app:hintAnimationEnabled="true"
+                android:theme="@style/TextLabel">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/lname"
                     android:hint="@string/lname"
-                    android:layout_marginTop="300dp"
-                    android:textColorHint="@color/pure_black"/>
+                    android:layout_marginTop="300dp"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -100,30 +96,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="7dp">
+                android:layout_marginTop="10dp">
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:src="@drawable/ic_mail"
                     android:id="@+id/mailIconSignUp"
-                    android:text="@string/mailIcon"
-                    android:textSize="20sp"
-                    android:layout_marginTop="25dp"
-                    android:textColor="@color/navBar"/>
+                    android:layout_marginTop="17dp"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
-                    android:textColorHint="@color/navBar"
-                    app:hintAnimationEnabled="true">
+                    android:textColorHint="#E0E0E0"
+                    app:hintAnimationEnabled="true"
+                    android:theme="@style/TextLabel">
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/email"
-                        android:hint="@string/email"
-                        android:textColorHint="@color/pure_black"/>
+                        android:hint="@string/email"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -133,23 +127,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="7dp">
+                android:layout_marginTop="10dp">
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:src="@drawable/ic_password"
                     android:id="@+id/keyIconSignUp"
-                    android:text="@string/keyIcon"
-                    android:textSize="20sp"
-                    android:layout_marginTop="25dp"
-                    android:textColor="@color/navBar"/>
+                    android:layout_marginTop="17dp"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
-                    android:textColorHint="@color/navBar"
-                    app:hintAnimationEnabled="true">
+                    android:textColorHint="#E0E0E0"
+                    app:hintAnimationEnabled="true"
+                    android:theme="@style/TextLabel">
 
                     <EditText
                         android:layout_width="match_parent"
@@ -157,7 +150,6 @@
                         android:id="@+id/password"
                         android:hint="@string/password"
                         android:layout_marginTop="30dp"
-                        android:textColorHint="@color/pure_black"
                         android:password="true"/>
 
                 </android.support.design.widget.TextInputLayout>
@@ -168,23 +160,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="7dp">
+                android:layout_marginTop="10dp">
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:src="@drawable/ic_confirm_password"
                     android:id="@+id/checkIcon"
-                    android:text="@string/checkIcon"
-                    android:textSize="20sp"
-                    android:layout_marginTop="25dp"
-                    android:textColor="@color/navBar"/>
+                    android:layout_marginTop="17dp"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
-                    android:textColorHint="@color/navBar"
-                    app:hintAnimationEnabled="true">
+                    android:textColorHint="#E0E0E0"
+                    app:hintAnimationEnabled="true"
+                    android:theme="@style/TextLabel">
 
                     <EditText
                         android:layout_width="match_parent"
@@ -192,7 +183,6 @@
                         android:id="@+id/confirmPassword"
                         android:hint="@string/confirm"
                         android:layout_marginTop="30dp"
-                        android:textColorHint="@color/pure_black"
                         android:password="true"/>
 
                 </android.support.design.widget.TextInputLayout>
@@ -205,9 +195,9 @@
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/createAccount"
                 android:text="@string/signUp"
-                android:layout_marginTop="20dp"
-                android:background="@color/success"
-                android:textColor="@color/white"
+                android:layout_marginTop="30dp"
+                android:background="#E0E0E0"
+                android:textColor="@color/pure_black"
                 android:onClick="loginScreen"/>
 
     </LinearLayout>

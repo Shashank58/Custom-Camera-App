@@ -1,4 +1,4 @@
-package com.cybrilla.shashank.liborg;
+package com.cybrilla.shashank.android;
 
 import org.junit.Test;
 

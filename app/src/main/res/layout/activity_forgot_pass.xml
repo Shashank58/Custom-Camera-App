@@ -3,10 +3,10 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.cybrilla.shashank.liborg.ForgotPassActivity"
+    tools:context="com.cybrilla.shashank.android.ForgotPassActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="#009688">
 
 
     <LinearLayout
@@ -24,7 +24,7 @@
             android:text="@string/account_recover"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@color/navBar"
+            android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"/>
 
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:text="@string/message_retrive"
             android:textSize="18sp"
-            android:textColor="@color/navBar"
+            android:textColor="#E0E0E0"
             android:layout_marginTop="15dp"
             android:layout_gravity="center"/>
 
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
-            android:background="@color/registerScreens"
+            android:background="@color/white"
             android:id="@+id/recoveryEmail"/>
 
         <Button
@@ -51,8 +51,8 @@
             android:layout_gravity="center_horizontal"
             android:text="@string/submit"
             android:id="@+id/recoveryButton"
-            android:background="@color/success"
-            android:textColor="@color/white"
+            android:background="@color/registerScreens"
+            android:textColor="@color/pure_black"
             android:elevation="2dp"
             android:clickable="true"/>
 
