@@ -58,13 +58,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 String transitionArrow = mContext.getString(R.string.transition_name_author);
                 // Define the view that the animation will start from
                 View viewStart = v.findViewById(R.id.card_view_one);
+                View authorStart = v.findViewById(R.id.authorName);
                 int pos = (int) v.getTag();
                 HomeView hv = allBooks.get(pos);
                 intent.putExtra("allData", hv);
 
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation
                         (mActivity,  new Pair<View, String>(viewStart, transitionCircle)
-                                , new Pair<View, String>(viewStart, transitionArrow));
+                                , new Pair<View, String>(authorStart, transitionArrow));
 
                 ActivityCompat.startActivity(mActivity, intent, options.toBundle());
             }

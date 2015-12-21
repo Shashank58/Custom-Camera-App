@@ -108,8 +108,15 @@ public class SignUp extends AppCompatActivity {
                             String message = jObj.getString("message");
                             Boolean status = jObj.getBoolean("status");
                             if(status){
-                                showDialog(SIGN_UP, message);
-                                finish();
+                                new AlertDialog.Builder(SignUp.this)
+                                        .setTitle(SIGN_UP)
+                                        .setMessage(message)
+                                        .setPositiveButton(android.R.string.yes,
+                                                new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        finish();
+                                                    }
+                                                }).show();
                             } else {
                                 showDialog(SIGN_UP, message);
                             }
@@ -138,5 +145,9 @@ public class SignUp extends AppCompatActivity {
         };
 
         queue.add(jsonObjectRequest);
+    }
+
+    public void backToSignIn(){
+        finish();
     }
 }

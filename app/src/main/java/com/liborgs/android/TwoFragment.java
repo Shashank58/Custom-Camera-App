@@ -7,6 +7,7 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request.Method;
@@ -74,43 +75,48 @@ public class TwoFragment extends android.support.v4.app.Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONArray data = response.getJSONArray("data");
-                            for(int i = 0; i < data.length(); i++){
-                                JSONObject book = (JSONObject) data.get(i);
-                                String title = book.getString("title");
-                                JSONArray authors = book.getJSONArray("author");
-                                String author = authors.getString(0);
-                                JSONObject issueData = book.getJSONObject("issue_data");
-                                long issueDate = issueData.getLong("issue_date");
-                                String isbn = issueData.getString("isbn");
-                                Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-                                cal.setTimeInMillis(issueDate * 1000L);
-                                String date = DateFormat.format("dd-MM-yyyy", cal).toString();
-                                cal.add(Calendar.DATE, 15);
-                                String dueDate = DateFormat.format("dd-MM-yyyy", cal).toString();
-                                String returnDate = null;
-                                int returnStatus = -1;
-                                JSONObject returnData;
-                                if(!book.isNull("return_data")) {
-                                    returnData = book.getJSONObject("return_data");
-                                    long returnDateUnix = returnData.getLong("return_date");
-                                    Calendar calander = Calendar.getInstance(Locale.ENGLISH);
-                                    calander.setTimeInMillis(returnDateUnix * 1000L);
-                                    returnDate = DateFormat.format("dd-MM-yyyy", calander).toString();
-                                    returnStatus = returnData.getInt("return_status");
-                                }
-                                String thumbnail = book.getString("thumbnail");
-                                myBooks.add(new HomeView(title, author, date, thumbnail, dueDate, issueDate
+                            if(response.has("data")) {
+                                JSONArray data = response.getJSONArray("data");
+                                for (int i = 0; i < data.length(); i++) {
+                                    JSONObject book = (JSONObject) data.get(i);
+                                    String title = book.getString("title");
+                                    JSONArray authors = book.getJSONArray("author");
+                                    String author = authors.getString(0);
+                                    JSONObject issueData = book.getJSONObject("issue_data");
+                                    long issueDate = issueData.getLong("issue_date");
+                                    String isbn = issueData.getString("isbn");
+                                    Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+                                    cal.setTimeInMillis(issueDate * 1000L);
+                                    String date = DateFormat.format("dd-MM-yyyy", cal).toString();
+                                    cal.add(Calendar.DATE, 15);
+                                    String dueDate = DateFormat.format("dd-MM-yyyy", cal).toString();
+                                    String returnDate = null;
+                                    int returnStatus = -1;
+                                    JSONObject returnData;
+                                    if (!book.isNull("return_data")) {
+                                        returnData = book.getJSONObject("return_data");
+                                        long returnDateUnix = returnData.getLong("return_date");
+                                        Calendar calander = Calendar.getInstance(Locale.ENGLISH);
+                                        calander.setTimeInMillis(returnDateUnix * 1000L);
+                                        returnDate = DateFormat.format("dd-MM-yyyy", calander).toString();
+                                        returnStatus = returnData.getInt("return_status");
+                                    }
+                                    String thumbnail = book.getString("thumbnail");
+                                    myBooks.add(new HomeView(title, author, date, thumbnail, dueDate, issueDate
                                             , isbn, returnDate, returnStatus));
-                            }
-                            Collections.sort(myBooks, new Comparator<HomeView>() {
-                                @Override
-                                public int compare(HomeView lhs, HomeView rhs) {
-                                    return lhs.getReturnStatus()-rhs.getReturnStatus();
                                 }
-                            });
-                            bookList = new ShelfAdapter(myBooks, getActivity(), getActivity());
-                            recList.setAdapter(bookList);
+                                Collections.sort(myBooks, new Comparator<HomeView>() {
+                                    @Override
+                                    public int compare(HomeView lhs, HomeView rhs) {
+                                        return lhs.getReturnStatus() - rhs.getReturnStatus();
+                                    }
+                                });
+                                bookList = new ShelfAdapter(myBooks, getActivity(), getActivity());
+                                recList.setAdapter(bookList);
+                            } else {
+                                TextView noBooks = (TextView) getActivity().findViewById(R.id.noBooks);
+                                noBooks.setVisibility(View.VISIBLE);
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
