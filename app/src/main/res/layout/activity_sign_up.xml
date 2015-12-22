@@ -54,6 +54,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/fname"
                         android:hint="@string/fname"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
                         android:layout_marginTop="300dp"/>
 
                 </android.support.design.widget.TextInputLayout>
@@ -85,6 +87,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/lname"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
                     android:hint="@string/lname"
                     android:layout_marginTop="300dp"/>
 
@@ -117,6 +121,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/email"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
                         android:hint="@string/email"/>
 
                 </android.support.design.widget.TextInputLayout>
@@ -148,6 +154,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/password"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
                         android:hint="@string/password"
                         android:layout_marginTop="30dp"
                         android:password="true"/>
@@ -182,6 +190,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/confirmPassword"
                         android:hint="@string/confirm"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
                         android:layout_marginTop="30dp"
                         android:password="true"/>
 
@@ -206,7 +216,7 @@
                 android:text="Already have an account? Sign in"
                 android:layout_marginTop="20dp"
                 android:onClick="backToSignIn"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="#E0E0E0"
                 android:textStyle="italic"/>
 

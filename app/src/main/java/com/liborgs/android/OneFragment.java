@@ -310,8 +310,17 @@ public class OneFragment extends Fragment {
                 try {
                     boolean status = response.getBoolean("status");
                     if (status){
-                        extractResponse(response);
-                        listOfAllBooks = new ArrayList<>(libraryBooks);
+                        if (response.has("data")) {
+                            extractResponse(response);
+                            listOfAllBooks = new ArrayList<>(libraryBooks);
+                        } else {
+                            Log.e("One fragment", "No data");
+                            fetchData.setText("Could not fetch data, check your internet connection");
+                            fetchData.setVisibility(View.VISIBLE);
+                            LayoutParams params = (LayoutParams) fetchData.getLayoutParams();
+                            params.setMargins(80,140,0,0);
+                            fetchData.setLayoutParams(params);
+                        }
                     } else {
                         Log.e("One fragement", "Message:");
                         String message = response.getString("message");

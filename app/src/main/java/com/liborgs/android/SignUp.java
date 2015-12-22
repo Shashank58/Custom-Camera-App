@@ -106,7 +106,7 @@ public class SignUp extends AppCompatActivity {
                         try {
                             JSONObject jObj = new JSONObject(response);
                             String message = jObj.getString("message");
-                            Boolean status = jObj.getBoolean("status");
+                            boolean status = jObj.getBoolean("status");
                             if(status){
                                 new AlertDialog.Builder(SignUp.this)
                                         .setTitle(SIGN_UP)
@@ -147,7 +147,7 @@ public class SignUp extends AppCompatActivity {
         queue.add(jsonObjectRequest);
     }
 
-    public void backToSignIn(){
-        finish();
+    public void backToSignIn(View v){
+        this.finish();
     }
 }

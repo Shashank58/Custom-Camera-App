@@ -119,7 +119,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="15dp"
         android:clickable="true"
-        app:backgroundTint="#009688"
+        app:backgroundTint="#00796B"
         android:src="@drawable/ic_add"
         android:onClick="scanBarCode"/>
 

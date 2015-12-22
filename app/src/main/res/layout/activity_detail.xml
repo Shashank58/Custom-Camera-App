@@ -105,7 +105,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/appBar"
-        android:background="#EEEEEE">
+        android:background="#ECEFF1">
 
         <LinearLayout
             android:id="@+id/allViewsDetail"
@@ -120,7 +120,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#ffffff"
+                android:background="#FFFFFF"
                 android:orientation="vertical">
 
                 <GridLayout
@@ -223,7 +223,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:background="#ffffff"
+                android:layout_marginBottom="10dp"
+                android:background="#FFFFFF"
                 android:orientation="vertical">
 
                 <TextView
@@ -231,7 +232,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:text="Description:"
+                    android:text="Description"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold"/>
@@ -241,7 +242,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
-                    android:lineSpacingExtra="4dp"
+                    android:lineSpacingExtra="6dp"
+                    android:layout_marginBottom="5dp"
                     android:padding="15dp"
                     android:text="In The Book, Agile Estimating And Planning Is The Definitive, Practical Guide To Estimating And Planning Agile Projects, Agile Alliance Cofounder Mike Cohn Discusses The Philosophy Of Agile Estimating And Planning And Shows You Exactly How To Get The Job Done, With Real-World Examples And Case Studies.Concepts Are Clearly Illustrated And Readers Are Guided, Step By Step, Toward How To Answer The Following Questions: What Will We Build? How Big Will It Be? When Must It Be Done? How Much Can I Really Complete By Then? You Will First Learn What Makes A Good Plan-And Then What Makes It Agile.Using The Techniques In The Book, You Can Stay Agile From Start To Finish, Saving Time, Conserving Resources, And Accomplishing More."/>
 
