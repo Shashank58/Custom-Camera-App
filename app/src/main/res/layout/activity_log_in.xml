@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/logIn"
             android:text="@string/login"
+            android:fontFamily="sans-serif-condensed"
             android:textSize="26sp"
             android:textStyle="bold"
             android:layout_gravity="center_horizontal"

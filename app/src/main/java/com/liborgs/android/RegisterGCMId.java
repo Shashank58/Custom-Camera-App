@@ -1,9 +1,14 @@
 package com.liborgs.android;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -114,7 +119,7 @@ public class RegisterGCMId extends Application {
         }
     }
 
-    public void checkVersion(final String authToken){
+    public void checkVersion(final String authToken, final Activity activity){
         String Url = "https://liborgs-1139.appspot.com/device/app_version_code";
         RequestQueue reqQueue = Volley.newRequestQueue(this);
 
@@ -128,11 +133,33 @@ public class RegisterGCMId extends Application {
                             if (status) {
                                 String versionCode = jsonObject.getString("version_code");
                                 int version = Integer.parseInt(versionCode);
+                                String message = jsonObject.getString("message");
                                 try {
                                     PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
                                     int currentVersion = packageInfo.versionCode;
                                     if(version > currentVersion){
+                                        Log.e("Register GCM id", "Message: "+message);
+                                        new AlertDialog.Builder(activity)
+                                                    .setTitle("New Update Available")
+                                                    .setMessage(message)
+                                                    .setPositiveButton(android.R.string.yes,
+                                                            new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                    Intent viewIntent =
+                                                                            new Intent("android.intent.action.VIEW",
+                                                                                    Uri.parse("https://play.google.com/store/apps/details?id=com.liborgs.android"));
+                                                                    viewIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                                    startActivity(viewIntent);
+                                                                }
+                                                            })
+                                                    .setNegativeButton(android.R.string.cancel,
+                                                            new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int which) {
 
+                                                                }
+                                                            }).show();
                                     }
                                 } catch (NameNotFoundException e) {
                                     e.printStackTrace();

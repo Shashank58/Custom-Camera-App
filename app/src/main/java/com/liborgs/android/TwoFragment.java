@@ -74,8 +74,10 @@ public class TwoFragment extends android.support.v4.app.Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        TextView noBooks = (TextView) getActivity().findViewById(R.id.noBooks);
                         try {
                             if(response.has("data")) {
+                                noBooks.setVisibility(View.GONE);
                                 JSONArray data = response.getJSONArray("data");
                                 for (int i = 0; i < data.length(); i++) {
                                     JSONObject book = (JSONObject) data.get(i);
@@ -114,7 +116,6 @@ public class TwoFragment extends android.support.v4.app.Fragment {
                                 bookList = new ShelfAdapter(myBooks, getActivity(), getActivity());
                                 recList.setAdapter(bookList);
                             } else {
-                                TextView noBooks = (TextView) getActivity().findViewById(R.id.noBooks);
                                 noBooks.setVisibility(View.VISIBLE);
                             }
                         } catch (JSONException e) {

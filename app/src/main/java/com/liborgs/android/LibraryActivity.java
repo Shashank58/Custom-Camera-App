@@ -59,12 +59,18 @@ public class LibraryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferencesHandler sh = new SharedPreferencesHandler();
+        String loggedIn = sh.getKeyAuth(this);
         // Hide the status bar.
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         getWindow().getDecorView().setSystemUiVisibility(uiOptions);
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
         setContentView(R.layout.activity_library);
+
+        RegisterGCMId app = (RegisterGCMId) getApplication();
+        app.checkVersion(loggedIn, this);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         myEditText = (EditText) findViewById(R.id.myEditText);

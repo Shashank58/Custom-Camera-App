@@ -15,13 +15,13 @@
             android:id="@+id/toolbarDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#004D40"
+            android:background="@color/detail_tab"
             android:transitionName="@string/transition_name_circle">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#004D40"
+                android:background="@color/detail_tab"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -49,7 +49,9 @@
                     android:layout_marginBottom="15dp"
                     android:layout_marginTop="40dp"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0"
                     android:orientation="vertical">
 
@@ -64,7 +66,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
                             android:text="Effective Java"
-                            android:textColor="#ffffff"
+                            android:textColor="@color/white"
                             android:textSize="24sp"
                             android:textStyle="bold"
                             android:transitionName="@string/transition_name_name"/>
@@ -105,7 +107,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/appBar"
-        android:background="#ECEFF1">
+        android:background="@color/scroll_detail">
 
         <LinearLayout
             android:id="@+id/allViewsDetail"
@@ -120,7 +122,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFFFFF"
+                android:background="@color/white"
                 android:orientation="vertical">
 
                 <GridLayout
@@ -149,7 +151,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Computers"
-                        android:textColor="#000000"
+                        android:textColor="@color/pure_black"
                         android:textSize="18sp"/>
 
                 </GridLayout>
@@ -180,7 +182,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="1"
-                        android:textColor="#000000"
+                        android:textColor="@color/pure_black"
                         android:textSize="18sp"/>
 
                 </GridLayout>
@@ -212,7 +214,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="360"
-                        android:textColor="#000000"
+                        android:textColor="@color/pure_black"
                         android:textSize="18sp"/>
 
                 </GridLayout>
@@ -224,7 +226,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="10dp"
-                android:background="#FFFFFF"
+                android:background="@color/white"
                 android:orientation="vertical">
 
                 <TextView
@@ -233,7 +235,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:text="Description"
-                    android:textColor="#000000"
+                    android:textColor="@color/pure_black"
                     android:textSize="18sp"
                     android:textStyle="bold"/>
 

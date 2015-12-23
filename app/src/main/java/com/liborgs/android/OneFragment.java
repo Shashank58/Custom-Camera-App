@@ -322,7 +322,6 @@ public class OneFragment extends Fragment {
                             fetchData.setLayoutParams(params);
                         }
                     } else {
-                        Log.e("One fragement", "Message:");
                         String message = response.getString("message");
                         new AlertDialog.Builder(getActivity())
                                 .setTitle("Liborg")

@@ -42,9 +42,6 @@ public class LogInActivity extends AppCompatActivity {
         Log.e("Login Activity", "Logged In: "+loggedIn);
         Log.e("Login Activity", "Token value: " + token);
         if(loggedIn != null) {
-            RegisterGCMId app = (RegisterGCMId) getApplication();
-            app.checkVersion(loggedIn);
-            Log.e("Login Activity", "Called login");
             Intent intent = new Intent(this, LibraryActivity.class);
             startActivity(intent);
             finish();
