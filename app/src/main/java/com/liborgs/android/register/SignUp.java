@@ -1,14 +1,12 @@
-package com.liborgs.android;
+package com.liborgs.android.register;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.liborgs.android.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,62 +26,60 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LogInActivity extends AppCompatActivity {
-    private EditText email, password;
-    private String mEmail, mPassword;
-    private static final String KEY_EMAIL = "email";
-    private static final String KEY_PASSWORD = "password";
+public class SignUp extends AppCompatActivity {
+    private String mFname, mLname, mEmail, mPassword, mConfirm;
+    private EditText fname, lname, email, password, confirm;
+    private Button createAccount;
+    public static final String KEY_FNAME = "firstname";
+    public static final String KEY_LNAME = "lastname";
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_PASSWORD = "password";
+    private static final String SIGN_UP = "Sign Up";
+    private static final String PASSWORD_NOT_MATCHING = "Password not matching";
+    private static final String LIBORGS = "Liborgs";
+    private static final String INTERNET_CONN = "Please connect to internet";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferencesHandler sh = new SharedPreferencesHandler();
-        String loggedIn = sh.getKeyAuth(this);
-        String token = sh.getRegId(this);
-        Log.e("Login Activity", "Logged In: "+loggedIn);
-        Log.e("Login Activity", "Token value: " + token);
-        if(loggedIn != null) {
-            Intent intent = new Intent(this, LibraryActivity.class);
-            startActivity(intent);
-            finish();
-        }else {
-            setContentView(R.layout.activity_log_in);
-            if(getSupportActionBar() != null) {
-                getSupportActionBar().hide();
-            }
+        setContentView(R.layout.activity_sign_up);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().hide();
         }
+        findViews();
+
     }
 
-
-    public void forgotPassword(View v){
-        Intent intent = new Intent(this, ForgotPassActivity.class);
-        startActivity(intent);
+    private void findViews(){
+        fname = (EditText) findViewById(R.id.fname);
+        lname = (EditText) findViewById(R.id.lname);
+        email = (EditText) findViewById(R.id.email);
+        password = (EditText) findViewById(R.id.password);
+        confirm = (EditText) findViewById(R.id.confirmPassword);
+        createAccount = (Button) findViewById(R.id.createAccount);
     }
 
-    public void login(View v){
-        email = (EditText) findViewById(R.id.loginEmail);
-        password = (EditText) findViewById(R.id.passwordLogin);
-
-        mEmail = email.getText().toString().trim();
+    public void loginScreen(View v){
         mPassword = password.getText().toString();
-        Button submit = (Button) findViewById(R.id.submit);
-
-        if(mEmail.equals("") || mPassword.equals("")){
-            Toast.makeText(getApplicationContext(), "Email or Password empty",
-                    Toast.LENGTH_LONG).show();
-        } else{
+        mConfirm = confirm.getText().toString();
+        mFname = fname.getText().toString().trim();
+        mLname = lname.getText().toString().trim();
+        if(mConfirm.equals(mPassword)) {
             if (isNetworkAvailable()) {
-                submit.setEnabled(false);
-                logIntoAccount();
+                createAccount.setEnabled(false);
+                registerUser();
             }
             else {
-                showDialog("Liborg", "Please connect to internet");
+                showDialog(LIBORGS, INTERNET_CONN);
             }
+        } else {
+            showDialog(SIGN_UP, PASSWORD_NOT_MATCHING);
         }
     }
 
     private void showDialog(String title, String message){
-        new AlertDialog.Builder(LogInActivity.this)
+        new AlertDialog.Builder(SignUp.this)
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton(android.R.string.yes,
@@ -100,38 +97,32 @@ public class LogInActivity extends AppCompatActivity {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    public void logIntoAccount(){
+    public void registerUser(){
+        mEmail = email.getText().toString().trim();
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        String REGISTER_URL = "https://liborgs-1139.appspot.com/users/login?";
+        String REGISTER_URL = "https://liborgs-1139.appspot.com/users/register";
 
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            Log.e("Sign Up", "Response is: "+response);
                             JSONObject jObj = new JSONObject(response);
-                            Boolean status = jObj.getBoolean("status");
+                            String message = jObj.getString("message");
+                            boolean status = jObj.getBoolean("status");
                             if(status){
-                                String fname = jObj.getString("firstname");
-                                String lname = jObj.getString("lastname");
-                                String auth_token = jObj.getString("auth_token");
-
-                                SharedPreferencesHandler s = new SharedPreferencesHandler();
-                                s.setSharedPreference(getApplicationContext(), fname, lname
-                                        , mEmail, auth_token);
-
-                                RegisterGCMId app = (RegisterGCMId) getApplication();
-                                app.sendToServer();
-
-                                Intent intent = new Intent(getApplication(), LibraryActivity.class);
-                                startActivity(intent);
-                                finish();
+                                new AlertDialog.Builder(SignUp.this)
+                                        .setTitle(SIGN_UP)
+                                        .setMessage(message)
+                                        .setPositiveButton(android.R.string.yes,
+                                                new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        finish();
+                                                    }
+                                                }).show();
                             } else {
-                                String message = jObj.getString("message");
-
-                                showDialog("Log In", message);
+                                showDialog(SIGN_UP, message);
                             }
                         }catch (JSONException e){
                             e.printStackTrace();
@@ -149,6 +140,8 @@ public class LogInActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<>();
+                params.put(KEY_FNAME, mFname);
+                params.put(KEY_LNAME, mLname);
                 params.put(KEY_EMAIL, mEmail);
                 params.put(KEY_PASSWORD, mPassword);
                 return params;
@@ -158,9 +151,7 @@ public class LogInActivity extends AppCompatActivity {
         queue.add(jsonObjectRequest);
     }
 
-    public void signUp(View v){
-        Intent intent = new Intent(this, SignUp.class);
-        startActivity(intent);
+    public void backToSignIn(View v){
+        this.finish();
     }
-
 }

@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build.VERSION_CODES;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.util.Pair;
@@ -14,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,31 +43,35 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
     @TargetApi(VERSION_CODES.M)
     @Override
     public HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.
+        final View itemView = LayoutInflater.
                 from(parent.getContext()).
                 inflate(R.layout.card_layout, parent, false);
 
+        final String transitionCircle = mActivity.getString(R.string.transition_name_circle);
+        final String transitionArrow = mActivity.getString(R.string.transition_name_author);
 
         itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 InputMethodManager imgr = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imgr.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                Intent intent = new Intent(mContext, DetailActivity.class);
-                String transitionCircle = mContext.getString(R.string.transition_name_circle);
-                String transitionArrow = mContext.getString(R.string.transition_name_author);
+                Intent intent = new Intent(mActivity, DetailActivity.class);
                 // Define the view that the animation will start from
-                View viewStart = v.findViewById(R.id.card_view_one);
+                View viewStart = itemView.findViewById(R.id.card_view_one);
                 View authorStart = v.findViewById(R.id.authorName);
+
+                viewStart.setTransitionName(transitionCircle);
+                authorStart.setTransitionName(transitionArrow);
+
                 int pos = (int) v.getTag();
                 HomeView hv = allBooks.get(pos);
                 intent.putExtra("allData", hv);
-
+                intent.addFlags(Window.FEATURE_ACTIVITY_TRANSITIONS);
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation
                         (mActivity,  new Pair<View, String>(viewStart, transitionCircle)
                                 , new Pair<View, String>(authorStart, transitionArrow));
 
-                ActivityCompat.startActivity(mActivity, intent, options.toBundle());
+                mActivity.startActivity(intent, options.toBundle());
             }
         });
 

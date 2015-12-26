@@ -1,4 +1,4 @@
-package com.liborgs.android;
+package com.liborgs.android.register;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.liborgs.android.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;

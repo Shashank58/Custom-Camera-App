@@ -16,15 +16,11 @@ import android.net.Uri;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout.LayoutParams;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,10 +28,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -45,6 +38,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.liborgs.android.register.LogInActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,7 +52,6 @@ import java.util.Map;
 public class OneFragment extends Fragment {
     private RecyclerView recList;
     private Context mContext;
-    private EditText myEditText;
     private ImageView search;
     private Toolbar toolbar;
     private TextView fetchData;
@@ -116,86 +109,15 @@ public class OneFragment extends Fragment {
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setCollapsible(true);
 
-        myEditText = (EditText) getActivity().findViewById(R.id.myEditText);
-        final ImageView searchBack = (ImageView) getActivity().findViewById(R.id.searchBack);
-        final TextView tabTitle = (TextView) getActivity().findViewById(R.id.tabTitle);
-        final LinearLayout searchLayout = (LinearLayout) getActivity().findViewById(R.id.searchBarLayout);
         search = (ImageView) toolbar.findViewById(R.id.search_action);
-        final TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
-        final ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.viewpager);
-        final ImageView cancel = (ImageView) getActivity().findViewById(R.id.cancel);
 
         search.setOnClickListener(new OnClickListener() {
 
             @TargetApi(VERSION_CODES.M)
             @Override
             public void onClick(View v) {
-                if (searchLayout.getVisibility() == View.INVISIBLE) {
-                    if (tabLayout.getTabAt(1).isSelected()) {
-                        tabLayout.getTabAt(0).select();
-                        viewPager.setCurrentItem(0);
-                    }
-                    final InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    searchLayout.setVisibility(View.VISIBLE);
-                    tabTitle.setVisibility(View.GONE);
-                    searchBack.setVisibility(View.VISIBLE);
-                    myEditText.requestFocus();
-                    imgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-                    searchBack.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            searchBack.setVisibility(View.GONE);
-                            tabTitle.setVisibility(View.VISIBLE);
-                            searchLayout.setVisibility(View.INVISIBLE);
-                            imgr.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                            bookList = new HomeAdapter(listOfAllBooks, mContext, getActivity());
-                            recList.swapAdapter(bookList, true);
-                        }
-                    });
-
-                    cancel.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            myEditText.setText("");
-                        }
-                    });
-
-                    myEditText.addTextChangedListener(new TextWatcher() {
-                        @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                        }
-
-                        @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {
-                            //Resetting adapter with all books
-                            setOriginalAdapter();
-                        }
-
-                        @Override
-                        public void afterTextChanged(Editable s) {
-
-                        }
-                    });
-                } else {
-                    String query = myEditText.getText().toString().trim();
-                    if (!query.equals("")) {
-                        if (isNetworkAvailable())
-                            fetchData(query);
-                        else {
-                            new AlertDialog.Builder(getActivity())
-                                    .setTitle("Liborg")
-                                    .setMessage("Please check your internet connection")
-                                    .setPositiveButton(android.R.string.yes,
-                                        new DialogInterface.OnClickListener(){
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-
-                                            }
-                                        }).show();
-                        }
-                    }
-                }
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -306,6 +228,7 @@ public class OneFragment extends Fragment {
         JsonObjectRequest jRequest = new JsonObjectRequest(url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                Log.e("One fragment", "Response: "+response.toString());
                 dialog.hide();
                 try {
                     boolean status = response.getBoolean("status");

@@ -8,13 +8,10 @@
     <color name="scroll_detail">#ECEFF1</color>
     <color name="pure_black">#000000</color>
     <color name="navBar">#009688</color>
-    <color name="detail_tab">#004D40</color>
+    <color name="detail_tab">#00796B</color>
     <color name="primary_material_dark_1">#212121</color>
     <color name="accent_material_dark_1">#80cbc4</color>
     <color name="background_material_dark_1">#303030</color>
-    <color name="foreground_material_dark_1">#ffffff</color>
-    <color name="primary_text_material_light">#ffffff</color>
-    <color name="primary_text_material_light_1">#ffffff</color>
     <color name="success">#388e3c</color>
     <color name="info">#536DFE</color>
     <color name="tab_selected">#EEEEEE</color>
