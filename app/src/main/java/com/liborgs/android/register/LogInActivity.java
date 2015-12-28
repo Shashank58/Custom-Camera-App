@@ -22,8 +22,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.liborgs.android.LibraryActivity;
 import com.liborgs.android.R;
-import com.liborgs.android.RegisterGCMId;
-import com.liborgs.android.SharedPreferencesHandler;
+import com.liborgs.android.util.RegisterGCMId;
+import com.liborgs.android.util.SharedPreferencesHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package com.liborgs.android;
+package com.liborgs.android.util;
 
 import android.app.Activity;
 import android.app.Application;

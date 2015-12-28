@@ -60,6 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/searchFilterLayout"
         android:layout_below="@+id/toolbar">
 
         <LinearLayout
@@ -119,5 +120,14 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchResults"
+        android:layout_below="@+id/searchFilterLayout"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

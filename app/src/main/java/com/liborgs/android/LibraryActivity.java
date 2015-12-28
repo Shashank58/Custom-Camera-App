@@ -29,6 +29,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.liborgs.android.util.RegisterGCMId;
+import com.liborgs.android.util.SharedPreferencesHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;

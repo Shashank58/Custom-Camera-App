@@ -33,7 +33,7 @@ library
     </dependency>
 
     <application
-        android:name=".RegisterGCMId"
+        android:name=".util.RegisterGCMId"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -76,7 +76,7 @@ library
 
         <!-- [START gcm_listener] -->
         <service
-            android:name=".MyGcmListenerService"
+            android:name=".util.MyGcmListenerService"
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />

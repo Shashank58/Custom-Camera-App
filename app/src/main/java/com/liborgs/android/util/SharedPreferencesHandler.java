@@ -1,4 +1,4 @@
-package com.liborgs.android;
+package com.liborgs.android.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;

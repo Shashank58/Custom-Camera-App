@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.Images.Media;
 import android.util.Log;
 
+import com.liborgs.android.util.SharedPreferencesHandler;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;

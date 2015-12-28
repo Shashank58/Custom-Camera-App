@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class SearchActivity extends AppCompatActivity{
+public class SearchActivity extends AppCompatActivity implements View.OnClickListener{
     private ImageView mBack, localImage, webImage, cancel;
     private LinearLayout localLayout, webLayout;
     private TextView localText, webText;
@@ -38,41 +38,14 @@ public class SearchActivity extends AppCompatActivity{
         myEditText = (EditText) findViewById(R.id.myEditText);
         cancel = (ImageView) findViewById(R.id.cancel);
 
-        onClickListeners();
+        localLayout.setOnClickListener(this);
+        webLayout.setOnClickListener(this);
+        mBack.setOnClickListener(this);
+
+        editTextListeners();
     }
 
-    private void onClickListeners(){
-        localLayout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                localLayout.setBackgroundColor(Color.parseColor("#4CAF50"));
-                localImage.setImageResource(R.drawable.ic_local_selected);
-                localText.setTextColor(Color.parseColor("#FFFFFF"));
-                webLayout.setBackgroundColor(Color.parseColor("#EEEEEE"));
-                webImage.setImageResource(R.drawable.ic_web_search);
-                webText.setTextColor(Color.parseColor("#000000"));
-            }
-        });
-
-        webLayout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                webLayout.setBackgroundColor(Color.parseColor("#4CAF50"));
-                webImage.setImageResource(R.drawable.ic_web_search_selected);
-                webText.setTextColor(Color.parseColor("#FFFFFF"));
-                localLayout.setBackgroundColor(Color.parseColor("#EEEEEE"));
-                localImage.setImageResource(R.drawable.ic_local);
-                localText.setTextColor(Color.parseColor("#000000"));
-            }
-        });
-
-        mBack.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
+    private void editTextListeners(){
         myEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -112,5 +85,32 @@ public class SearchActivity extends AppCompatActivity{
                 return handled;
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.local_search_layout:
+                localLayout.setBackgroundColor(Color.parseColor("#4CAF50"));
+                localImage.setImageResource(R.drawable.ic_local_selected);
+                localText.setTextColor(Color.parseColor("#FFFFFF"));
+                webLayout.setBackgroundColor(Color.parseColor("#EEEEEE"));
+                webImage.setImageResource(R.drawable.ic_web_search);
+                webText.setTextColor(Color.parseColor("#000000"));
+                break;
+
+            case R.id.web_search_layout:
+                webLayout.setBackgroundColor(Color.parseColor("#4CAF50"));
+                webImage.setImageResource(R.drawable.ic_web_search_selected);
+                webText.setTextColor(Color.parseColor("#FFFFFF"));
+                localLayout.setBackgroundColor(Color.parseColor("#EEEEEE"));
+                localImage.setImageResource(R.drawable.ic_local);
+                localText.setTextColor(Color.parseColor("#000000"));
+                break;
+
+            case R.id.searchBack:
+                onBackPressed();
+                break;
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.liborgs.android;
+package com.liborgs.android.util;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,6 +12,8 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
+import com.liborgs.android.LibraryActivity;
+import com.liborgs.android.R;
 
 /**
  * Created by shashankm on 09/12/15.
