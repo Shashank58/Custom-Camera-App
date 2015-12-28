@@ -15,8 +15,7 @@
             android:id="@+id/toolbarDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/detail_tab"
-            android:transitionName="@string/transition_name_circle">
+            android:background="@color/detail_tab">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -28,7 +27,6 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="10dp"
-
                     android:clickable="true"
                     android:src="@drawable/ic_searchback"
                     android:onClick="back"
@@ -41,7 +39,8 @@
                     android:layout_marginBottom="15dp"
                     android:layout_marginTop="50dp"
                     android:layout_weight="0"
-                    android:scaleType="fitXY"/>
+                    android:scaleType="fitXY"
+                    android:transitionName="@string/transition_name_circle"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"

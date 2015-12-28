@@ -47,6 +47,13 @@ public class HomeView implements Serializable {
         this.returnStatus = returnStatus;
     }
 
+    public HomeView(String bookName, String authorName, String thumbnail, String publisher) {
+        this.bookName = bookName;
+        this.authorName = authorName;
+        this.thumbnail = thumbnail;
+        this.publisher = publisher;
+    }
+
     public String getBookName(){
         return bookName;
     }

@@ -48,7 +48,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 inflate(R.layout.card_layout, parent, false);
 
         final String transitionCircle = mActivity.getString(R.string.transition_name_circle);
-        final String transitionArrow = mActivity.getString(R.string.transition_name_author);
 
         itemView.setOnClickListener(new OnClickListener() {
             @Override
@@ -58,18 +57,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 Intent intent = new Intent(mActivity, DetailActivity.class);
                 // Define the view that the animation will start from
                 View viewStart = itemView.findViewById(R.id.card_view_one);
-                View authorStart = v.findViewById(R.id.authorName);
+                View imageStart = v.findViewById(R.id.bookImage);
 
-                viewStart.setTransitionName(transitionCircle);
-                authorStart.setTransitionName(transitionArrow);
+                imageStart.setTransitionName(transitionCircle);
 
                 int pos = (int) v.getTag();
                 HomeView hv = allBooks.get(pos);
                 intent.putExtra("allData", hv);
                 intent.addFlags(Window.FEATURE_ACTIVITY_TRANSITIONS);
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation
-                        (mActivity,  new Pair<View, String>(viewStart, transitionCircle)
-                                , new Pair<View, String>(authorStart, transitionArrow));
+                        (mActivity,  new Pair<View, String>(viewStart, transitionCircle));
 
                 mActivity.startActivity(intent, options.toBundle());
             }

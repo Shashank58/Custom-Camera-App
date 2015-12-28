@@ -12,13 +12,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout.LayoutParams;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -32,7 +31,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -84,9 +82,7 @@ public class OneFragment extends Fragment {
             recList = (RecyclerView) view.findViewById(R.id.cardList);
             recList.setHasFixedSize(true);
             mContext = getActivity().getBaseContext();
-            LinearLayoutManager llm = new LinearLayoutManager(mContext);
-            llm.setOrientation(LinearLayoutManager.VERTICAL);
-            recList.setLayoutManager(llm);
+            recList.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         } else {
             //Not connected to net
             fetchData.setText("Please connect to internet");
@@ -123,54 +119,6 @@ public class OneFragment extends Fragment {
         });
     }
 
-    private void fetchData(String query){
-        String url = Uri.parse("https://liborgs-1139.appspot.com/books/search")
-                        .buildUpon()
-                        .appendQueryParameter("query", query)
-                        .build().toString();
-
-        final ProgressDialog dialog = new ProgressDialog(getActivity());
-        dialog.setMessage("Searching");
-        dialog.setCancelable(false);
-        dialog.setInverseBackgroundForced(false);
-        dialog.show();
-
-        JsonObjectRequest jObject = new JsonObjectRequest(Method.GET, url,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        dialog.hide();
-                        try {
-                            boolean status = response.getBoolean("status");
-                            if(status)
-                                extractResponse(response);
-                            else {
-                                String message = response.getString("message");
-                                new AlertDialog.Builder(getActivity())
-                                                .setTitle("Liborg")
-                                                .setMessage(message)
-                                                .setPositiveButton(android.R.string.yes,
-                                                        new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialog, int which) {
-
-                                                            }
-                                                        })
-                                                .show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                dialog.hide();
-            }
-        });
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-        queue.add(jObject);
-    }
 
     private void extractResponse(JSONObject response){
         libraryBooks = new ArrayList<>();
