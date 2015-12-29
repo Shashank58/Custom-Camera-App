@@ -88,8 +88,15 @@ public class ResultsActivity extends AppCompatActivity {
                 if (categories.length() != 0) {
                     category = (String) categories.get(0);
                 }
+                String averageRaing = "NA";
+                if (book.has("averageRating"))
+                    averageRaing = book.getString("averageRating");
+                String webReaderLink = "NA";
+                if (book.has("webReaderLink"))
+                    webReaderLink = book.getString("webReaderLink");
                 resultBooks.add(new HomeView(title, authorName, thumbnail
-                        , available, pageCount, description, publisher, category));
+                        , available, pageCount, description, publisher, category
+                        , averageRaing, webReaderLink));
             }
 
             adapter = new ResultsAdapter(resultBooks, this);

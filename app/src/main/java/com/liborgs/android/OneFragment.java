@@ -140,11 +140,18 @@ public class OneFragment extends Fragment {
                 }
                 authorName += authors.get(authors.length()-1);
                 String category = "NA";
+                String averageRaing = "NA";
+                if (book.has("averageRating"))
+                    averageRaing = book.getString("averageRating");
+                String webReaderLink = "NA";
+                if (book.has("webReaderLink"))
+                    webReaderLink = book.getString("webReaderLink");
                 if(categories.length() != 0){
                     category = (String)categories.get(0);
                 }
                 libraryBooks.add(new HomeView(title, authorName, thumbnail
-                        , available, pageCount, description, publisher, category));
+                        , available, pageCount, description, publisher, category,
+                        averageRaing, webReaderLink));
             }
             bookList = new HomeAdapter(libraryBooks, mContext, getActivity());
             recList.setAdapter(bookList);

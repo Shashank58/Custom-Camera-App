@@ -24,6 +24,9 @@
         android:id="@+id/cardList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     </android.support.v7.widget.RecyclerView>
