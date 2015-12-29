@@ -76,6 +76,7 @@ public class SearchActivity extends AppCompatActivity {
                 if (count == 0) {
                     cancel.setImageResource(R.drawable.ic_speech);
                 } else {
+                    recList.setAdapter(null);
                     cancel.setImageResource(R.drawable.ic_cancel);
                     cancel.setOnClickListener(new OnClickListener() {
                         @Override

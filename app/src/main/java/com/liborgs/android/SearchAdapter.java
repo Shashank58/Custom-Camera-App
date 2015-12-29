@@ -97,10 +97,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case 1:
                 mActivity.findViewById(R.id.searchResults);
                 WebViewHolder webHolder = (WebViewHolder) holder;
-                if (position == 0)
-                    webHolder.sectionDivider.setText(searchResults.get(position).toString());
-                else
-                    webHolder.sectionDivider.setText(searchResults.get(position).toString());
+                webHolder.sectionDivider.setText(searchResults.get(position).toString());
                 break;
         }
     }
