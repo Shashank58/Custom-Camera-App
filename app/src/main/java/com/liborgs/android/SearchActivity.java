@@ -133,7 +133,7 @@ public class SearchActivity extends AppCompatActivity {
                                 searchBooks.add("Local Results");
                                 extractSearchResponse(response);
                                 fetchDataGoogleSearch(myEditText.getText().toString());
-                                size = searchBooks.size();
+                                size = searchBooks.size() - 1;
                             }
                             else {
                                 String message = response.getString("message");
