@@ -151,7 +151,7 @@ public class OneFragment extends Fragment {
                 }
                 libraryBooks.add(new HomeView(title, authorName, thumbnail
                         , available, pageCount, description, publisher, category,
-                        averageRaing, webReaderLink));
+                        averageRaing, webReaderLink, true));
             }
             bookList = new HomeAdapter(libraryBooks, mContext, getActivity());
             recList.setAdapter(bookList);
@@ -159,12 +159,6 @@ public class OneFragment extends Fragment {
             e.printStackTrace();
         }
     }
-
-    public void setOriginalAdapter(){
-        bookList = new HomeAdapter(listOfAllBooks, mContext, getActivity());
-        recList.setAdapter(bookList);
-    }
-
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {

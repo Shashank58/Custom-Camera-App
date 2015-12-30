@@ -22,10 +22,11 @@ public class HomeView implements Serializable {
     private String isbn;
     private String returnDate;
     private int returnStatus;
+    private boolean isBookLocal;
 
     public HomeView(String bookName, String authorName, String thumbnail
             , int available, String pageCount, String description, String publisher, String categories
-            , String averageRating, String webReaderLink){
+            , String averageRating, String webReaderLink, boolean isBookLocal){
         super();
         this.bookName = bookName;
         this.authorName = authorName;
@@ -37,10 +38,12 @@ public class HomeView implements Serializable {
         this.categories = categories;
         this.averageRating = averageRating;
         this.webReaderLink = webReaderLink;
+        this.isBookLocal = isBookLocal;
     }
 
     public HomeView(String bookName, String authorName, String borrowedDate, String thumbnail
-            , String dueDate, long issueDate, String isbn, String returnDate, int returnStatus){
+            , String dueDate, long issueDate, String isbn, String returnDate, int returnStatus
+            , boolean isBookLocal){
         this.bookName = bookName;
         this.authorName = authorName;
         this.dueDate = dueDate;
@@ -50,6 +53,7 @@ public class HomeView implements Serializable {
         this.isbn = isbn;
         this.returnDate = returnDate;
         this.returnStatus = returnStatus;
+        this.isBookLocal = isBookLocal;
     }
 
     public String getBookName(){
@@ -106,5 +110,17 @@ public class HomeView implements Serializable {
 
     public int getReturnStatus(){
         return returnStatus;
+    }
+
+    public String getAverageRating(){
+        return averageRating;
+    }
+
+    public String getWebReaderLink(){
+        return webReaderLink;
+    }
+
+    public boolean getIsBookLocal(){
+        return isBookLocal;
     }
 }

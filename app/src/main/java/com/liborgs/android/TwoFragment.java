@@ -106,7 +106,7 @@ public class TwoFragment extends android.support.v4.app.Fragment {
                                     }
                                     String thumbnail = book.getString("thumbnail");
                                     myBooks.add(new HomeView(title, author, date, thumbnail, dueDate, issueDate
-                                            , isbn, returnDate, returnStatus));
+                                            , isbn, returnDate, returnStatus, true));
                                 }
                                 Collections.sort(myBooks, new Comparator<HomeView>() {
                                     @Override

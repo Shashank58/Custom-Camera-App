@@ -96,7 +96,7 @@ public class ResultsActivity extends AppCompatActivity {
                     webReaderLink = book.getString("webReaderLink");
                 resultBooks.add(new HomeView(title, authorName, thumbnail
                         , available, pageCount, description, publisher, category
-                        , averageRaing, webReaderLink));
+                        , averageRaing, webReaderLink, true));
             }
 
             adapter = new ResultsAdapter(resultBooks, this);

@@ -132,24 +132,13 @@ public class SearchActivity extends AppCompatActivity {
                             boolean status = response.getBoolean("status");
                             if(status) {
                                 searchBooks.add("Local Results");
-                                extractSearchResponse(response);
+                                extractSearchResponse(response, true);
                                 fetchDataGoogleSearch(myEditText.getText().toString());
                                 size = searchBooks.size() - 1;
                             }
                             else {
-                                String message = response.getString("message");
-                                new AlertDialog.Builder(SearchActivity.this)
-                                        .setTitle("Liborg")
-                                        .setMessage(message)
-                                        .setPositiveButton(android.R.string.yes,
-                                                new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        size = 0;
-                                                        fetchDataGoogleSearch(myEditText.getText().toString());
-                                                    }
-                                                })
-                                        .show();
+                                size = 0;
+                                fetchDataGoogleSearch(myEditText.getText().toString());
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -185,7 +174,7 @@ public class SearchActivity extends AppCompatActivity {
                         try {
                             boolean status = response.getBoolean("status");
                             if(status)
-                                extractSearchResponse(response);
+                                extractSearchResponse(response, false);
                             else {
                                 String message = response.getString("message");
                                 new AlertDialog.Builder(SearchActivity.this)
@@ -215,16 +204,12 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
-    private void extractSearchResponse(JSONObject response){
+    private void extractSearchResponse(JSONObject response, boolean isBookLocal){
         try {
             JSONArray data = response.getJSONArray("data");
             for(int i = 0; i < data.length(); i++){
                 JSONObject book = (JSONObject) data.get(i);
-                JSONArray authors = null;
-                if (book.has("author"))
-                    authors = book.getJSONArray("author");
-                else
-                    authors = book.getJSONArray("authors");
+                JSONArray authors = book.getJSONArray("author");
                 JSONArray categories = book.getJSONArray("categories");
                 String thumbnail = book.getString("thumbnail");
                 String title = book.getString("title");
@@ -232,11 +217,7 @@ public class SearchActivity extends AppCompatActivity {
                 if (book.has("available"))
                     available = book.getInt("available");
                 String description = book.getString("description");
-                String pageCount = "NA";
-                if (book.has("pagecount"))
-                    pageCount = book.getString("pagecount");
-                else
-                    pageCount = book.getString("pageCount");
+                String pageCount = book.getString("pagecount");
                 String publisher = book.getString("publisher");
                 String authorName = "";
                 if (authors.length() > 0) {
@@ -258,7 +239,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 searchBooks.add(new HomeView(title, authorName, thumbnail
                         , available, pageCount, description, publisher, category, averageRating
-                        , webReaderLink));
+                        , webReaderLink, isBookLocal));
             }
             bookList = new SearchAdapter(searchBooks, this);
             GridLayoutManager manager = new GridLayoutManager(this, 3);

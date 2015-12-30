@@ -5,7 +5,9 @@ import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -18,6 +20,8 @@ import java.io.Serializable;
 public class DetailActivity extends AppCompatActivity implements Serializable {
     private TextView bookName, authorName, categories, pageCount, available, description, publication;
     private ImageView thumbnail;
+    private LinearLayout startLayout;
+    private Button webReaderButton, requestBook;
 
     @TargetApi(VERSION_CODES.LOLLIPOP)
     @Override
@@ -38,7 +42,9 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         available = (TextView) findViewById(R.id.detail_available);
         description = (TextView) findViewById(R.id.detail_description);
         publication = (TextView) findViewById(R.id.detail_publication);
-
+        startLayout = (LinearLayout) findViewById(R.id.star_layout);
+        webReaderButton = (Button) findViewById(R.id.web_reader_button);
+        requestBook = (Button) findViewById(R.id.request_book);
 
         setData();
     }
@@ -49,7 +55,11 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
 
     private void setData(){
         HomeView hv = (HomeView) getIntent().getSerializableExtra("allData");
-
+        if (hv.getAverageRating().equals("NA")){
+            startLayout.setVisibility(View.GONE);
+            webReaderButton.setVisibility(View.GONE);
+            requestBook.setVisibility(View.GONE);
+        }
         bookName.setText(hv.getBookName());
         authorName.setText(hv.getAuthorName());
         categories.setText(hv.getCategories());

@@ -73,7 +73,6 @@ library
         </receiver>
         <!-- [END gcm_receiver] -->
 
-
         <!-- [START gcm_listener] -->
         <service
             android:name=".util.MyGcmListenerService"
@@ -84,20 +83,13 @@ library
         </service>
         <!-- [END gcm_listener] -->
 
-
-        <!-- [START instanceId_listener] -->
-        <!-- <service -->
-        <!-- android:name="com.cybrilla.shashank.liborg.MyInstanceIDListenerService" -->
-        <!-- android:exported="false"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="com.google.android.gms.iid.InstanceID"/> -->
-        <!-- </intent-filter> -->
-        <!-- </service> -->
-        <!-- [END instanceId_listener] -->
-
-        <activity android:name=".ResultsActivity" >
+        <activity
+            android:name=".ResultsActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".SearchActivity" >
+        <activity
+            android:name=".SearchActivity"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 
