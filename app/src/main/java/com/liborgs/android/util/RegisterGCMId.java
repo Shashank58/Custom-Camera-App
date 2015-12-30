@@ -45,7 +45,6 @@ public class RegisterGCMId extends Application {
         singleton = this;
         SharedPreferencesHandler sh = new SharedPreferencesHandler();
         if(sh.getRegId(this) == null) {
-            Log.e("Register", "Is this called???");
             registerGCM();
         }
     }
