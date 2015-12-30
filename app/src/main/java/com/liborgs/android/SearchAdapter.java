@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.liborgs.android.activities.DetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,12 +47,11 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         switch (viewType) {
             case 0:
                 final View itemView = inflater.inflate(R.layout.card_layout, parent, false);
-                final String transitionCircle = mActivity.getString(R.string.transition_name_circle);
 
                 itemView.setOnClickListener(new OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
-                                                       startNewActivity(v, transitionCircle);
+                                                       startNewActivity(v);
                                                 }
                                             }
                 );
@@ -70,9 +70,8 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return viewHolder;
     }
 
-    private void startNewActivity(View v, String transitionCircle){
+    private void startNewActivity(View v){
         Intent intent = new Intent(mActivity, DetailActivity.class);
-        View imageStart = v.findViewById(R.id.bookImage);
 
         int pos = (int) v.getTag();
         HomeView hv = (HomeView) searchResults.get(pos);

@@ -1,4 +1,4 @@
-package com.liborgs.android;
+package com.liborgs.android.activities;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -8,6 +8,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import com.liborgs.android.HomeView;
+import com.liborgs.android.R;
+import com.liborgs.android.ResultsAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,7 +51,10 @@ public class ResultsActivity extends AppCompatActivity {
             showResults(response);
         else {
             try {
-                String message = response.getString("message");
+                String message = null;
+                if (response != null) {
+                    message = response.getString("message");
+                }
                 new AlertDialog.Builder(ResultsActivity.this)
                                 .setTitle("Liborg")
                                 .setMessage(message)

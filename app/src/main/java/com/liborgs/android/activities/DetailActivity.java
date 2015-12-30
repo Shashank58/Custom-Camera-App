@@ -1,21 +1,37 @@
-package com.liborgs.android;
+package com.liborgs.android.activities;
 
-import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request.Method;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.liborgs.android.HomeView;
+import com.liborgs.android.R;
+import com.liborgs.android.util.AppUtils;
+import com.liborgs.android.util.Constants;
+import com.liborgs.android.util.SharedPreferencesHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class responsible for setting details of the given book.**/
@@ -23,10 +39,9 @@ import java.io.Serializable;
 public class DetailActivity extends AppCompatActivity implements Serializable {
     private TextView bookName, authorName, categories, pageCount, available, description, publication;
     private ImageView thumbnail, starOne, starTwo, starThree, starFour, startFive;
-    private LinearLayout startLayout;
     private Button webReaderButton, requestBook;
+    private HomeView hv;
 
-    @TargetApi(VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +60,6 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         available = (TextView) findViewById(R.id.detail_available);
         description = (TextView) findViewById(R.id.detail_description);
         publication = (TextView) findViewById(R.id.detail_publication);
-        startLayout = (LinearLayout) findViewById(R.id.star_layout);
         webReaderButton = (Button) findViewById(R.id.web_reader_button);
         requestBook = (Button) findViewById(R.id.request_book);
         starOne = (ImageView) findViewById(R.id.star_1);
@@ -55,14 +69,80 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         startFive = (ImageView) findViewById(R.id.star_5);
 
         setData();
+        requestBookListener();
     }
 
     public void back(View v){
         super.onBackPressed();
     }
 
+    private void requestBookListener(){
+        requestBook.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RequestQueue queue = Volley.newRequestQueue(DetailActivity.this);
+                final ProgressDialog dialog = new ProgressDialog(DetailActivity.this);
+                dialog.setMessage("Sending request to admin");
+                dialog.setInverseBackgroundForced(false);
+                dialog.setCancelable(false);
+                dialog.show();
+
+                StringRequest jsonObjectRequest = new StringRequest(Method.POST
+                        , Constants.USER_REQUEST_BOOK,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                dialog.hide();
+                                try {
+                                    JSONObject jObj = new JSONObject(response);
+                                    boolean status = jObj.getBoolean("status");
+                                    if (status) {
+                                        String message = jObj.getString("message");
+                                        AppUtils.getInstance().alertMessage(DetailActivity.this,
+                                                Constants.LIBORGS, message);
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        dialog.hide();
+                        error.printStackTrace();
+                    }
+                })
+                {
+                    @Override
+                    public Map<String, String> getParams() throws AuthFailureError {
+                        Log.e("Detail Activity", "Authors: "+hv.getAuthorName());
+                        HashMap<String, String> params = new HashMap<>();
+                        params.put("title", hv.getBookName());
+                        params.put("author", hv.getAuthorName());
+                        params.put("publisher", hv.getPublisher());
+                        params.put("thumbnail", hv.getThumbnail());
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        SharedPreferencesHandler s = new SharedPreferencesHandler();
+                        String loggedIn = s.getKeyAuth(DetailActivity.this);
+                        HashMap<String, String> param = new HashMap<>();
+                        Log.e("Detail activity", "Auth token: " + loggedIn);
+                        param.put("auth-token", loggedIn);
+                        return param;
+                    }
+                };
+
+                queue.add(jsonObjectRequest);
+            }
+
+        });
+    }
+
     private void setData(){
-        HomeView hv = (HomeView) getIntent().getSerializableExtra("allData");
+        hv = (HomeView) getIntent().getSerializableExtra("allData");
         if (hv.getAverageRating().equals("NA")){
             webReaderButton.setVisibility(View.GONE);
             requestBook.setVisibility(View.GONE);

@@ -10,17 +10,9 @@ import android.util.Log;
  */
 
 public class SharedPreferencesHandler {
-    private static final String KEY_AUTH = "auth_key" ;
-    private static final String KEY_FNAME = "first name" ;
-    private static final String KEY_LNAME = "last name" ;
-    private static final String KEY_EMAIL = "email";
-    private static final String KEY_REG_ID = "reg_id";
     private SharedPreferences pref;
     private Editor editor;
     private String auth_token, fName, lName, email, reg_id;
-
-    private static final String LIB_KEY = "Liborg Auth";
-    private static final int PRIVATE_MODE = 0;
 
     public void setSharedPreference(Context context, String fname, String lname
                                     , String mEmail, String authToken){
@@ -29,13 +21,13 @@ public class SharedPreferencesHandler {
         this.fName = fname;
         this.lName = lname;
 
-        pref = context.getSharedPreferences(LIB_KEY, PRIVATE_MODE);
+        pref = context.getSharedPreferences(Constants.LIB_KEY, Constants.PRIVATE_MODE);
         editor = pref.edit();
 
-        editor.putString(KEY_AUTH, auth_token);
-        editor.putString(KEY_FNAME, fName);
-        editor.putString(KEY_EMAIL, email);
-        editor.putString(KEY_LNAME, lName);
+        editor.putString(Constants.KEY_AUTH, auth_token);
+        editor.putString(Constants.KEY_FNAME, fName);
+        editor.putString(Constants.KEY_EMAIL, email);
+        editor.putString(Constants.KEY_LNAME, lName);
 
         editor.commit();
     }
@@ -43,25 +35,25 @@ public class SharedPreferencesHandler {
     public void setSharedPreference(Context context, String regId){
         this.reg_id = regId;
 
-        pref = context.getSharedPreferences(LIB_KEY, PRIVATE_MODE);
+        pref = context.getSharedPreferences(Constants.LIB_KEY, Constants.PRIVATE_MODE);
         editor = pref.edit();
-        editor.putString(KEY_REG_ID, reg_id);
+        editor.putString(Constants.KEY_REG_ID, reg_id);
 
         editor.commit();
     }
 
     public String getKeyAuth(Context context){
-        SharedPreferences pref = context.getSharedPreferences(LIB_KEY, PRIVATE_MODE);
-        return pref.getString(KEY_AUTH, null);
+        SharedPreferences pref = context.getSharedPreferences(Constants.LIB_KEY, Constants.PRIVATE_MODE);
+        return pref.getString(Constants.KEY_AUTH, null);
     }
 
     public String getRegId(Context context){
-        SharedPreferences pref = context.getSharedPreferences(LIB_KEY, PRIVATE_MODE);
-        return pref.getString(KEY_REG_ID, null);
+        SharedPreferences pref = context.getSharedPreferences(Constants.LIB_KEY, Constants.PRIVATE_MODE);
+        return pref.getString(Constants.KEY_REG_ID, null);
     }
 
     public void deleteSharedPreference(Context context){
-        SharedPreferences pref = context.getSharedPreferences(LIB_KEY, PRIVATE_MODE);
+        SharedPreferences pref = context.getSharedPreferences(Constants.LIB_KEY, Constants.PRIVATE_MODE);
         SharedPreferences.Editor editor = pref.edit();
         editor.clear();
         editor.commit();

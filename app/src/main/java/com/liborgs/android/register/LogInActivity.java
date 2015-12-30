@@ -1,12 +1,7 @@
 package com.liborgs.android.register;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -20,9 +15,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.liborgs.android.LibraryActivity;
 import com.liborgs.android.R;
-import com.liborgs.android.util.RegisterGCMId;
+import com.liborgs.android.RegisterGCMId;
+import com.liborgs.android.activities.LibraryActivity;
+import com.liborgs.android.util.AppUtils;
+import com.liborgs.android.util.Constants;
 import com.liborgs.android.util.SharedPreferencesHandler;
 
 import org.json.JSONException;
@@ -34,8 +31,6 @@ import java.util.Map;
 public class LogInActivity extends AppCompatActivity {
     private EditText email, password;
     private String mEmail, mPassword;
-    private static final String KEY_EMAIL = "email";
-    private static final String KEY_PASSWORD = "password";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,41 +70,23 @@ public class LogInActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Email or Password empty",
                     Toast.LENGTH_LONG).show();
         } else{
-            if (isNetworkAvailable()) {
+            if (AppUtils.getInstance().isNetworkAvailable(this)) {
                 submit.setEnabled(false);
                 logIntoAccount();
             }
             else {
-                showDialog("Liborg", "Please connect to internet");
+                AppUtils.getInstance().alertMessage(this, Constants.LIBORGS,
+                        Constants.INTERNET_CONN);
             }
         }
     }
 
-    private void showDialog(String title, String message){
-        new AlertDialog.Builder(LogInActivity.this)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.yes,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        }).show();
-    }
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
 
     public void logIntoAccount(){
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        String REGISTER_URL = "https://liborgs-1139.appspot.com/users/login?";
-
-        StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST
+                , Constants.USER_LOGIN_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -126,16 +103,15 @@ public class LogInActivity extends AppCompatActivity {
                                 s.setSharedPreference(getApplicationContext(), fname, lname
                                         , mEmail, auth_token);
 
-                                RegisterGCMId app = (RegisterGCMId) getApplication();
-                                app.sendToServer();
+                                 ((RegisterGCMId) getApplication()).sendToServer();
 
                                 Intent intent = new Intent(getApplication(), LibraryActivity.class);
                                 startActivity(intent);
                                 finish();
                             } else {
                                 String message = jObj.getString("message");
-
-                                showDialog("Log In", message);
+                                AppUtils.getInstance().alertMessage(LogInActivity.this,
+                                        "Log in", message);
                             }
                         }catch (JSONException e){
                             e.printStackTrace();
@@ -153,8 +129,8 @@ public class LogInActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<>();
-                params.put(KEY_EMAIL, mEmail);
-                params.put(KEY_PASSWORD, mPassword);
+                params.put(Constants.KEY_EMAIL, mEmail);
+                params.put(Constants.KEY_PASSWORD, mPassword);
                 return params;
             }
         };

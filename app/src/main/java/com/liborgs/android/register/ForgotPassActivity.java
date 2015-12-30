@@ -1,11 +1,6 @@
 package com.liborgs.android.register;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,6 +15,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.liborgs.android.R;
+import com.liborgs.android.util.AppUtils;
+import com.liborgs.android.util.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,7 +26,6 @@ import java.util.Map;
 
 public class ForgotPassActivity extends AppCompatActivity {
     private EditText recoveryEmail;
-    private static final String KEY_EMAIL = "email";
     private String mail;
     private Button recoveryButton;
 
@@ -42,25 +38,11 @@ public class ForgotPassActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_pass);
         recoveryEmail = (EditText) findViewById(R.id.recoveryEmail);
         recoveryButton = (Button) findViewById(R.id.recoveryButton);
-        if (isNetworkAvailable())
+        if (AppUtils.getInstance().isNetworkAvailable(this))
             resetPassword();
         else {
-            new AlertDialog.Builder(ForgotPassActivity.this)
-                    .setTitle("Liborg")
-                    .setMessage("Please connect to internet")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    }).show();
+            AppUtils.getInstance().alertMessage(this, Constants.LIBORGS, Constants.INTERNET_CONN);
         }
-    }
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     public void resetPassword(){
@@ -69,10 +51,10 @@ public class ForgotPassActivity extends AppCompatActivity {
             public void onClick(View v) {
                 recoveryButton.setEnabled(false);
                 mail = recoveryEmail.getText().toString().trim();
-                String url = "https://liborgs-1139.appspot.com/users/reset-password?";
                 RequestQueue queue = Volley.newRequestQueue(ForgotPassActivity.this);
 
-                StringRequest request = new StringRequest(Request.Method.POST, url,
+                StringRequest request = new StringRequest(Request.Method.POST,
+                        Constants.PASSWORD_RESET_URL,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -80,23 +62,11 @@ public class ForgotPassActivity extends AppCompatActivity {
                                     JSONObject jObject = new JSONObject(response);
                                     Boolean status = jObject.getBoolean("status");
                                     if (status) {
-                                        new AlertDialog.Builder(ForgotPassActivity.this)
-                                                .setTitle("Account Recovery")
-                                                .setMessage("Please check your email for further instructions")
-                                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        finish();
-                                                    }
-                                                }).show();
+                                        AppUtils.getInstance().alertMessage(ForgotPassActivity.this,
+                                                "Account Recovery,", "Please check your email for further instructions");
                                     } else {
-                                        new AlertDialog.Builder(ForgotPassActivity.this)
-                                                .setTitle("Account Recovery")
-                                                .setMessage("Please enter valid email")
-                                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int which) {
-
-                                                    }
-                                                }).show();
+                                        AppUtils.getInstance().alertMessage(ForgotPassActivity.this,
+                                                "Account Recovery", "Please enter correct email");
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -111,7 +81,7 @@ public class ForgotPassActivity extends AppCompatActivity {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
-                        params.put(KEY_EMAIL, mail);
+                        params.put(Constants.KEY_EMAIL, mail);
                         return params;
                     }
                 };

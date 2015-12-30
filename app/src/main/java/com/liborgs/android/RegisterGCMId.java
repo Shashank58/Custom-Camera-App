@@ -1,4 +1,4 @@
-package com.liborgs.android.util;
+package com.liborgs.android;
 
 import android.app.Activity;
 import android.app.Application;
@@ -19,6 +19,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.iid.InstanceID;
+import com.liborgs.android.util.Constants;
+import com.liborgs.android.util.SharedPreferencesHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,18 +33,11 @@ import java.util.Map;
  */
 public class RegisterGCMId extends Application {
     private static final String TAG = "RegisterGCMId";
-    private static final String GOOGLE_PROJECT_ID = "926498080108";
-    private static RegisterGCMId singleton;
     SharedPreferencesHandler s;
-
-    public RegisterGCMId getInstance(){
-        return singleton;
-    }
 
     @Override
     public void onCreate(){
         super.onCreate();
-        singleton = this;
         SharedPreferencesHandler sh = new SharedPreferencesHandler();
         if(sh.getRegId(this) == null) {
             registerGCM();
@@ -56,7 +51,7 @@ public class RegisterGCMId extends Application {
                String token = "";
                try {
                    InstanceID instanceID = InstanceID.getInstance(RegisterGCMId.this);
-                   token = instanceID.getToken(GOOGLE_PROJECT_ID, null);
+                   token = instanceID.getToken(Constants.GOOGLE_PROJECT_ID, null);
                    Log.e(TAG, "GCM Registration Token: " + token);
                } catch(Exception e) {
                    Log.e(TAG, "Failed to complete token refresh", e);
@@ -82,10 +77,9 @@ public class RegisterGCMId extends Application {
         final String registered = sh.getRegId(this);
 
         if((loggedIn != null) && (registered != null)){
-            String url = "  https://liborgs-1139.appspot.com/device/register";
             RequestQueue queue = Volley.newRequestQueue(this);
 
-            StringRequest req = new StringRequest(Method.POST, url
+            StringRequest req = new StringRequest(Method.POST, Constants.DEVICE_GCM_REGISTER
                     , new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -119,10 +113,9 @@ public class RegisterGCMId extends Application {
     }
 
     public void checkVersion(final String authToken, final Activity activity){
-        String Url = "https://liborgs-1139.appspot.com/device/app_version_code";
         RequestQueue reqQueue = Volley.newRequestQueue(this);
 
-        StringRequest req = new StringRequest(Method.GET, Url,
+        StringRequest req = new StringRequest(Method.GET, Constants.GET_APP_VERSION,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

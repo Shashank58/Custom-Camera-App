@@ -1,13 +1,11 @@
-package com.liborgs.android;
+package com.liborgs.android.activities;
 
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +14,7 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager.LayoutParams;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -29,6 +28,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.liborgs.android.HomeView;
+import com.liborgs.android.R;
+import com.liborgs.android.SearchAdapter;
+import com.liborgs.android.util.AppUtils;
+import com.liborgs.android.util.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,8 +48,7 @@ public class SearchActivity extends AppCompatActivity {
     private List<Object> searchBooks;
     private RecyclerView recList;
     private SearchAdapter bookList;
-    private static int size = 0;
-    private final int REQ_CODE_SPEECH_INPUT = 100;
+    private static int size = 0; //Changing grid size to occupy full space for Section headers
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +88,7 @@ public class SearchActivity extends AppCompatActivity {
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
                 "Speak Now");
         try {
-            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+            startActivityForResult(intent, Constants.REQ_CODE_SPEECH_INPUT);
         } catch (ActivityNotFoundException a) {
             Toast.makeText(getApplicationContext(),
                     "Not supported",
@@ -149,11 +152,12 @@ public class SearchActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case REQ_CODE_SPEECH_INPUT: {
+            case Constants.REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
 
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                     myEditText.setText(result.get(0));
                 }
                 break;
@@ -164,7 +168,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void fetchDataNormalSearch(String query){
         searchBooks = new ArrayList<>();
-        String url = Uri.parse("https://liborgs-1139.appspot.com/books/search")
+        String url = Uri.parse(Constants.LOCAL_BOOK_SEARCH)
                 .buildUpon()
                 .appendQueryParameter("query", query)
                 .build().toString();
@@ -208,7 +212,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void fetchDataGoogleSearch(String query){
         searchBooks.add("Web Results");
-        String url = Uri.parse("https://liborgs-1139.appspot.com/books/search_google")
+        String url = Uri.parse(Constants.GOOGLE_BOOK_SEARCH)
                 .buildUpon()
                 .appendQueryParameter("query", query)
                 .build().toString();
@@ -229,17 +233,8 @@ public class SearchActivity extends AppCompatActivity {
                                 extractSearchResponse(response, false);
                             else {
                                 String message = response.getString("message");
-                                new AlertDialog.Builder(SearchActivity.this)
-                                        .setTitle("Liborg")
-                                        .setMessage(message)
-                                        .setPositiveButton(android.R.string.yes,
-                                                new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
-
-                                                    }
-                                                })
-                                        .show();
+                                AppUtils.getInstance().alertMessage(SearchActivity.this,
+                                        Constants.LIBORGS, message);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

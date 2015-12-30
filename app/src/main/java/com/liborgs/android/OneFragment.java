@@ -10,8 +10,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout.LayoutParams;
@@ -36,7 +34,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.liborgs.android.activities.SearchActivity;
 import com.liborgs.android.register.LogInActivity;
+import com.liborgs.android.util.AppUtils;
+import com.liborgs.android.util.Constants;
 import com.liborgs.android.util.SharedPreferencesHandler;
 
 import org.json.JSONArray;
@@ -66,7 +67,7 @@ public class OneFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(isNetworkAvailable()) {
+        if(AppUtils.getInstance().isNetworkAvailable(getActivity())) {
             getData();
         }
     }
@@ -77,7 +78,7 @@ public class OneFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_one, container, false);
         fetchData = (TextView) view.findViewById(R.id.fetching_data);
-        if(isNetworkAvailable()) {
+        if(AppUtils.getInstance().isNetworkAvailable(getActivity())) {
             searchFeature();
             recList = (RecyclerView) view.findViewById(R.id.cardList);
             recList.setHasFixedSize(true);
@@ -95,12 +96,6 @@ public class OneFragment extends Fragment {
         return view;
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
 
     private void searchFeature(){
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
@@ -167,7 +162,6 @@ public class OneFragment extends Fragment {
     }
 
     private void getData(){
-        String url = "https://liborgs-1139.appspot.com/books/get_all_books";
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         final ProgressDialog dialog = new ProgressDialog(getActivity());
         dialog.setMessage("Fetching");
@@ -175,7 +169,8 @@ public class OneFragment extends Fragment {
         dialog.setInverseBackgroundForced(false);
         dialog.show();
 
-        JsonObjectRequest jRequest = new JsonObjectRequest(url, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jRequest = new JsonObjectRequest(Constants.GET_ALL_BOOKS
+                , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.e("One fragment", "Response: "+response.toString());

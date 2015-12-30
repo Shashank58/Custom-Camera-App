@@ -1,9 +1,6 @@
 package com.liborgs.android.register;
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +16,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.liborgs.android.R;
+import com.liborgs.android.util.AppUtils;
+import com.liborgs.android.util.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,14 +29,6 @@ public class SignUp extends AppCompatActivity {
     private String mFname, mLname, mEmail, mPassword, mConfirm;
     private EditText fname, lname, email, password, confirm;
     private Button createAccount;
-    public static final String KEY_FNAME = "firstname";
-    public static final String KEY_LNAME = "lastname";
-    public static final String KEY_EMAIL = "email";
-    public static final String KEY_PASSWORD = "password";
-    private static final String SIGN_UP = "Sign Up";
-    private static final String PASSWORD_NOT_MATCHING = "Password not matching";
-    private static final String LIBORGS = "Liborgs";
-    private static final String INTERNET_CONN = "Please connect to internet";
 
 
     @Override
@@ -66,44 +57,25 @@ public class SignUp extends AppCompatActivity {
         mFname = fname.getText().toString().trim();
         mLname = lname.getText().toString().trim();
         if(mConfirm.equals(mPassword)) {
-            if (isNetworkAvailable()) {
+            if (AppUtils.getInstance().isNetworkAvailable(this)) {
                 createAccount.setEnabled(false);
                 registerUser();
             }
             else {
-                showDialog(LIBORGS, INTERNET_CONN);
+               AppUtils.getInstance().alertMessage(this, Constants.LIBORGS, Constants.INTERNET_CONN);
             }
         } else {
-            showDialog(SIGN_UP, PASSWORD_NOT_MATCHING);
+            AppUtils.getInstance().alertMessage(this, Constants.SIGN_UP, Constants.PASSWORD_NOT_MATCHING);
         }
     }
 
-    private void showDialog(String title, String message){
-        new AlertDialog.Builder(SignUp.this)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.yes,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        }).show();
-    }
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
 
     public void registerUser(){
         mEmail = email.getText().toString().trim();
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        String REGISTER_URL = "https://liborgs-1139.appspot.com/users/register";
-
-        StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST
+                , Constants.USER_REGISTER_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -113,7 +85,7 @@ public class SignUp extends AppCompatActivity {
                             boolean status = jObj.getBoolean("status");
                             if(status){
                                 new AlertDialog.Builder(SignUp.this)
-                                        .setTitle(SIGN_UP)
+                                        .setTitle(Constants.SIGN_UP)
                                         .setMessage(message)
                                         .setPositiveButton(android.R.string.yes,
                                                 new DialogInterface.OnClickListener() {
@@ -122,7 +94,8 @@ public class SignUp extends AppCompatActivity {
                                                     }
                                                 }).show();
                             } else {
-                                showDialog(SIGN_UP, message);
+                                AppUtils.getInstance().alertMessage(SignUp.this,
+                                        Constants.SIGN_UP, message);
                             }
                         }catch (JSONException e){
                             e.printStackTrace();
@@ -140,10 +113,10 @@ public class SignUp extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<>();
-                params.put(KEY_FNAME, mFname);
-                params.put(KEY_LNAME, mLname);
-                params.put(KEY_EMAIL, mEmail);
-                params.put(KEY_PASSWORD, mPassword);
+                params.put(Constants.KEY_FNAME, mFname);
+                params.put(Constants.KEY_LNAME, mLname);
+                params.put(Constants.KEY_EMAIL, mEmail);
+                params.put(Constants.KEY_PASSWORD, mPassword);
                 return params;
             }
         };

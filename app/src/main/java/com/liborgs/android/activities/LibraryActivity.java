@@ -1,13 +1,10 @@
-package com.liborgs.android;
+package com.liborgs.android.activities;
 
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -18,6 +15,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,7 +27,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.zxing.integration.android.IntentIntegrator;
-import com.liborgs.android.util.RegisterGCMId;
+import com.liborgs.android.OneFragment;
+import com.liborgs.android.R;
+import com.liborgs.android.RegisterGCMId;
+import com.liborgs.android.SendImage;
+import com.liborgs.android.TwoFragment;
+import com.liborgs.android.util.AppUtils;
+import com.liborgs.android.util.Constants;
 import com.liborgs.android.util.SharedPreferencesHandler;
 
 import org.json.JSONException;
@@ -52,9 +56,6 @@ public class LibraryActivity extends AppCompatActivity {
     private TwoFragment twoFragment;
     private OneFragment oneFragment;
     private Bitmap bm, scaledBitmap, bitmap;
-
-    private static final int PIC_CAPTURED = 0;
-    private static final int CROPPED_PIC = 2;
     private int x1, y1, x2, y2;
 
 
@@ -71,8 +72,7 @@ public class LibraryActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         setContentView(R.layout.activity_library);
 
-        RegisterGCMId app = (RegisterGCMId) getApplication();
-        app.checkVersion(loggedIn, this);
+        ((RegisterGCMId) getApplication()).checkVersion(loggedIn, this);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         myEditText = (EditText) findViewById(R.id.myEditText);
@@ -81,6 +81,16 @@ public class LibraryActivity extends AppCompatActivity {
 
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
+
+        if (getIntent().hasExtra("SelectedTab")){
+            Log.e("Library activity", "Getting called notification");
+            int tabSelected = getIntent().getIntExtra("SelectedTab", 0);
+            TabLayout.Tab tab = tabLayout.getTabAt(tabSelected);
+            if (tab != null) {
+                tab.select();
+            }
+            viewPager.setCurrentItem(tabSelected);
+        }
 
         toolbar.setCollapsible(true);
     }
@@ -103,7 +113,7 @@ public class LibraryActivity extends AppCompatActivity {
 
 
     public void scanBarCode(View v){
-        if(isNetworkAvailable()) {
+        if(AppUtils.getInstance().isNetworkAvailable(this)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.pick_issue_type)
                     .setItems(R.array.issue_method, new DialogInterface.OnClickListener() {
@@ -114,27 +124,21 @@ public class LibraryActivity extends AppCompatActivity {
                                 integrator.initiateScan();
                             } else {
                                 Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                                startActivityForResult(intent, PIC_CAPTURED);
+                                startActivityForResult(intent, Constants.PIC_CAPTURED);
                             }
                         }
                     }).show();
         }
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if(requestCode == PIC_CAPTURED){
+            if(requestCode == Constants.PIC_CAPTURED){
                 performCrop(data.getData());
-            } else if (requestCode == CROPPED_PIC){
+            } else if (requestCode == Constants.CROPPED_PIC){
                 bm = data.getExtras().getParcelable("data");
                 int height = 0;
                 if (bm != null) {
@@ -156,20 +160,10 @@ public class LibraryActivity extends AppCompatActivity {
                 s.sendImage();
             } else {
                 String _code = data.getStringExtra("SCAN_RESULT");
-                if (isNetworkAvailable())
+                if (AppUtils.getInstance().isNetworkAvailable(this))
                     issueBook(_code, "");
                 else {
-                    new AlertDialog.Builder(this)
-                                .setTitle("Liborg")
-                                .setMessage("Please check your internet connection")
-                                .setPositiveButton(android.R.string.yes,
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-
-                                            }
-                                        })
-                                .show();
+                    AppUtils.getInstance().alertMessage(this, Constants.LIBORGS, Constants.INTERNET_CONN);
                 }
             }
         }
@@ -188,7 +182,7 @@ public class LibraryActivity extends AppCompatActivity {
             cropIntent.putExtra("outputX", x2);
             cropIntent.putExtra("outputY", y2);
             cropIntent.putExtra("return-data", true);
-            startActivityForResult(cropIntent, CROPPED_PIC);
+            startActivityForResult(cropIntent, Constants.CROPPED_PIC);
         } catch (ActivityNotFoundException e){
             e.printStackTrace();
             Toast toast = Toast.makeText(getApplicationContext(), "Your device doesnot support cropping an image", Toast.LENGTH_LONG);
@@ -197,14 +191,13 @@ public class LibraryActivity extends AppCompatActivity {
     }
 
     private void issueBook(final String isbn, final String bookTitle){
-        String url = "https://liborgs-1139.appspot.com/users/issue";
         final ProgressDialog dialog = new ProgressDialog(LibraryActivity.this);
         dialog.setMessage("Issuing");
         dialog.setCancelable(false);
         dialog.setInverseBackgroundForced(false);
         dialog.show();
 
-        StringRequest jObject = new StringRequest(Request.Method.POST, url,
+        StringRequest jObject = new StringRequest(Request.Method.POST, Constants.USERS_ISSUE_BOOK,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -216,21 +209,12 @@ public class LibraryActivity extends AppCompatActivity {
                             if(status){
                                 twoFragment.getData(); //Update my shelf with the book
                             }
-                            AlertDialog.Builder builder = new AlertDialog.Builder(LibraryActivity.this);
-                            builder.setTitle("Book Issue")
-                                    .setMessage(message)
-                                    .setPositiveButton(android.R.string.yes,
-                                            new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    //Goto My shelf
-                                                    TabLayout.Tab tab = tabLayout.getTabAt(1);
-                                                    if(tab != null)
-                                                        tab.select();
-                                                    viewPager.setCurrentItem(1);
-                                                }
-                                            })
-                                    .show();
+                            AppUtils.getInstance().alertMessage(LibraryActivity.this, "Book Issue", message);
+                            //Goto My shelf
+                            TabLayout.Tab tab = tabLayout.getTabAt(1);
+                            if(tab != null)
+                                tab.select();
+                            viewPager.setCurrentItem(1);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

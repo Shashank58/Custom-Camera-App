@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.liborgs.android.util.Constants;
 import com.liborgs.android.util.SharedPreferencesHandler;
 
 import org.json.JSONException;
@@ -64,13 +65,13 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
         holder.getIt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://liborgs-1139.appspot.com/users/issue";
                 final ProgressDialog dialog = new ProgressDialog(mActivity);
                 dialog.setMessage("Issuing");
                 dialog.setCancelable(false);
                 dialog.setInverseBackgroundForced(false);
                 dialog.show();
-                StringRequest jObject = new StringRequest(Request.Method.POST, url,
+                StringRequest jObject = new StringRequest(Request.Method.POST
+                        , Constants.USERS_ISSUE_BOOK,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {

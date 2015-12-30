@@ -1,4 +1,4 @@
-package com.liborgs.android.util;
+package com.liborgs.android.services;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,8 +12,9 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
-import com.liborgs.android.LibraryActivity;
 import com.liborgs.android.R;
+import com.liborgs.android.activities.LibraryActivity;
+import com.liborgs.android.util.Constants;
 
 /**
  * Created by shashankm on 09/12/15.
@@ -25,12 +26,19 @@ public class MyGcmListenerService extends GcmListenerService {
     public void onMessageReceived(String from, Bundle data) {
         Log.e(TAG, "Bundle: "+data.toString());
         String message = data.getString("message");
-        sendNotification(message);
+        String type = data.getString("type");
+        if (Constants.NOTIFICATION_TYPE_NEW_BOOK
+                    .equals(type)) {
+            sendNotification(message, 0);
+        } else if (Constants.NOTIFICATION_TYPE_APPROVED.equals(type)){
+            sendNotification(message, 1);
+        }
     }
 
-    private void sendNotification(String message) {
+    private void sendNotification(String message, int selectedTab) {
         Intent intent = new Intent(this, LibraryActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("SelectedTab", selectedTab);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent,
                 PendingIntent.FLAG_ONE_SHOT);
 

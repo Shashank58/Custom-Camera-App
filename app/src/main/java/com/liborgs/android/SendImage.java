@@ -12,6 +12,8 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.Images.Media;
 import android.util.Log;
 
+import com.liborgs.android.activities.ResultsActivity;
+import com.liborgs.android.util.Constants;
 import com.liborgs.android.util.SharedPreferencesHandler;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -40,8 +42,6 @@ public class SendImage {
     }
 
     public void sendImage() {
-        String url = "http://107.167.190.253/image_search/similar";
-
         Cursor cursor = mContext.getContentResolver().query(Media.EXTERNAL_CONTENT_URI, new String[]{Media.DATA, Media.DATE_ADDED, MediaStore.Images.ImageColumns.ORIENTATION}, Media.DATE_ADDED, null, "date_added ASC");
         if (cursor != null && cursor.moveToLast()) {
             Uri fileURI = Uri.parse(cursor.getString(cursor.getColumnIndex(Media.DATA)));
@@ -62,7 +62,7 @@ public class SendImage {
             Log.d("MyApp", "File not found!!!" + fileSrc);
         }
         final ProgressDialog dialog = new ProgressDialog(mContext);
-        client.post(url, params, new JsonHttpResponseHandler(){
+        client.post(Constants.BOOK_IMAGE_SEARCH, params, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 dialog.hide();

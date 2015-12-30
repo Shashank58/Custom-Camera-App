@@ -17,6 +17,7 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.liborgs.android.util.Constants;
 import com.liborgs.android.util.SharedPreferencesHandler;
 
 import org.json.JSONArray;
@@ -66,12 +67,11 @@ public class TwoFragment extends android.support.v4.app.Fragment {
         return view;
     }
 
-    protected void getData(){
-        String url = "https://liborgs-1139.appspot.com/users/issued_books";
+    public void getData(){
         myBooks = new ArrayList<>();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
-        JsonObjectRequest jObject = new JsonObjectRequest(Method.GET, url,
+        JsonObjectRequest jObject = new JsonObjectRequest(Method.GET, Constants.GET_USER_ISSUED_BOOKS,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

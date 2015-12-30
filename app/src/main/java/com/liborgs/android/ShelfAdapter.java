@@ -2,8 +2,6 @@ package com.liborgs.android;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,6 +20,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.liborgs.android.util.AppUtils;
+import com.liborgs.android.util.Constants;
 import com.liborgs.android.util.SharedPreferencesHandler;
 
 import org.json.JSONException;
@@ -61,8 +61,8 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
                 int pos = (int) v.getTag();
                 final HomeView hv = allBooks.get(pos);
                 RequestQueue queue = Volley.newRequestQueue(mContext);
-                String url = "https://liborgs-1139.appspot.com/users/return";
-                StringRequest sRequest = new StringRequest(Method.POST, url,
+                StringRequest sRequest = new StringRequest(Method.POST,
+                        Constants.USER_BOOK_RETURN,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -75,17 +75,8 @@ public class ShelfAdapter extends RecyclerView.Adapter<ShelfAdapter.ShelfViewHol
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-                                AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-                                builder.setTitle("Book Return")
-                                        .setMessage(message)
-                                        .setPositiveButton(android.R.string.yes,
-                                                new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialog, int id) {
-
-                                                    }
-                                                })
-                                        .show();
+                                AppUtils.getInstance().alertMessage(mActivity,
+                                        "Book Return", message);
                             }
                         }, new Response.ErrorListener() {
                     @Override
