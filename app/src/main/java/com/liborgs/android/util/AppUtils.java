@@ -1,6 +1,7 @@
 package com.liborgs.android.util;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
@@ -12,6 +13,7 @@ import android.support.v7.app.AlertDialog;
  */
 public class AppUtils {
     private static AppUtils instance;
+    private ProgressDialog dialog;
 
     public static AppUtils getInstance(){
         if (instance == null){
@@ -38,5 +40,19 @@ public class AppUtils {
 
                             }
                         }).create().show();
+    }
+
+    public void showProgressDialog(Activity activity, String message){
+        dialog = new ProgressDialog(activity);
+        dialog.setMessage(message);
+        dialog.setInverseBackgroundForced(false);
+        dialog.setCancelable(false);
+        dialog.show();
+    }
+
+    public void dismissProgressDialog(){
+        if (dialog != null){
+            dialog.dismiss();
+        }
     }
 }

@@ -6,7 +6,6 @@ package com.liborgs.android;
  **/
 
 import android.annotation.TargetApi;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -163,18 +162,14 @@ public class OneFragment extends Fragment {
 
     private void getData(){
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        final ProgressDialog dialog = new ProgressDialog(getActivity());
-        dialog.setMessage("Fetching");
-        dialog.setCancelable(false);
-        dialog.setInverseBackgroundForced(false);
-        dialog.show();
+        AppUtils.getInstance().showProgressDialog(getActivity(), "Fetching");
 
         JsonObjectRequest jRequest = new JsonObjectRequest(Constants.GET_ALL_BOOKS
                 , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.e("One fragment", "Response: "+response.toString());
-                dialog.hide();
+                AppUtils.getInstance().dismissProgressDialog();
                 try {
                     boolean status = response.getBoolean("status");
                     if (status){
@@ -213,7 +208,7 @@ public class OneFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                dialog.hide();
+                AppUtils.getInstance().dismissProgressDialog();
             }
         }){
             public Map<String, String> getHeaders() throws AuthFailureError {

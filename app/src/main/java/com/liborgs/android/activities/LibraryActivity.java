@@ -1,6 +1,5 @@
 package com.liborgs.android.activities;
 
-import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,7 +14,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -83,7 +81,6 @@ public class LibraryActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         if (getIntent().hasExtra("SelectedTab")){
-            Log.e("Library activity", "Getting called notification");
             int tabSelected = getIntent().getIntExtra("SelectedTab", 0);
             TabLayout.Tab tab = tabLayout.getTabAt(tabSelected);
             if (tab != null) {
@@ -191,18 +188,14 @@ public class LibraryActivity extends AppCompatActivity {
     }
 
     private void issueBook(final String isbn, final String bookTitle){
-        final ProgressDialog dialog = new ProgressDialog(LibraryActivity.this);
-        dialog.setMessage("Issuing");
-        dialog.setCancelable(false);
-        dialog.setInverseBackgroundForced(false);
-        dialog.show();
+        AppUtils.getInstance().showProgressDialog(this, "Issuing");
 
         StringRequest jObject = new StringRequest(Request.Method.POST, Constants.USERS_ISSUE_BOOK,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            dialog.hide();
+                            AppUtils.getInstance().dismissProgressDialog();
                             JSONObject res = new JSONObject(response);
                             String message = res.getString("message");
                             boolean status = res.getBoolean("status");
@@ -222,7 +215,7 @@ public class LibraryActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                dialog.hide();
+                AppUtils.getInstance().dismissProgressDialog();
             }
         })
         {

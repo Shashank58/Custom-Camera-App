@@ -1,6 +1,5 @@
 package com.liborgs.android.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -81,18 +80,15 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
             @Override
             public void onClick(View v) {
                 RequestQueue queue = Volley.newRequestQueue(DetailActivity.this);
-                final ProgressDialog dialog = new ProgressDialog(DetailActivity.this);
-                dialog.setMessage("Sending request to admin");
-                dialog.setInverseBackgroundForced(false);
-                dialog.setCancelable(false);
-                dialog.show();
+                AppUtils.getInstance().showProgressDialog(DetailActivity.this,
+                        "Sending request to admin");
 
                 StringRequest jsonObjectRequest = new StringRequest(Method.POST
                         , Constants.USER_REQUEST_BOOK,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                dialog.hide();
+                                AppUtils.getInstance().dismissProgressDialog();
                                 try {
                                     JSONObject jObj = new JSONObject(response);
                                     boolean status = jObj.getBoolean("status");
@@ -108,7 +104,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        dialog.hide();
+                        AppUtils.getInstance().dismissProgressDialog();
                         error.printStackTrace();
                     }
                 })

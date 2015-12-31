@@ -1,6 +1,5 @@
 package com.liborgs.android.activities;
 
-import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -173,17 +172,13 @@ public class SearchActivity extends AppCompatActivity {
                 .appendQueryParameter("query", query)
                 .build().toString();
 
-        final ProgressDialog dialog = new ProgressDialog(this);
-        dialog.setMessage("Searching");
-        dialog.setCancelable(false);
-        dialog.setInverseBackgroundForced(false);
-        dialog.show();
+        AppUtils.getInstance().showProgressDialog(this, "Searching");
 
         JsonObjectRequest jObject = new JsonObjectRequest(Method.GET, url,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        dialog.hide();
+                        AppUtils.getInstance().dismissProgressDialog();
                         try {
                             boolean status = response.getBoolean("status");
                             if(status) {
@@ -203,7 +198,7 @@ public class SearchActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                dialog.hide();
+                AppUtils.getInstance().dismissProgressDialog();
             }
         });
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -216,17 +211,13 @@ public class SearchActivity extends AppCompatActivity {
                 .buildUpon()
                 .appendQueryParameter("query", query)
                 .build().toString();
-        final ProgressDialog dialog = new ProgressDialog(this);
-        dialog.setMessage("Searching");
-        dialog.setCancelable(false);
-        dialog.setInverseBackgroundForced(false);
-        dialog.show();
+        AppUtils.getInstance().showProgressDialog(this, "Searching");
 
         JsonObjectRequest jObject = new JsonObjectRequest(Method.GET, url,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        dialog.hide();
+                        AppUtils.getInstance().dismissProgressDialog();
                         try {
                             boolean status = response.getBoolean("status");
                             if(status)
@@ -243,7 +234,7 @@ public class SearchActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                dialog.hide();
+                AppUtils.getInstance().dismissProgressDialog();
             }
         });
         RequestQueue queue = Volley.newRequestQueue(this);

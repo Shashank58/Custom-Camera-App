@@ -1,7 +1,6 @@
 package com.liborgs.android;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -22,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.liborgs.android.util.AppUtils;
 import com.liborgs.android.util.Constants;
 import com.liborgs.android.util.SharedPreferencesHandler;
 
@@ -65,17 +65,13 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
         holder.getIt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ProgressDialog dialog = new ProgressDialog(mActivity);
-                dialog.setMessage("Issuing");
-                dialog.setCancelable(false);
-                dialog.setInverseBackgroundForced(false);
-                dialog.show();
+                AppUtils.getInstance().showProgressDialog(mActivity, "Issuing");
                 StringRequest jObject = new StringRequest(Request.Method.POST
                         , Constants.USERS_ISSUE_BOOK,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                dialog.hide();
+                                AppUtils.getInstance().dismissProgressDialog();
                                 try {
                                     Log.e("Library activity", "Response: " + response);
                                     JSONObject res = new JSONObject(response);
@@ -98,7 +94,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        dialog.hide();
+                        AppUtils.getInstance().dismissProgressDialog();
                     }
                 })
                 {

@@ -1,7 +1,6 @@
 package com.liborgs.android;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -13,6 +12,7 @@ import android.provider.MediaStore.Images.Media;
 import android.util.Log;
 
 import com.liborgs.android.activities.ResultsActivity;
+import com.liborgs.android.util.AppUtils;
 import com.liborgs.android.util.Constants;
 import com.liborgs.android.util.SharedPreferencesHandler;
 import com.loopj.android.http.AsyncHttpClient;
@@ -61,11 +61,10 @@ public class SendImage {
         } catch (FileNotFoundException e) {
             Log.d("MyApp", "File not found!!!" + fileSrc);
         }
-        final ProgressDialog dialog = new ProgressDialog(mContext);
         client.post(Constants.BOOK_IMAGE_SEARCH, params, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                dialog.hide();
+                AppUtils.getInstance().dismissProgressDialog();
                 Log.e("Send Image", "Response: " + response.toString());
                 Intent intent = new Intent(mContext, ResultsActivity.class);
                 intent.putExtra("response", response.toString());
@@ -74,16 +73,13 @@ public class SendImage {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                dialog.hide();
+                AppUtils.getInstance().dismissProgressDialog();
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
 
             @Override
             public void onProgress(long bytesWritten, long totalSize) {
-                dialog.setMessage("Fetching");
-                dialog.setCancelable(false);
-                dialog.setInverseBackgroundForced(false);
-                dialog.show();
+                AppUtils.getInstance().showProgressDialog(mContext, "Fetching");
             }
         });
     }
