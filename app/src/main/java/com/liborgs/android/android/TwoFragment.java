@@ -1,4 +1,4 @@
-package com.liborgs.android;
+package com.liborgs.android.android;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +17,9 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.liborgs.android.R;
+import com.liborgs.android.adapters.ShelfAdapter;
+import com.liborgs.android.datamodle.HomeView;
 import com.liborgs.android.util.Constants;
 import com.liborgs.android.util.SharedPreferencesHandler;
 

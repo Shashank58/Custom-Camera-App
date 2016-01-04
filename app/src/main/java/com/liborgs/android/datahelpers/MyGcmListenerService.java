@@ -1,4 +1,4 @@
-package com.liborgs.android.services;
+package com.liborgs.android.datahelpers;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -13,7 +13,7 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
 import com.liborgs.android.R;
-import com.liborgs.android.activities.LibraryActivity;
+import com.liborgs.android.android.LibraryActivity;
 import com.liborgs.android.util.Constants;
 
 /**

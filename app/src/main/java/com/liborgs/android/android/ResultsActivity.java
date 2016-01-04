@@ -1,4 +1,4 @@
-package com.liborgs.android.activities;
+package com.liborgs.android.android;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -9,9 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.liborgs.android.HomeView;
 import com.liborgs.android.R;
-import com.liborgs.android.ResultsAdapter;
+import com.liborgs.android.adapters.ResultsAdapter;
+import com.liborgs.android.datamodle.HomeView;
 
 import org.json.JSONArray;
 import org.json.JSONException;

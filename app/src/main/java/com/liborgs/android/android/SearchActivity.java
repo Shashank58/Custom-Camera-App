@@ -1,4 +1,4 @@
-package com.liborgs.android.activities;
+package com.liborgs.android.android;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -27,9 +27,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.liborgs.android.HomeView;
 import com.liborgs.android.R;
-import com.liborgs.android.SearchAdapter;
+import com.liborgs.android.adapters.SearchAdapter;
+import com.liborgs.android.datamodle.HomeView;
 import com.liborgs.android.util.AppUtils;
 import com.liborgs.android.util.Constants;
 

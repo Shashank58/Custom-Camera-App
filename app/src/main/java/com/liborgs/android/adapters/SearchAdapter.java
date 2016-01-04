@@ -1,4 +1,4 @@
-package com.liborgs.android;
+package com.liborgs.android.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.liborgs.android.activities.DetailActivity;
+import com.liborgs.android.datamodle.HomeView;
+import com.liborgs.android.R;
+import com.liborgs.android.android.DetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;

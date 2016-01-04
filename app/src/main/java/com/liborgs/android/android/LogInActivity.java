@@ -1,4 +1,4 @@
-package com.liborgs.android.register;
+package com.liborgs.android.android;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,8 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.liborgs.android.R;
-import com.liborgs.android.RegisterGCMId;
-import com.liborgs.android.activities.LibraryActivity;
+import com.liborgs.android.datahelpers.RegisterGCMId;
 import com.liborgs.android.util.AppUtils;
 import com.liborgs.android.util.Constants;
 import com.liborgs.android.util.SharedPreferencesHandler;

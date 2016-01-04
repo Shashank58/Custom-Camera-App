@@ -1,4 +1,4 @@
-package com.liborgs.android;
+package com.liborgs.android.datamodle;
 
 import java.io.Serializable;
 

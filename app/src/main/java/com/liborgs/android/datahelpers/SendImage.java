@@ -1,4 +1,4 @@
-package com.liborgs.android;
+package com.liborgs.android.datahelpers;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.Images.Media;
 import android.util.Log;
 
-import com.liborgs.android.activities.ResultsActivity;
+import com.liborgs.android.android.ResultsActivity;
 import com.liborgs.android.util.AppUtils;
 import com.liborgs.android.util.Constants;
 import com.liborgs.android.util.SharedPreferencesHandler;

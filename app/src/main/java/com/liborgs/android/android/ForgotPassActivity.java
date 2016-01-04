@@ -1,4 +1,4 @@
-package com.liborgs.android.register;
+package com.liborgs.android.android;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

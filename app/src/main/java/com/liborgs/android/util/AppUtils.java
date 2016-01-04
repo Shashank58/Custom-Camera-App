@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 /**
  * Created by shashankm on 30/12/15.
  */
+
 public class AppUtils {
     private static AppUtils instance;
     private ProgressDialog dialog;

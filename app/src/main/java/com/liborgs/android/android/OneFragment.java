@@ -1,4 +1,4 @@
-package com.liborgs.android;
+package com.liborgs.android.android;
 
 /**
  This is the home fragment of app which contains list of all books in the library.
@@ -33,8 +33,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.liborgs.android.activities.SearchActivity;
-import com.liborgs.android.register.LogInActivity;
+import com.liborgs.android.R;
+import com.liborgs.android.adapters.HomeAdapter;
+import com.liborgs.android.datamodle.HomeView;
 import com.liborgs.android.util.AppUtils;
 import com.liborgs.android.util.Constants;
 import com.liborgs.android.util.SharedPreferencesHandler;

@@ -1,4 +1,4 @@
-package com.liborgs.android.register;
+package com.liborgs.android.android;
 
 import android.content.DialogInterface;
 import android.os.Bundle;

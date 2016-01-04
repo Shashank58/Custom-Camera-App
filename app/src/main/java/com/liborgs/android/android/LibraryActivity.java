@@ -1,4 +1,4 @@
-package com.liborgs.android.activities;
+package com.liborgs.android.android;
 
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -25,11 +25,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.zxing.integration.android.IntentIntegrator;
-import com.liborgs.android.OneFragment;
 import com.liborgs.android.R;
-import com.liborgs.android.RegisterGCMId;
-import com.liborgs.android.SendImage;
-import com.liborgs.android.TwoFragment;
+import com.liborgs.android.datahelpers.RegisterGCMId;
+import com.liborgs.android.datahelpers.SendImage;
 import com.liborgs.android.util.AppUtils;
 import com.liborgs.android.util.Constants;
 import com.liborgs.android.util.SharedPreferencesHandler;

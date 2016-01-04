@@ -1,12 +1,12 @@
-package com.liborgs.android;
+package com.liborgs.android.adapters;
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build.VERSION_CODES;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.util.Pair;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,7 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.liborgs.android.activities.DetailActivity;
+import com.liborgs.android.R;
+import com.liborgs.android.android.DetailActivity;
+import com.liborgs.android.datamodle.HomeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,9 +69,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 intent.putExtra("allData", hv);
                 intent.addFlags(Window.FEATURE_ACTIVITY_TRANSITIONS);
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation
-                        (mActivity,  new Pair<View, String>(viewStart, transitionCircle));
+                        (mActivity,  viewStart, transitionCircle);
 
-                mActivity.startActivity(intent, options.toBundle());
+                ActivityCompat.startActivity(mActivity, intent, options.toBundle());
             }
         });
 

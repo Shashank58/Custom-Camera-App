@@ -1,4 +1,4 @@
-package com.liborgs.android.activities;
+package com.liborgs.android.android;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -19,8 +19,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.liborgs.android.HomeView;
 import com.liborgs.android.R;
+import com.liborgs.android.datamodle.HomeView;
 import com.liborgs.android.util.AppUtils;
 import com.liborgs.android.util.Constants;
 import com.liborgs.android.util.SharedPreferencesHandler;
