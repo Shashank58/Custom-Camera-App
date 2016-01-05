@@ -43,7 +43,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         mActivity = activity;
     }
 
-
     @TargetApi(VERSION_CODES.M)
     @Override
     public HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -79,10 +78,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 ActivityCompat.startActivity(mActivity, intent, options.toBundle());
             }
         });
-
         return new HomeViewHolder(itemView);
     }
-
 
     @Override
     public void onBindViewHolder(final HomeViewHolder holder, final int position) {
@@ -94,12 +91,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         .asBitmap().into(holder.bookImage);
     }
 
-
     @Override
     public int getItemCount() {
         return allBooks.size();
     }
-
 
     public static class HomeViewHolder extends RecyclerView.ViewHolder {
         protected TextView bookName;

@@ -1,12 +1,23 @@
 package com.liborgs.android.android;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.Point;
 import android.net.Uri;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
+import android.transition.TransitionManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +32,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.liborgs.android.R;
 import com.liborgs.android.datamodle.HomeView;
+import com.liborgs.android.transition.RevealTransition;
 import com.liborgs.android.util.AppUtils;
 import com.liborgs.android.util.Constants;
 import com.liborgs.android.util.SharedPreferencesHandler;
@@ -40,8 +52,10 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
     private ImageView thumbnail, starOne, starTwo, starThree, starFour, startFive;
     private Button webReaderButton, requestBook;
     private HomeView hv;
+    private ViewGroup allView;
+    private View firstDetail, secondDetail, thirdDetail;
     public static final String EXTRA_EPICENTER = "EXTRA_EPICENTER";
-    View[] viewsToAnimate;
+    private static boolean isStartAnimation = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +66,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
             getSupportActionBar().hide();
 
         setContentView(R.layout.activity_detail);
+        initTransitions();
 
         bookName = (TextView) findViewById(R.id.detail_book_name);
         authorName = (TextView) findViewById(R.id.detail_author_name);
@@ -68,13 +83,118 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         starThree = (ImageView) findViewById(R.id.star_3);
         starFour = (ImageView) findViewById(R.id.star_4);
         startFive = (ImageView) findViewById(R.id.star_5);
+        allView = (ViewGroup) findViewById(R.id.allViewsDetail);
+        firstDetail = findViewById(R.id.first_detail);
+        secondDetail = findViewById(R.id.second_detail);
+        thirdDetail = findViewById(R.id.third_detail);
 
         setData();
         requestBookListener();
     }
 
-    public void back(View v){
+    @TargetApi(VERSION_CODES.LOLLIPOP)
+    private void initTransitions() {
+        TransitionInflater inflater = TransitionInflater.from(this);
+        Window window = getWindow();
+        RevealTransition reveal = createRevealTransition();
+        reveal.addListener(new Transition.TransitionListener() {
+            @Override
+            public void onTransitionStart(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionEnd(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionCancel(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionPause(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionResume(Transition transition) {
+
+            }
+        });
+        window.setEnterTransition(reveal);
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                isStartAnimation = true;
+                beginAllViewTransition();
+            }
+        }, 500);
+    }
+
+    @TargetApi(VERSION_CODES.LOLLIPOP)
+    private void beginAllViewTransition(){
+        TransitionManager.beginDelayedTransition(allView, new Slide());
+        if (isStartAnimation)
+            toggleVisibilityOn(firstDetail, secondDetail, thirdDetail);
+        else
+            toggleVisibilityOff(firstDetail, secondDetail, thirdDetail);
+    }
+
+    private static void toggleVisibilityOff(View... views) {
+        for (View view : views) {
+            view.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        isStartAnimation = false;
+        beginAllViewTransition();
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                superFinishAfterTransition();
+            }
+        }, 300);
+    }
+
+    @TargetApi(VERSION_CODES.LOLLIPOP)
+    private void superFinishAfterTransition() {
+        Log.e("Detail activity", "is it");
         super.onBackPressed();
+    }
+
+    private static void toggleVisibilityOn(View... views) {
+        for (View view : views) {
+            view.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void back(View v){
+        isStartAnimation = false;
+        beginAllViewTransition();
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                superFinishAfterTransition();
+            }
+        }, 300);
+    }
+
+    @TargetApi(VERSION_CODES.KITKAT)
+    private RevealTransition createRevealTransition() {
+        Point epicenter = getIntent().getParcelableExtra(EXTRA_EPICENTER);
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int bigRadius = Math.max(displayMetrics.widthPixels, displayMetrics.heightPixels);
+        RevealTransition reveal = new RevealTransition(epicenter, 0, bigRadius, 600);
+        reveal.addTarget(R.id.detail_thumbnail);
+        reveal.addTarget(android.R.id.statusBarBackground);
+        return reveal;
     }
 
     private void requestBookListener(){
@@ -132,10 +252,8 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
                         return param;
                     }
                 };
-
                 queue.add(jsonObjectRequest);
             }
-
         });
     }
 
