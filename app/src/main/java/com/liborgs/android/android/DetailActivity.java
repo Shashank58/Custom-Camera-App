@@ -40,6 +40,8 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
     private ImageView thumbnail, starOne, starTwo, starThree, starFour, startFive;
     private Button webReaderButton, requestBook;
     private HomeView hv;
+    public static final String EXTRA_EPICENTER = "EXTRA_EPICENTER";
+    View[] viewsToAnimate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

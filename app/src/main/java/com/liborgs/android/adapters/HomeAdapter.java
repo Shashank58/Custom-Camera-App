@@ -3,6 +3,7 @@ package com.liborgs.android.adapters;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Build.VERSION_CODES;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -60,9 +61,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 Intent intent = new Intent(mActivity, DetailActivity.class);
                 // Define the view that the animation will start from
                 View viewStart = itemView.findViewById(R.id.card_view_one);
-                View imageStart = v.findViewById(R.id.bookImage);
+                ImageView imageStart = (ImageView) v.findViewById(R.id.bookImage);
 
                 imageStart.setTransitionName(transitionCircle);
+                int[] location = new int[2];
+                Point epicenter = new Point(location[0] + imageStart.getMeasuredWidth() / 2,
+                        location[1] + imageStart.getMeasuredHeight() / 2);
+                intent.putExtra(DetailActivity.EXTRA_EPICENTER, epicenter);
 
                 int pos = (int) v.getTag();
                 HomeView hv = allBooks.get(pos);
