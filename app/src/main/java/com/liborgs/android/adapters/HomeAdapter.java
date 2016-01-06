@@ -43,6 +43,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         mActivity = activity;
     }
 
+    @TargetApi(VERSION_CODES.LOLLIPOP)
+    private void initTransitions() {
+        mActivity.getWindow().setExitTransition(null);
+        mActivity.getWindow().setReenterTransition(null);
+        mActivity.getWindow().setSharedElementEnterTransition(null);
+        mActivity.getWindow().setSharedElementExitTransition(null);
+        mActivity.getWindow().setSharedElementReenterTransition(null);
+        mActivity.getWindow().setSharedElementReturnTransition(null);
+    }
+
     @TargetApi(VERSION_CODES.M)
     @Override
     public HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -55,6 +65,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                initTransitions();
                 InputMethodManager imgr = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imgr.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 Intent intent = new Intent(mActivity, DetailActivity.class);
@@ -64,6 +75,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
 
                 imageStart.setTransitionName(transitionCircle);
                 int[] location = new int[2];
+                imageStart.getLocationInWindow(location);
                 Point epicenter = new Point(location[0] + imageStart.getMeasuredWidth() / 2,
                         location[1] + imageStart.getMeasuredHeight() / 2);
                 intent.putExtra(DetailActivity.EXTRA_EPICENTER, epicenter);

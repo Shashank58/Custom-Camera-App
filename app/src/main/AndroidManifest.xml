@@ -20,15 +20,15 @@
 
     <dependency>
         <groupId>
-com.mcxiaoke.volley
+            com.mcxiaoke.volley
         </groupId>
 
         <artifactId>
-library
+            library
         </artifactId>
 
         <version>
-1.0.19
+            1.0.19
         </version>
     </dependency>
 
@@ -54,7 +54,7 @@ library
         </activity>
         <activity
             android:name=".android.DetailActivity"
-            android:parentActivityName=".android.LibraryActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
         </activity>
         <activity android:name=".android.ForgotPassActivity" >

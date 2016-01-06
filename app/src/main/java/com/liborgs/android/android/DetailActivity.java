@@ -8,7 +8,7 @@ import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Slide;
+import android.transition.Explode;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.transition.TransitionManager;
@@ -136,7 +136,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
 
     @TargetApi(VERSION_CODES.LOLLIPOP)
     private void beginAllViewTransition(){
-        TransitionManager.beginDelayedTransition(allView, new Slide());
+        TransitionManager.beginDelayedTransition(allView, new Explode());
         if (isStartAnimation)
             toggleVisibilityOn(firstDetail, secondDetail, thirdDetail);
         else
@@ -164,7 +164,6 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
 
     @TargetApi(VERSION_CODES.LOLLIPOP)
     private void superFinishAfterTransition() {
-        Log.e("Detail activity", "is it");
         super.onBackPressed();
     }
 
@@ -191,9 +190,9 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         Point epicenter = getIntent().getParcelableExtra(EXTRA_EPICENTER);
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int bigRadius = Math.max(displayMetrics.widthPixels, displayMetrics.heightPixels);
-        RevealTransition reveal = new RevealTransition(epicenter, 0, bigRadius, 600);
+        RevealTransition reveal = new RevealTransition(epicenter, 0, bigRadius, 500);
         reveal.addTarget(R.id.detail_thumbnail);
-        reveal.addTarget(android.R.id.statusBarBackground);
+        reveal.addTarget(R.color.pure_black);
         return reveal;
     }
 
