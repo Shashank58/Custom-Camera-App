@@ -53,8 +53,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-        getWindow().getDecorView().setSystemUiVisibility(uiOptions);
+
         if(getSupportActionBar() != null)
             getSupportActionBar().hide();
 
@@ -148,16 +147,6 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         }, 300);
     }
 
-//    @TargetApi(VERSION_CODES.KITKAT)
-//    private RevealTransition createRevealTransition() {
-//        Point epicenter = getIntent().getParcelableExtra(EXTRA_EPICENTER);
-//        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-//        int bigRadius = Math.max(displayMetrics.widthPixels, displayMetrics.heightPixels);
-//        RevealTransition reveal = new RevealTransition(epicenter, 0, bigRadius, 500);
-//        reveal.addTarget(R.id.detail_thumbnail);
-//        reveal.addTarget(R.color.pure_black);
-//        return reveal;
-//    }
 
     private void requestBookListener(){
         requestBook.setOnClickListener(new OnClickListener() {

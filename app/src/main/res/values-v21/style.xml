@@ -4,6 +4,10 @@
         <item name="colorPrimaryDark">@color/navBar</item>
     </style>
 
+    <style name="DetailTheme" parent="AppTheme.Base">
+        <item name="colorPrimaryDark">@color/pure_black</item>
+    </style>
+
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light">
 
         <item name="android:windowContentTransitions">true</item>

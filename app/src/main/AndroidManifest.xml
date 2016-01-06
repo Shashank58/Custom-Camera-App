@@ -55,7 +55,7 @@
         <activity
             android:name=".android.DetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/DetailTheme" >
         </activity>
         <activity android:name=".android.ForgotPassActivity" >
         </activity>
