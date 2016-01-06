@@ -1,7 +1,11 @@
 package com.liborgs.android.adapters;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build.VERSION_CODES;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -72,14 +76,18 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return viewHolder;
     }
 
+    @TargetApi(VERSION_CODES.LOLLIPOP)
     private void startNewActivity(View v){
         Intent intent = new Intent(mActivity, DetailActivity.class);
 
+        ImageView imageStart = (ImageView) v.findViewById(R.id.bookImage);
         int pos = (int) v.getTag();
         HomeView hv = (HomeView) searchResults.get(pos);
         intent.putExtra("allData", hv);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation
+                (mActivity, imageStart, imageStart.getTransitionName());
 
-        mActivity.startActivity(intent);
+        ActivityCompat.startActivity(mActivity, intent, options.toBundle());
     }
 
     @Override

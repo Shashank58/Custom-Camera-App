@@ -3,338 +3,339 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbarDetail"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/pure_black">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbarDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
-                    android:clickable="true"
-                    android:onClick="back"
-                    android:src="@drawable/ic_searchback"
-                    android:transitionName="@string/transition_name_author"/>
-
-                <ImageView
-                    android:id="@+id/detail_thumbnail"
-                    android:layout_width="120dp"
-                    android:layout_height="140dp"
-                    android:gravity="center_horizontal"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="60dp"
-                    android:layout_marginTop="20dp"
-                    android:scaleType="fitCenter"
-                    android:transitionName="bookImage"/>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.Toolbar>
-
-    </android.support.design.widget.AppBarLayout>
-
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/appBar"
-        android:background="@color/registerScreens">
-
-        <LinearLayout
-            android:id="@+id/allViewsDetail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:visibility="invisible"
-                android:id="@+id/first_detail"
-                android:padding="5dp">
-
-                <TextView
-                    android:id="@+id/detail_book_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Effective Java"
-                    android:fontFamily="sans-serif-condensed"
-                    android:layout_marginLeft="5dp"
-                    android:textColor="@color/pure_black"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:transitionName="@string/transition_name_name"/>
+                android:background="@color/pure_black">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/star_layout"
-                    android:layout_below="@+id/detail_book_name"
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/star_1"/>
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="10dp"
+                        android:clickable="true"
+                        android:onClick="back"
+                        android:src="@drawable/ic_searchback"
+                        android:transitionName="@string/transition_name_author"/>
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/star_2"/>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/star_3"/>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/star_4"/>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/star_5"/>
+                        android:id="@+id/detail_thumbnail"
+                        android:layout_width="120dp"
+                        android:layout_height="140dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="60dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center_horizontal"
+                        android:scaleType="fitCenter"
+                        android:transitionName="bookImage"/>
 
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Author: "
-                    android:layout_marginTop="8dp"
-                    android:layout_marginLeft="5dp"
-                    android:id="@+id/author_text"
-                    android:textSize="14sp"
-                    android:textColor="@color/pure_black"
-                    android:textStyle="italic"
-                    android:layout_below="@+id/star_layout"/>
+            </android.support.v7.widget.Toolbar>
 
-                <TextView
-                    android:id="@+id/detail_author_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_below="@+id/star_layout"
-                    android:layout_toRightOf="@+id/author_text"
-                    android:text="Stephaine King"
-                    android:textColor="@color/pure_black"
-                    android:textSize="14sp"
-                    android:textStyle="italic"
-                    android:transitionName="@string/transition_name_author"/>
+        </android.support.design.widget.AppBarLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/publisher_text"
-                    android:text="Publisher: "
-                    android:layout_marginLeft="5dp"
-                    android:textSize="14sp"
-                    android:textStyle="italic"
-                    android:layout_below="@+id/detail_author_name"
-                    android:layout_marginTop="8dp"/>
 
-                <TextView
-                    android:id="@+id/detail_publication"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_toRightOf="@+id/publisher_text"
-                    android:layout_below="@+id/detail_author_name"
-                    android:text="BPB publications"
-                    android:textSize="14sp"
-                    android:textStyle="italic"/>
-
-                <Button
-                    android:layout_width="170dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/web_reader_button"
-                    android:text="Read"
-                    android:textColor="@color/white"
-                    android:background="@drawable/mybutton"
-                    android:layout_below="@+id/publisher_text"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="5dp"/>
-
-                <Button
-                    android:layout_width="170dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/request_book"
-                    android:layout_marginLeft="10dp"
-                    android:text="Request Book"
-                    android:layout_toRightOf="@+id/web_reader_button"
-                    android:textColor="@color/white"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/mybutton"
-                    android:layout_below="@+id/publisher_text"
-                    android:layout_marginTop="15dp"/>
-
-            </RelativeLayout>
-
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/appBar"
+            android:background="@color/registerScreens">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:orientation="vertical"
-                android:visibility="invisible"
-                android:id="@+id/second_detail"
-                android:background="@color/white">
-
-                <GridLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginRight="1dp"
-                        android:layout_marginTop="3dp"
-                        android:src="@drawable/ic_categories"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
-                        android:text="Categories :"
-                        android:textColor="@color/pure_black"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:id="@+id/detail_category"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/pure_black"
-                        android:text="Computers"
-                        android:textSize="18sp"/>
-
-                </GridLayout>
-
-                <GridLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginRight="1dp"
-                        android:layout_marginTop="3dp"
-                        android:src="@drawable/ic_copies"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
-                        android:text="Copies :"
-                        android:textColor="@color/pure_black"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:id="@+id/detail_available"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/pure_black"
-                        android:text="1"
-                        android:textSize="18sp"/>
-
-                </GridLayout>
-
-                <GridLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginRight="1dp"
-                        android:layout_marginTop="2dp"
-                        android:src="@drawable/ic_pages"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
-                        android:text="Pages :"
-                        android:textColor="@color/pure_black"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:id="@+id/detail_pages"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/pure_black"
-                        android:text="360"
-                        android:textSize="18sp"/>
-
-                </GridLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
+                android:id="@+id/allViewsDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="@color/white"
-                android:visibility="invisible"
-                android:layout_marginTop="1dp"
-                android:id="@+id/third_detail"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/first_detail"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Description"
-                    android:textColor="@color/pure_black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"/>
+                    android:background="@color/white"
+                    android:padding="5dp"
+                    android:visibility="invisible">
 
-                <TextView
-                    android:id="@+id/detail_description"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/detail_book_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Effective Java"
+                        android:textColor="@color/pure_black"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:transitionName="@string/transition_name_name"/>
+
+                    <LinearLayout
+                        android:id="@+id/star_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/detail_book_name"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/star_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <ImageView
+                            android:id="@+id/star_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <ImageView
+                            android:id="@+id/star_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <ImageView
+                            android:id="@+id/star_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <ImageView
+                            android:id="@+id/star_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/author_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/star_layout"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Author: "
+                        android:textColor="@color/pure_black"
+                        android:textSize="14sp"
+                        android:textStyle="italic"/>
+
+                    <TextView
+                        android:id="@+id/detail_author_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/star_layout"
+                        android:layout_marginTop="8dp"
+                        android:layout_toRightOf="@+id/author_text"
+                        android:text="Stephaine King"
+                        android:textColor="@color/pure_black"
+                        android:textSize="14sp"
+                        android:textStyle="italic"
+                        android:transitionName="@string/transition_name_author"/>
+
+                    <TextView
+                        android:id="@+id/publisher_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/detail_author_name"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Publisher: "
+                        android:textSize="14sp"
+                        android:textStyle="italic"/>
+
+                    <TextView
+                        android:id="@+id/detail_publication"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/detail_author_name"
+                        android:layout_marginTop="8dp"
+                        android:layout_toRightOf="@+id/publisher_text"
+                        android:text="BPB publications"
+                        android:textSize="14sp"
+                        android:textStyle="italic"/>
+
+                    <Button
+                        android:id="@+id/web_reader_button"
+                        android:layout_width="170dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/publisher_text"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/mybutton"
+                        android:text="Read"
+                        android:textColor="@color/white"/>
+
+                    <Button
+                        android:id="@+id/request_book"
+                        android:layout_width="170dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/publisher_text"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_toRightOf="@+id/web_reader_button"
+                        android:background="@drawable/mybutton"
+                        android:text="Request Book"
+                        android:textColor="@color/white"/>
+
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/second_detail"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="7dp"
-                    android:lineSpacingExtra="6dp"
-                    android:padding="15dp"
-                    android:text="In The Book, Agile Estimating And Planning Is The Definitive, Practical Guide To Estimating And Planning Agile Projects, Agile Alliance Cofounder Mike Cohn Discusses The Philosophy Of Agile Estimating And Planning And Shows You Exactly How To Get The Job Done, With Real-World Examples And Case Studies.Concepts Are Clearly Illustrated And Readers Are Guided, Step By Step, Toward How To Answer The Following Questions: What Will We Build? How Big Will It Be? When Must It Be Done? How Much Can I Really Complete By Then? You Will First Learn What Makes A Good Plan-And Then What Makes It Agile.Using The Techniques In The Book, You Can Stay Agile From Start To Finish, Saving Time, Conserving Resources, And Accomplishing More."/>
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:visibility="invisible">
+
+                    <GridLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="1dp"
+                            android:layout_marginTop="3dp"
+                            android:src="@drawable/ic_categories"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:text="Categories :"
+                            android:textColor="@color/pure_black"
+                            android:textSize="18sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/detail_category"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Computers"
+                            android:textColor="@color/pure_black"
+                            android:textSize="18sp"/>
+
+                    </GridLayout>
+
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="1dp"
+                            android:layout_marginTop="3dp"
+                            android:src="@drawable/ic_copies"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:text="Copies :"
+                            android:textColor="@color/pure_black"
+                            android:textSize="18sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/detail_available"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:textColor="@color/pure_black"
+                            android:textSize="18sp"/>
+
+                    </GridLayout>
+
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="1dp"
+                            android:layout_marginTop="2dp"
+                            android:src="@drawable/ic_pages"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:text="Pages :"
+                            android:textColor="@color/pure_black"
+                            android:textSize="18sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/detail_pages"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="360"
+                            android:textColor="@color/pure_black"
+                            android:textSize="18sp"/>
+
+                    </GridLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/third_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:visibility="invisible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Description"
+                        android:textColor="@color/pure_black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/detail_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="7dp"
+                        android:lineSpacingExtra="6dp"
+                        android:padding="15dp"
+                        android:text="In The Book, Agile Estimating And Planning Is The Definitive, Practical Guide To Estimating And Planning Agile Projects, Agile Alliance Cofounder Mike Cohn Discusses The Philosophy Of Agile Estimating And Planning And Shows You Exactly How To Get The Job Done, With Real-World Examples And Case Studies.Concepts Are Clearly Illustrated And Readers Are Guided, Step By Step, Toward How To Answer The Following Questions: What Will We Build? How Big Will It Be? When Must It Be Done? How Much Can I Really Complete By Then? You Will First Learn What Makes A Good Plan-And Then What Makes It Agile.Using The Techniques In The Book, You Can Stay Agile From Start To Finish, Saving Time, Conserving Resources, And Accomplishing More."/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-
-    </ScrollView>
+        </ScrollView>
 
 </RelativeLayout>
