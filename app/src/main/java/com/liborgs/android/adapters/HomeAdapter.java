@@ -3,7 +3,6 @@ package com.liborgs.android.adapters;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.Build.VERSION_CODES;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -14,8 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,6 +38,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         this.allBooks = new ArrayList<>(allBooks);
         mContext = context;
         mActivity = activity;
+        initTransitions();
     }
 
     @TargetApi(VERSION_CODES.LOLLIPOP)
@@ -59,33 +57,17 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         final View itemView = LayoutInflater.
                 from(parent.getContext()).
                 inflate(R.layout.card_layout, parent, false);
-
-        final String transitionCircle = mActivity.getString(R.string.transition_name_circle);
-
         itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                initTransitions();
-                InputMethodManager imgr = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imgr.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 Intent intent = new Intent(mActivity, DetailActivity.class);
                 // Define the view that the animation will start from
-                View viewStart = itemView.findViewById(R.id.card_view_one);
                 ImageView imageStart = (ImageView) v.findViewById(R.id.bookImage);
-
-                imageStart.setTransitionName(transitionCircle);
-                int[] location = new int[2];
-                imageStart.getLocationInWindow(location);
-                Point epicenter = new Point(location[0] + imageStart.getMeasuredWidth() / 2,
-                        location[1] + imageStart.getMeasuredHeight() / 2);
-                intent.putExtra(DetailActivity.EXTRA_EPICENTER, epicenter);
-
                 int pos = (int) v.getTag();
                 HomeView hv = allBooks.get(pos);
                 intent.putExtra("allData", hv);
-                intent.addFlags(Window.FEATURE_ACTIVITY_TRANSITIONS);
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation
-                        (mActivity,  viewStart, transitionCircle);
+                        (mActivity, imageStart, imageStart.getTransitionName());
 
                 ActivityCompat.startActivity(mActivity, intent, options.toBundle());
             }

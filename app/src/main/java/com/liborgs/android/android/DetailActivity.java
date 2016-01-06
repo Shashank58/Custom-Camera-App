@@ -2,22 +2,17 @@ package com.liborgs.android.android;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Explode;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.transition.TransitionManager;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,7 +27,6 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.liborgs.android.R;
 import com.liborgs.android.datamodle.HomeView;
-import com.liborgs.android.transition.RevealTransition;
 import com.liborgs.android.util.AppUtils;
 import com.liborgs.android.util.Constants;
 import com.liborgs.android.util.SharedPreferencesHandler;
@@ -54,7 +48,6 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
     private HomeView hv;
     private ViewGroup allView;
     private View firstDetail, secondDetail, thirdDetail;
-    public static final String EXTRA_EPICENTER = "EXTRA_EPICENTER";
     private static boolean isStartAnimation = true;
 
     @Override
@@ -94,36 +87,6 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
 
     @TargetApi(VERSION_CODES.LOLLIPOP)
     private void initTransitions() {
-        TransitionInflater inflater = TransitionInflater.from(this);
-        Window window = getWindow();
-        RevealTransition reveal = createRevealTransition();
-        reveal.addListener(new Transition.TransitionListener() {
-            @Override
-            public void onTransitionStart(Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionEnd(Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionCancel(Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionPause(Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionResume(Transition transition) {
-
-            }
-        });
-        window.setEnterTransition(reveal);
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -185,16 +148,16 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         }, 300);
     }
 
-    @TargetApi(VERSION_CODES.KITKAT)
-    private RevealTransition createRevealTransition() {
-        Point epicenter = getIntent().getParcelableExtra(EXTRA_EPICENTER);
-        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        int bigRadius = Math.max(displayMetrics.widthPixels, displayMetrics.heightPixels);
-        RevealTransition reveal = new RevealTransition(epicenter, 0, bigRadius, 500);
-        reveal.addTarget(R.id.detail_thumbnail);
-        reveal.addTarget(R.color.pure_black);
-        return reveal;
-    }
+//    @TargetApi(VERSION_CODES.KITKAT)
+//    private RevealTransition createRevealTransition() {
+//        Point epicenter = getIntent().getParcelableExtra(EXTRA_EPICENTER);
+//        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+//        int bigRadius = Math.max(displayMetrics.widthPixels, displayMetrics.heightPixels);
+//        RevealTransition reveal = new RevealTransition(epicenter, 0, bigRadius, 500);
+//        reveal.addTarget(R.id.detail_thumbnail);
+//        reveal.addTarget(R.color.pure_black);
+//        return reveal;
+//    }
 
     private void requestBookListener(){
         requestBook.setOnClickListener(new OnClickListener() {
