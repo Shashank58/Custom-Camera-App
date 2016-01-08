@@ -178,7 +178,6 @@ public class SearchActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        AppUtils.getInstance().dismissProgressDialog();
                         try {
                             boolean status = response.getBoolean("status");
                             if(status) {
@@ -198,7 +197,7 @@ public class SearchActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                AppUtils.getInstance().dismissProgressDialog();
+
             }
         });
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -211,7 +210,6 @@ public class SearchActivity extends AppCompatActivity {
                 .buildUpon()
                 .appendQueryParameter("query", query)
                 .build().toString();
-        AppUtils.getInstance().showProgressDialog(this, "Searching");
 
         JsonObjectRequest jObject = new JsonObjectRequest(Method.GET, url,
                 new Response.Listener<JSONObject>() {
