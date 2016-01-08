@@ -220,8 +220,10 @@ public class SearchActivity extends AppCompatActivity {
                         AppUtils.getInstance().dismissProgressDialog();
                         try {
                             boolean status = response.getBoolean("status");
-                            if(status)
+                            if(status) {
                                 extractSearchResponse(response, false);
+                                recList.setAdapter(bookList);
+                            }
                             else {
                                 String message = response.getString("message");
                                 AppUtils.getInstance().alertMessage(SearchActivity.this,
@@ -286,13 +288,11 @@ public class SearchActivity extends AppCompatActivity {
                 public int getSpanSize(int position) {
                     if (position == 0 || position == size) {
                         return 3;
-                    }
-                    else
+                    } else
                         return 1;
                 }
             });
             recList.setLayoutManager(manager);
-            recList.setAdapter(bookList);
         } catch (JSONException e) {
             e.printStackTrace();
         }

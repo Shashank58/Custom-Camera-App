@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +34,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
     private HomeView hv;
     private Context mContext;
     private FragmentActivity mActivity;
+    private int lastPosition = -1;
 
     public HomeAdapter(List<HomeView> allBooks, Context context, FragmentActivity activity){
         super();
@@ -83,6 +86,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         holder.authorName.setText(hv.getAuthorName());
         Glide.with(mContext).load(hv.getThumbnail())
         .asBitmap().into(holder.bookImage);
+        setAnimation(holder.cardView, position);
+    }
+
+    private void setAnimation(View viewToAnimate, int position) {
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation
+                    (mActivity, android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
     }
 
     @Override
