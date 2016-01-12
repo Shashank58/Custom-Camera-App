@@ -11,6 +11,8 @@ public class Constants {
     public static final int PRIVATE_MODE = 2;
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PASSWORD = "password";
+    public static final String KEY_FIRST_NAME = "firstname";
+    public static final String KEY_LAST_NAME = "lastname";
     public static final String GOOGLE_PROJECT_ID = "926498080108";
     public static final String KEY_AUTH = "auth_key" ;
     public static final String KEY_FNAME = "first name" ;

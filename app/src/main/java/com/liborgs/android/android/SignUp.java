@@ -71,6 +71,7 @@ public class SignUp extends AppCompatActivity {
 
 
     public void registerUser(){
+        AppUtils.getInstance().showProgressDialog(this, "Registering");
         mEmail = email.getText().toString().trim();
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -79,6 +80,7 @@ public class SignUp extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        AppUtils.getInstance().dismissProgressDialog();
                         try {
                             JSONObject jObj = new JSONObject(response);
                             String message = jObj.getString("message");
@@ -98,6 +100,7 @@ public class SignUp extends AppCompatActivity {
                                         Constants.SIGN_UP, message);
                             }
                         }catch (JSONException e){
+                            AppUtils.getInstance().dismissProgressDialog();
                             e.printStackTrace();
                         }
                     }
@@ -113,8 +116,8 @@ public class SignUp extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<>();
-                params.put(Constants.KEY_FNAME, mFname);
-                params.put(Constants.KEY_LNAME, mLname);
+                params.put(Constants.KEY_FIRST_NAME, mFname);
+                params.put(Constants.KEY_LAST_NAME, mLname);
                 params.put(Constants.KEY_EMAIL, mEmail);
                 params.put(Constants.KEY_PASSWORD, mPassword);
                 return params;

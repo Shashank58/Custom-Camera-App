@@ -66,8 +66,8 @@ public class LogInActivity extends AppCompatActivity {
         Button submit = (Button) findViewById(R.id.submit);
 
         if(mEmail.equals("") || mPassword.equals("")){
-            Toast.makeText(getApplicationContext(), "Email or Password empty",
-                    Toast.LENGTH_LONG).show();
+            AppUtils.getInstance().alertMessage(this, Constants.LIBORGS,
+                    "Email or password is empty");
         } else{
             if (AppUtils.getInstance().isNetworkAvailable(this)) {
                 submit.setEnabled(false);
@@ -83,12 +83,14 @@ public class LogInActivity extends AppCompatActivity {
 
     public void logIntoAccount(){
         RequestQueue queue = Volley.newRequestQueue(this);
+        AppUtils.getInstance().showProgressDialog(this, "Logging in");
 
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST
                 , Constants.USER_LOGIN_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        AppUtils.getInstance().dismissProgressDialog();
                         try {
                             Log.e("Sign Up", "Response is: "+response);
                             JSONObject jObj = new JSONObject(response);
@@ -113,6 +115,7 @@ public class LogInActivity extends AppCompatActivity {
                                         "Log in", message);
                             }
                         }catch (JSONException e){
+                            AppUtils.getInstance().dismissProgressDialog();
                             e.printStackTrace();
                         }
                     }
