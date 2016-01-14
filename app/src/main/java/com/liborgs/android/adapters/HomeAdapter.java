@@ -54,7 +54,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         mActivity.getWindow().setSharedElementReturnTransition(null);
     }
 
-    @TargetApi(VERSION_CODES.M)
+    @TargetApi(VERSION_CODES.LOLLIPOP)
     @Override
     public HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View itemView = LayoutInflater.

@@ -79,6 +79,7 @@ public class SendImage {
 
             @Override
             public void onProgress(long bytesWritten, long totalSize) {
+                Log.e("Send Image", "Called again? Wtf");
                 AppUtils.getInstance().showProgressDialog(mContext, "Fetching");
             }
         });

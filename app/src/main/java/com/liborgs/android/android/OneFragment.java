@@ -5,11 +5,9 @@ package com.liborgs.android.android;
  Fetches data of all books from server. Search of books is also handled here.
  **/
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout.LayoutParams;
 import android.support.v4.app.Fragment;
@@ -104,8 +102,6 @@ public class OneFragment extends Fragment {
         search = (ImageView) toolbar.findViewById(R.id.search_action);
 
         search.setOnClickListener(new OnClickListener() {
-
-            @TargetApi(VERSION_CODES.M)
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SearchActivity.class);

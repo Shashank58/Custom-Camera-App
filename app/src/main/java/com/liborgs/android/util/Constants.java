@@ -24,6 +24,9 @@ public class Constants {
     public static final String LIBORGS = "Liborgs";
     public static final String INTERNET_CONN = "Please connect to internet";
     public static final int REQ_CODE_SPEECH_INPUT = 100;
+    public static final int MY_PERMISSIONS_ALL_PERMISSIONS = 110;
+    public static final int MY_PERMISSIONS_ACCESS_CAMERA = 50;
+    public static final int MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 60;
     private final static String BASE_URL = "https://liborgs-1139.appspot.com/";
     public static final String PASSWORD_RESET_URL = BASE_URL + "users/reset-password?";
     public static final String USER_LOGIN_URL = BASE_URL + "users/login?";

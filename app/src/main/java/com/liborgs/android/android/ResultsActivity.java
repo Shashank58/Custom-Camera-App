@@ -1,8 +1,6 @@
 package com.liborgs.android.android;
 
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -30,8 +28,7 @@ public class ResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
         if(getSupportActionBar() != null) {
-            getSupportActionBar().setElevation(0);
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#009688")));
+            getSupportActionBar().hide();
         }
         resultList = (RecyclerView) findViewById(R.id.resultList);
         resultList.setHasFixedSize(true);

@@ -1,19 +1,26 @@
 package com.liborgs.android.android;
 
+import android.Manifest.permission;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -53,6 +60,7 @@ public class LibraryActivity extends AppCompatActivity {
     private OneFragment oneFragment;
     private Bitmap bm, scaledBitmap, bitmap;
     private int x1, y1, x2, y2;
+    private static int selectedOption;
 
 
     @Override
@@ -104,26 +112,84 @@ public class LibraryActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-
+    //Fab button clicked
     public void scanBarCode(View v){
         if(AppUtils.getInstance().isNetworkAvailable(this)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.pick_issue_type)
                     .setItems(R.array.issue_method, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            if (which == 0) {
-                                IntentIntegrator integrator = new IntentIntegrator(LibraryActivity.this);
-                                integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
-                                integrator.initiateScan();
+                            selectedOption = which;
+                            if (VERSION.SDK_INT < VERSION_CODES.M) {
+                                Log.e("Library activity", "Which: "+selectedOption);
+                                selectBookIssueOptions();
                             } else {
-                                Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                                startActivityForResult(intent, Constants.PIC_CAPTURED);
+                                checkForPermission();
                             }
                         }
                     }).show();
         }
     }
 
+    private void selectBookIssueOptions(){
+        if (selectedOption == 0) {
+            IntentIntegrator integrator = new IntentIntegrator(LibraryActivity.this);
+            integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
+            integrator.initiateScan();
+        } else {
+            Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent, Constants.PIC_CAPTURED);
+        }
+    }
+
+    private void checkForPermission(){
+        int storagePermission = ContextCompat.checkSelfPermission(this,
+                permission.WRITE_EXTERNAL_STORAGE);
+        int cameraPermission = ContextCompat.checkSelfPermission(this,
+                permission.CAMERA);
+        if (storagePermission != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,
+                    new String[]{permission.WRITE_EXTERNAL_STORAGE},
+                    Constants.MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE);
+        } else if (cameraPermission != PackageManager.PERMISSION_GRANTED){
+            Log.e("Library activity", "Coming for another check");
+            ActivityCompat.requestPermissions(this,
+                    new String[]{permission.CAMERA},
+                    Constants.MY_PERMISSIONS_ACCESS_CAMERA);
+        } else {
+            selectBookIssueOptions();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode){
+            case Constants.MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    checkForPermission();
+                } else {
+                    String message = "Please enable storage permission to issue book";
+                    AppUtils.getInstance().alertMessage(this,
+                            Constants.LIBORGS, message);
+                }
+            break;
+
+            case Constants.MY_PERMISSIONS_ACCESS_CAMERA:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    selectBookIssueOptions();
+                } else {
+                    String message = "Please enable camera permission to issue book";
+                    AppUtils.getInstance().alertMessage(this,
+                            Constants.LIBORGS, message);
+                }
+            break;
+
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -156,7 +222,8 @@ public class LibraryActivity extends AppCompatActivity {
                 if (AppUtils.getInstance().isNetworkAvailable(this))
                     issueBook(_code, "");
                 else {
-                    AppUtils.getInstance().alertMessage(this, Constants.LIBORGS, Constants.INTERNET_CONN);
+                    AppUtils.getInstance().alertMessage(this, Constants.LIBORGS
+                            , Constants.INTERNET_CONN);
                 }
             }
         }

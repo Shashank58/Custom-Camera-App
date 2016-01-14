@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 /**
  * Created by shashankm on 30/12/15.
@@ -44,7 +45,9 @@ public class AppUtils {
     }
 
     public void showProgressDialog(Activity activity, String message){
-        dialog = new ProgressDialog(activity);
+        if (dialog == null) {
+            dialog = new ProgressDialog(activity);
+        }
         dialog.setMessage(message);
         dialog.setInverseBackgroundForced(false);
         dialog.setCancelable(false);
@@ -53,6 +56,7 @@ public class AppUtils {
 
     public void dismissProgressDialog(){
         if (dialog != null){
+            Log.e("App util", "Dismissing");
             dialog.dismiss();
         }
     }
