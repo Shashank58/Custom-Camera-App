@@ -58,6 +58,7 @@ public class AppUtils {
         if (dialog != null){
             Log.e("App util", "Dismissing");
             dialog.dismiss();
+            dialog = null;
         }
     }
 }

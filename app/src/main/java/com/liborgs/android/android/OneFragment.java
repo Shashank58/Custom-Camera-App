@@ -33,6 +33,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.liborgs.android.R;
 import com.liborgs.android.adapters.HomeAdapter;
+import com.liborgs.android.database.DBHelper;
 import com.liborgs.android.datamodle.HomeView;
 import com.liborgs.android.util.AppUtils;
 import com.liborgs.android.util.Constants;
@@ -56,6 +57,7 @@ public class OneFragment extends Fragment {
     private List<HomeView> libraryBooks;
     private List<HomeView> listOfAllBooks;
     private HomeAdapter bookList;
+    private DBHelper dbHelper;
 
     public OneFragment(){
 
@@ -65,8 +67,13 @@ public class OneFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (dbHelper == null) {
+            dbHelper = new DBHelper(getActivity());
+        }
         if(AppUtils.getInstance().isNetworkAvailable(getActivity())) {
-            getData();
+            Log.e("One Fragment", "Count: " + dbHelper.getCount());
+            if (dbHelper.getCount() == 0)
+                getData();
         }
     }
 
@@ -76,12 +83,14 @@ public class OneFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_one, container, false);
         fetchData = (TextView) view.findViewById(R.id.fetching_data);
-        if(AppUtils.getInstance().isNetworkAvailable(getActivity())) {
+        if(AppUtils.getInstance().isNetworkAvailable(getActivity()) ||
+                (dbHelper.getCount() != 0)) {
             searchFeature();
             recList = (RecyclerView) view.findViewById(R.id.cardList);
             recList.setHasFixedSize(true);
             mContext = getActivity().getBaseContext();
             recList.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+            getDataFromDb();
         } else {
             //Not connected to net
             fetchData.setText("Please connect to internet");
@@ -101,13 +110,19 @@ public class OneFragment extends Fragment {
 
         search = (ImageView) toolbar.findViewById(R.id.search_action);
 
-        search.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SearchActivity.class);
-                startActivity(intent);
-            }
-        });
+
+            search.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (AppUtils.getInstance().isNetworkAvailable(getActivity())) {
+                        Intent intent = new Intent(getActivity(), SearchActivity.class);
+                        startActivity(intent);
+                    } else {
+                        AppUtils.getInstance().alertMessage(getActivity(), "Liborgs",
+                                "Please connect to internet to access search facilities");
+                    }
+                }
+            });
     }
 
 
@@ -144,6 +159,12 @@ public class OneFragment extends Fragment {
                         , available, pageCount, description, publisher, category,
                         averageRaing, webReaderLink, true));
             }
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    dbHelper.insertAllBooks(libraryBooks);
+                }
+            }).start();
             bookList = new HomeAdapter(libraryBooks, mContext, getActivity());
             recList.setAdapter(bookList);
         } catch (JSONException e) {
@@ -217,6 +238,12 @@ public class OneFragment extends Fragment {
             }
         };
         queue.add(jRequest);
+    }
+
+    private void getDataFromDb(){
+        libraryBooks = new ArrayList<>(dbHelper.getAllBooks());
+        bookList = new HomeAdapter(libraryBooks, mContext, getActivity());
+        recList.setAdapter(bookList);
     }
 
 

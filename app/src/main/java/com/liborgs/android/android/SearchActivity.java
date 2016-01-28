@@ -1,6 +1,7 @@
 package com.liborgs.android.android;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,7 +14,6 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager.LayoutParams;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -77,6 +77,7 @@ public class SearchActivity extends AppCompatActivity {
                 promptSpeechInput();
             }
         });
+        myEditText.requestFocus();
     }
 
     private void promptSpeechInput() {
@@ -141,7 +142,6 @@ public class SearchActivity extends AppCompatActivity {
                     fetchDataNormalSearch(myEditText.getText().toString());
                     handled = true;
                 }
-
                 return handled;
             }
         });
@@ -151,17 +151,16 @@ public class SearchActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case Constants.REQ_CODE_SPEECH_INPUT: {
+            case Constants.REQ_CODE_SPEECH_INPUT:
                 if (resultCode == RESULT_OK && null != data) {
-
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                     myEditText.setText(result.get(0));
+                    InputMethodManager keyboard = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    keyboard.showSoftInput(myEditText, 0);
+                    myEditText.selectAll();
                 }
                 break;
-            }
-
         }
     }
 
@@ -295,5 +294,4 @@ public class SearchActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
 }

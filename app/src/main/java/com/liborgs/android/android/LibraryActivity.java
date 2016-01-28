@@ -128,6 +128,9 @@ public class LibraryActivity extends AppCompatActivity {
                             }
                         }
                     }).show();
+        } else {
+            AppUtils.getInstance().alertMessage(this, "Liborgs",
+                    "Please connect to internet to borrow book");
         }
     }
 
